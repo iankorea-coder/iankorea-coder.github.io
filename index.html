@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>floforpiece</title>
+    <title>플로폴피스</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -554,17 +555,24 @@
 
         lucide.createIcons();
 
-        // Firebase 설정 (서버 환경 변수 가져오기)
-        let app, auth, db, appId;
-        try {
-            const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-            app = initializeApp(firebaseConfig);
-            auth = getAuth(app);
-            db = getFirestore(app);
-            appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        } catch(e) {
-            console.error("Firebase 초기화 에러 (로컬 환경일 수 있습니다):", e);
-        }
+        // 🌟 내 컴퓨터/실제 서버에서 실행하기 위한 실제 서버 설정 🌟
+        // TODO: 아래 내용을 본인 Firebase 프로젝트 설정값으로 반드시 변경해야 합니다! (firebase_guide.md 참고)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Firebase 초기화
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        // 데이터베이스 폴더명 구분용 고정 ID
+        const appId = 'floforpiece-app'; 
 
         // 뷰 및 입력 요소
         const viewHome = document.getElementById('view-home');
@@ -679,81 +687,79 @@
             setTimeout(() => { toast.classList.add('opacity-0'); }, 2500); 
         }
 
-        // Firebase 초기 인증
+        // 🌟 실 배포용 Firebase 인증 시작 (익명 로그인 바탕)
         const initAuth = async () => {
-            if (!auth) return; 
-            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                await signInWithCustomToken(auth, __initial_auth_token);
-            } else {
+            try {
+                // 커스텀 회원가입/로그인(profiles 컬렉션 활용)을 위해 익명 권한을 우선 얻습니다.
                 await signInAnonymously(auth);
+            } catch (error) {
+                console.error("Firebase 연결 실패. 설정값(YOUR_API_KEY 등)을 확인하세요:", error);
             }
         };
 
-        if (auth) {
-            initAuth().then(() => {
-                onAuthStateChanged(auth, async (user) => {
-                    currentUser = user;
-                    if (user) {
-                        // 세션 확인
-                        const sessionRef = doc(db, 'artifacts', appId, 'public', 'data', 'sessions', user.uid);
-                        try {
-                            const docSnap = await new Promise((resolve, reject) => {
-                                const unsub = onSnapshot(sessionRef, (snap) => { resolve(snap); unsub(); }, reject);
-                            });
-                            if (docSnap.exists() && docSnap.data().email) {
-                                const userEmail = docSnap.data().email;
-                                const profilesRef = collection(db, 'artifacts', appId, 'public', 'data', 'profiles');
-                                const profilesSnap = await new Promise((resolve, reject) => {
-                                    const unsub = onSnapshot(profilesRef, (snap) => { resolve(snap); unsub(); }, reject);
-                                });
-                                profilesSnap.forEach(profileDoc => {
-                                    if (profileDoc.data().email === userEmail) {
-                                        currentUserProfileDocId = profileDoc.id;
-                                        currentUserProfileData = profileDoc.data();
-                                        currentUserNickname = profileDoc.data().nickname;
-                                        profileEmail.textContent = currentUserNickname; 
-                                        btnShowLogin.classList.add('hidden');
-                                        profileIndicator.classList.replace('hidden', 'flex');
-                                    }
-                                });
-                            } else {
-                                currentUserNickname = null;
-                                currentUserProfileDocId = null;
-                                currentUserProfileData = null;
-                                btnShowLogin.classList.remove('hidden');
-                                profileIndicator.classList.replace('flex', 'hidden');
-                            }
-                        } catch (e) {
-                            console.warn("세션 가져오기 실패:", e);
-                        }
+        initAuth();
 
-                        // 서버 데이터 실시간 구독 (게시글, 채팅방, 메시지)
-                        if (!postsUnsubscribe) {
-                            const postsRef = collection(db, 'artifacts', appId, 'public', 'data', 'posts');
-                            postsUnsubscribe = onSnapshot(postsRef, (snapshot) => {
-                                firestorePosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-                                                    .sort((a, b) => b.createdAt - a.createdAt); 
-                                refreshAllFeeds(); 
-                            }, (error) => console.error(error));
-                        }
-                        if (!chatRoomsUnsubscribe) {
-                            const roomsRef = collection(db, 'artifacts', appId, 'public', 'data', 'chatRooms');
-                            chatRoomsUnsubscribe = onSnapshot(roomsRef, (snap) => {
-                                allChatRooms = snap.docs.map(d => ({id: d.id, ...d.data()}));
-                                if (!viewChatList.classList.contains('hidden')) renderChatList();
-                            });
-                        }
-                        if (!chatMessagesUnsubscribe) {
-                            const msgsRef = collection(db, 'artifacts', appId, 'public', 'data', 'chatMessages');
-                            chatMessagesUnsubscribe = onSnapshot(msgsRef, (snap) => {
-                                allChatMessages = snap.docs.map(d => ({id: d.id, ...d.data()}));
-                                if (!viewChatRoom.classList.contains('hidden')) renderChatMessages();
-                            });
-                        }
+        onAuthStateChanged(auth, async (user) => {
+            currentUser = user;
+            if (user) {
+                // 세션 확인 (모의 로그인 유지)
+                const sessionRef = doc(db, 'artifacts', appId, 'public', 'data', 'sessions', user.uid);
+                try {
+                    const docSnap = await new Promise((resolve, reject) => {
+                        const unsub = onSnapshot(sessionRef, (snap) => { resolve(snap); unsub(); }, reject);
+                    });
+                    if (docSnap.exists() && docSnap.data().email) {
+                        const userEmail = docSnap.data().email;
+                        const profilesRef = collection(db, 'artifacts', appId, 'public', 'data', 'profiles');
+                        const profilesSnap = await new Promise((resolve, reject) => {
+                            const unsub = onSnapshot(profilesRef, (snap) => { resolve(snap); unsub(); }, reject);
+                        });
+                        profilesSnap.forEach(profileDoc => {
+                            if (profileDoc.data().email === userEmail) {
+                                currentUserProfileDocId = profileDoc.id;
+                                currentUserProfileData = profileDoc.data();
+                                currentUserNickname = profileDoc.data().nickname;
+                                profileEmail.textContent = currentUserNickname; 
+                                btnShowLogin.classList.add('hidden');
+                                profileIndicator.classList.replace('hidden', 'flex');
+                            }
+                        });
+                    } else {
+                        currentUserNickname = null;
+                        currentUserProfileDocId = null;
+                        currentUserProfileData = null;
+                        btnShowLogin.classList.remove('hidden');
+                        profileIndicator.classList.replace('flex', 'hidden');
                     }
-                });
-            });
-        }
+                } catch (e) {
+                    console.warn("세션 가져오기 실패 (규칙 설정이 필요할 수 있습니다):", e);
+                }
+
+                // 서버 데이터 실시간 구독 (게시글, 채팅방, 메시지)
+                if (!postsUnsubscribe) {
+                    const postsRef = collection(db, 'artifacts', appId, 'public', 'data', 'posts');
+                    postsUnsubscribe = onSnapshot(postsRef, (snapshot) => {
+                        firestorePosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+                                            .sort((a, b) => b.createdAt - a.createdAt); 
+                        refreshAllFeeds(); 
+                    }, (error) => console.error("게시글 가져오기 실패:", error));
+                }
+                if (!chatRoomsUnsubscribe) {
+                    const roomsRef = collection(db, 'artifacts', appId, 'public', 'data', 'chatRooms');
+                    chatRoomsUnsubscribe = onSnapshot(roomsRef, (snap) => {
+                        allChatRooms = snap.docs.map(d => ({id: d.id, ...d.data()}));
+                        if (!viewChatList.classList.contains('hidden')) renderChatList();
+                    });
+                }
+                if (!chatMessagesUnsubscribe) {
+                    const msgsRef = collection(db, 'artifacts', appId, 'public', 'data', 'chatMessages');
+                    chatMessagesUnsubscribe = onSnapshot(msgsRef, (snap) => {
+                        allChatMessages = snap.docs.map(d => ({id: d.id, ...d.data()}));
+                        if (!viewChatRoom.classList.contains('hidden')) renderChatMessages();
+                    });
+                }
+            }
+        });
 
         // --- 로그인 및 회원가입 창 제어 로직 ---
 
@@ -816,10 +822,10 @@
                     }
                 } catch (error) {
                     console.error("로그인 중 오류:", error);
-                    showToast("로그인 처리 중 오류가 발생했습니다.");
+                    showToast("서버 연결에 실패했습니다. Firebase 설정을 확인해주세요.");
                 }
             } else {
-                showToast("서버 연결이 없어 진행할 수 없습니다.");
+                showToast("서버 설정이 완료되지 않았습니다. 코드의 firebaseConfig를 확인하세요.");
             }
         });
 
@@ -1412,14 +1418,16 @@
                     await addDoc(postsRef, newPost);
                 } catch (e) {
                     console.error("Firestore 업로드 에러:", e);
-                    showToast("게시글 저장 중 오류가 발생했습니다.");
+                    showToast("게시글 저장 중 오류가 발생했습니다. 권한 설정을 확인하세요.");
                     btnUpload.disabled = false;
                     btnUpload.textContent = "업로드";
                     return;
                 }
             } else {
-                firestorePosts.unshift(newPost);
-                refreshAllFeeds();
+                showToast("데이터베이스와 연결되어 있지 않습니다.");
+                btnUpload.disabled = false;
+                btnUpload.textContent = "업로드";
+                return;
             }
 
             showToast("자료가 성공적으로 업로드되었습니다!");
@@ -1788,4 +1796,3 @@
     </script>
 </body>
 </html>
-
