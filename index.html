@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>플로폴피스 - 스케치 기반 웹사이트</title>
+    <title>플로폴피스</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -23,10 +22,12 @@
 </head>
 <body class="bg-white min-h-screen text-slate-800 relative">
 
+    <!-- 홈 화면 -->
     <div id="view-home" class="block pb-12 bg-slate-50 min-h-screen">
         <main class="max-w-3xl mx-auto px-4 sm:px-6 relative">
 
             <section class="pt-6 pb-6 sticky top-0 bg-slate-50/90 backdrop-blur-sm z-10">
+                <!-- 우상단 로그인/프로필 영역 -->
                 <div class="flex justify-between items-center mb-5">
                     <h1 class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 tracking-tight">플로폴피스</h1>
                     <div id="auth-container">
@@ -56,6 +57,7 @@
             </section>
 
             <section class="mb-10">
+                <!-- 2열 구조 (대학, 학과) -->
                 <div class="grid grid-cols-2 gap-4 sm:gap-6">
                     <div id="btn-univ" class="aspect-square bg-white rounded-2xl border-2 border-slate-200 shadow-sm flex flex-col items-center justify-center cursor-pointer hover:border-blue-400 hover:shadow-md transition-all group">
                         <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mb-2 group-hover:bg-blue-100 transition-colors">
@@ -79,6 +81,7 @@
         </main>
     </div>
 
+    <!-- 대학 선택 화면 -->
     <div id="view-univ" class="hidden bg-white min-h-screen pb-12 w-full max-w-3xl mx-auto">
         <header class="flex items-center justify-between px-2 py-3 border-b border-gray-100 sticky top-0 bg-white z-20">
             <button id="btn-back-univ" class="p-2 text-gray-700 hover:bg-gray-100 rounded-full transition-colors">
@@ -89,12 +92,14 @@
         </header>
 
         <section>
-            <div class="bg-[#f7f7f7] px-4 py-3 text-[15px] text-gray-400 font-medium">현재 위치 기준 가까운 대학 Top 10</div>
+            <div class="bg-[#f7f7f7] px-4 py-3 text-[15px] text-gray-400 font-medium">현재 위치 기준 가장 가까운 대학 Top 10</div>
             <ul id="univ-list" class="flex flex-col">
-                </ul>
+                <!-- 대학 리스트 렌더링 -->
+            </ul>
         </section>
     </div>
 
+    <!-- 학과 선택 화면 -->
     <div id="view-dept" class="hidden bg-white min-h-screen pb-12 w-full max-w-3xl mx-auto">
         <header class="flex items-center justify-between px-2 py-3 border-b border-gray-100 sticky top-0 bg-white z-20">
             <button id="btn-back-dept" class="p-2 text-gray-700 hover:bg-gray-100 rounded-full transition-colors">
@@ -174,6 +179,7 @@
         </section>
     </div>
 
+    <!-- 통합 필터링 게시판 화면 -->
     <div id="view-board" class="hidden bg-slate-50 min-h-screen pb-12 w-full max-w-3xl mx-auto flex-col relative z-40">
         <header class="flex items-center justify-between px-2 py-3 border-b border-gray-200 sticky top-0 bg-white z-20 shadow-sm shrink-0">
             <button id="btn-back-board" class="p-2 text-gray-700 hover:bg-gray-100 rounded-full transition-colors">
@@ -189,6 +195,7 @@
         </main>
     </div>
 
+    <!-- 글 작성 화면 -->
     <div id="view-write" class="hidden bg-white min-h-screen pb-12 w-full max-w-3xl mx-auto flex-col relative z-50">
         <header class="flex items-center justify-between px-3 py-3 border-b border-gray-100 sticky top-0 bg-white z-20">
             <div class="flex items-center gap-1">
@@ -224,6 +231,7 @@
         </main>
     </div>
 
+    <!-- 게시글 상세 화면 -->
     <div id="view-post-detail" class="hidden bg-white min-h-screen pb-24 w-full max-w-3xl mx-auto flex-col relative z-50">
         <header class="flex items-center justify-between px-2 py-3 border-b border-gray-100 sticky top-0 bg-white z-20">
             <button id="btn-back-detail" class="p-2 text-gray-700 hover:bg-gray-100 rounded-full transition-colors">
@@ -238,7 +246,8 @@
 
         <main class="flex-1 overflow-y-auto">
             <div id="detail-image-container" class="w-full bg-slate-100 aspect-video relative flex items-center justify-center overflow-hidden">
-                </div>
+                <!-- 이미지 영역 -->
+            </div>
             
             <div class="p-5">
                 <div class="flex items-center gap-3 mb-5 border-b border-gray-100 pb-5">
@@ -266,6 +275,7 @@
         </div>
     </div>
 
+    <!-- 삭제 확인 모달 -->
     <div id="view-confirm-delete" class="hidden fixed inset-0 z-[200] bg-black/50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl fade-in">
             <h3 class="text-lg font-bold text-gray-900 mb-2">게시글 삭제</h3>
@@ -277,6 +287,7 @@
         </div>
     </div>
 
+    <!-- 내 프로필 화면 -->
     <div id="view-profile" class="hidden bg-slate-50 min-h-screen pb-12 w-full max-w-3xl mx-auto flex-col relative z-50">
         <header class="flex items-center justify-between px-2 py-3 border-b border-gray-200 sticky top-0 bg-white z-20 shadow-sm shrink-0">
             <button id="btn-back-profile" class="p-2 text-gray-700 hover:bg-gray-100 rounded-full transition-colors">
@@ -323,6 +334,7 @@
         </main>
     </div>
 
+    <!-- 채팅 목록 화면 -->
     <div id="view-chat-list" class="hidden bg-slate-50 min-h-screen pb-12 w-full max-w-3xl mx-auto flex-col relative z-50">
         <header class="flex items-center justify-between px-2 py-3 border-b border-gray-200 sticky top-0 bg-white z-20 shadow-sm shrink-0">
             <button id="btn-back-chat-list" class="p-2 text-gray-700 hover:bg-gray-100 rounded-full transition-colors">
@@ -337,6 +349,7 @@
         </main>
     </div>
 
+    <!-- 1:1 채팅방 화면 -->
     <div id="view-chat-room" class="hidden bg-[#F2F3F6] min-h-screen pb-24 w-full max-w-3xl mx-auto flex-col relative z-50">
         <header class="flex items-center justify-between px-2 py-3 border-b border-gray-200 sticky top-0 bg-white z-20 shadow-sm shrink-0">
             <button id="btn-back-chat-room" class="p-2 text-gray-700 hover:bg-gray-100 rounded-full transition-colors">
@@ -359,6 +372,7 @@
         </footer>
     </div>
 
+    <!-- 로그인 모달 -->
     <div id="view-login" class="hidden fixed inset-0 mx-auto w-full max-w-3xl h-full bg-white flex-col z-[100] shadow-2xl overflow-y-auto">
         <header class="flex items-center justify-between px-2 py-3 border-b border-gray-100 sticky top-0 bg-white z-20 shrink-0">
             <button id="btn-back-login" class="p-2 text-gray-700 hover:bg-gray-100 rounded-full transition-colors">
@@ -391,6 +405,7 @@
         </main>
     </div>
 
+    <!-- 회원가입 모달 -->
     <div id="view-auth" class="hidden fixed inset-0 mx-auto w-full max-w-3xl h-full bg-white flex-col z-[100] shadow-2xl overflow-y-auto">
         <header class="flex items-center justify-between px-2 py-3 border-b border-gray-100 sticky top-0 bg-white z-20 shrink-0">
             <button id="btn-back-auth" class="p-2 text-gray-700 hover:bg-gray-100 rounded-full transition-colors">
@@ -442,6 +457,7 @@
         </main>
     </div>
 
+    <!-- 프로필 수정 모달 -->
     <div id="view-edit-profile" class="hidden fixed inset-0 mx-auto w-full max-w-3xl h-full bg-white flex-col z-[100] shadow-2xl overflow-y-auto">
         <header class="flex items-center justify-between px-2 py-3 border-b border-gray-100 sticky top-0 bg-white z-20 shrink-0">
             <button id="btn-back-edit-profile" class="p-2 text-gray-700 hover:bg-gray-100 rounded-full transition-colors">
@@ -475,14 +491,17 @@
         </main>
     </div>
 
+    <!-- 플로팅 채팅 목록 버튼 -->
     <button id="btn-chat-list" class="fixed bottom-[104px] right-6 w-14 h-14 bg-white text-blue-500 border border-gray-200 rounded-full shadow-lg flex items-center justify-center hover:bg-blue-50 hover:scale-105 transition-all duration-300 z-50 focus:outline-none focus:ring-4 focus:ring-blue-100">
         <i data-lucide="message-square" class="w-6 h-6"></i>
     </button>
 
+    <!-- 플로팅 글쓰기 버튼 -->
     <button id="btn-write-post" class="fixed bottom-6 right-6 w-14 h-14 bg-blue-500 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-blue-600 hover:scale-105 transition-all duration-300 z-50 focus:outline-none focus:ring-4 focus:ring-blue-300">
         <i data-lucide="pen" class="w-6 h-6"></i>
     </button>
 
+    <!-- Firebase 기반 클라우드 연동 로직 -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -490,7 +509,7 @@
 
         lucide.createIcons();
 
-        // 파이어베이스 설정 (본인의 키로 대체해주세요)
+        // 🔥 요청하신 실제 Firebase 연결 정보를 반영했습니다.
         const firebaseConfig = {
             apiKey: "AIzaSyBxBUOco-7Z7xY1Bl5L0nz3uDcxxUY0mHw",
             authDomain: "floforpiece-bbebb.firebaseapp.com",
@@ -593,8 +612,8 @@
         let currentPreviousView = viewHome;
         let viewBeforeDetail = null;
 
-        let baseLat = 37.554648; // 기본값 (서울 중심)
-        let baseLng = 126.972559;
+        let baseLat = 37.5665; // 기본값 (서울시청)
+        let baseLng = 126.9780;
 
         // 토스트 알림 함수
         window.showToast = function(msg) {
@@ -683,7 +702,7 @@
             }
         });
 
-        // 로그인/회원가입/프로필 로직 (기존과 동일)
+        // 로그인/회원가입/프로필 로직
         function isValidEmail(email) {
             const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return re.test(email);
@@ -907,17 +926,65 @@
             showToast("로그아웃 되었습니다.");
         });
 
-        // 🌟 대학 리스트 렌더링 및 위치 권한 요청 로직 🌟
-        
+        // 🌟 전국 주요 대학교 위치 데이터 추가 🌟
         const universitiesData = [
+            // 서울
             { name: "서울대학교", lat: 37.4598, lng: 126.9519, color: "text-blue-900" },
             { name: "연세대학교", lat: 37.5657, lng: 126.9385, color: "text-blue-600" },
             { name: "고려대학교", lat: 37.5907, lng: 127.0277, color: "text-red-800" },
             { name: "서강대학교", lat: 37.5512, lng: 126.9415, color: "text-red-700" },
             { name: "성균관대학교", lat: 37.5833, lng: 126.9954, color: "text-green-800" },
-            { name: "홍익대학교", lat: 37.5514, lng: 126.9250, color: "text-indigo-800" },
+            { name: "한양대학교", lat: 37.5559, lng: 127.0436, color: "text-blue-800" },
+            { name: "이화여자대학교", lat: 37.5618, lng: 126.9468, color: "text-green-700" },
+            { name: "중앙대학교", lat: 37.5050, lng: 126.9570, color: "text-blue-500" },
+            { name: "경희대학교", lat: 37.5961, lng: 127.0525, color: "text-red-900" },
+            { name: "한국외국어대학교", lat: 37.5970, lng: 127.0587, color: "text-indigo-800" },
+            { name: "서울시립대학교", lat: 37.5838, lng: 127.0589, color: "text-blue-400" },
             { name: "건국대학교", lat: 37.5400, lng: 127.0731, color: "text-green-600" },
-            { name: "국민대학교", lat: 37.6105, lng: 126.9968, color: "text-blue-600" }
+            { name: "동국대학교", lat: 37.5582, lng: 126.9984, color: "text-orange-600" },
+            { name: "홍익대학교", lat: 37.5514, lng: 126.9250, color: "text-indigo-900" },
+            { name: "국민대학교", lat: 37.6105, lng: 126.9968, color: "text-blue-600" },
+            { name: "숭실대학교", lat: 37.4963, lng: 126.9568, color: "text-cyan-700" },
+            { name: "세종대학교", lat: 37.5502, lng: 127.0731, color: "text-red-600" },
+            
+            // 경기/인천
+            { name: "인하대학교", lat: 37.4495, lng: 126.6531, color: "text-blue-700" },
+            { name: "아주대학교", lat: 37.2829, lng: 127.0463, color: "text-blue-500" },
+            { name: "가천대학교", lat: 37.4503, lng: 127.1298, color: "text-sky-600" },
+            { name: "경기대학교", lat: 37.3005, lng: 127.0358, color: "text-orange-500" },
+            { name: "단국대학교", lat: 37.3218, lng: 127.1267, color: "text-blue-800" },
+            
+            // 강원
+            { name: "강원대학교", lat: 37.8694, lng: 127.7441, color: "text-green-600" },
+            { name: "한림대학교", lat: 37.8864, lng: 127.7371, color: "text-blue-500" },
+            { name: "연세대학교(미래)", lat: 37.2721, lng: 127.9047, color: "text-blue-600" },
+            
+            // 충청/대전
+            { name: "KAIST", lat: 36.3721, lng: 127.3604, color: "text-blue-900" },
+            { name: "충남대학교", lat: 36.3622, lng: 127.3435, color: "text-green-700" },
+            { name: "충북대학교", lat: 36.6291, lng: 127.4563, color: "text-red-700" },
+            { name: "한국기술교육대학교", lat: 36.7643, lng: 127.2811, color: "text-orange-600" },
+            { name: "고려대학교(세종)", lat: 36.6231, lng: 127.2905, color: "text-red-800" },
+            { name: "단국대학교(천안)", lat: 36.8396, lng: 127.1685, color: "text-blue-800" },
+            
+            // 경상/대구/부산
+            { name: "부산대학교", lat: 35.2332, lng: 129.0792, color: "text-green-800" },
+            { name: "경북대학교", lat: 35.8906, lng: 128.6121, color: "text-red-700" },
+            { name: "포항공과대학교", lat: 36.0119, lng: 129.3229, color: "text-red-600" },
+            { name: "UNIST", lat: 35.5732, lng: 129.1901, color: "text-blue-700" },
+            { name: "영남대학교", lat: 35.8303, lng: 128.7540, color: "text-blue-600" },
+            { name: "동아대학교", lat: 35.1166, lng: 128.9685, color: "text-blue-800" },
+            { name: "부경대학교", lat: 35.1336, lng: 129.1054, color: "text-indigo-600" },
+            { name: "경상국립대학교", lat: 35.1531, lng: 128.0984, color: "text-green-600" },
+            
+            // 전라/광주
+            { name: "전남대학교", lat: 35.1768, lng: 126.9058, color: "text-green-700" },
+            { name: "전북대학교", lat: 35.8468, lng: 127.1293, color: "text-red-800" },
+            { name: "조선대학교", lat: 35.1401, lng: 126.9304, color: "text-blue-500" },
+            { name: "원광대학교", lat: 35.9696, lng: 126.9575, color: "text-teal-600" },
+            
+            // 제주
+            { name: "제주대학교", lat: 33.4561, lng: 126.5616, color: "text-green-600" }
         ];
 
         function calculateDistance(lat1, lon1, lat2, lon2) {
@@ -1313,7 +1380,7 @@
                     const postsRef = collection(db, 'artifacts', appId, 'public', 'data', 'posts');
                     await addDoc(postsRef, newPost);
                 } catch (e) {
-                    showToast("게시글 저장 중 오류가 발생했습니다.");
+                    showToast("게시글 저장 중 오류가 발생했습니다. 권한 설정을 확인하세요.");
                     btnUpload.disabled = false;
                     btnUpload.textContent = "업로드";
                     return;
@@ -1633,4 +1700,3 @@
     </script>
 </body>
 </html>
-
