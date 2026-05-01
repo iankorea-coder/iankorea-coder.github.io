@@ -265,14 +265,18 @@
         </main>
     </div>
 
-    <!-- 게시글 상세 화면 -->
+    <!-- 🌟 게시글 상세 화면 (삭제 버튼 추가) -->
     <div id="view-post-detail" class="hidden bg-white min-h-screen pb-24 w-full max-w-3xl mx-auto flex-col relative z-50">
         <header class="flex items-center justify-between px-2 py-3 border-b border-gray-100 sticky top-0 bg-white z-20">
             <button id="btn-back-detail" class="p-2 text-gray-700 hover:bg-gray-100 rounded-full transition-colors">
                 <i data-lucide="chevron-left" class="w-7 h-7"></i>
             </button>
             <h1 class="text-lg font-bold text-gray-900 absolute left-1/2 transform -translate-x-1/2">게시글 상세</h1>
-            <div class="w-11"></div>
+            
+            <!-- 삭제 버튼 (작성자에게만 보임) -->
+            <button id="btn-delete-post" class="hidden p-2 text-red-500 hover:bg-red-50 rounded-full transition-colors mr-1">
+                <i data-lucide="trash-2" class="w-5 h-5"></i>
+            </button>
         </header>
 
         <main class="flex-1 overflow-y-auto">
@@ -311,6 +315,18 @@
                 <i data-lucide="message-circle" class="w-5 h-5"></i>
                 대화하기
             </button>
+        </div>
+    </div>
+
+    <!-- 🌟 삭제 확인 모달 -->
+    <div id="view-confirm-delete" class="hidden fixed inset-0 z-[200] bg-black/50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl fade-in">
+            <h3 class="text-lg font-bold text-gray-900 mb-2">게시글 삭제</h3>
+            <p class="text-[15px] text-gray-600 mb-6">정말 이 게시글을 삭제하시겠습니까? 삭제된 글은 복구할 수 없습니다.</p>
+            <div class="flex gap-3">
+                <button id="btn-cancel-delete" class="flex-1 py-3 bg-gray-100 text-gray-700 font-bold rounded-xl hover:bg-gray-200 transition-colors">취소</button>
+                <button id="btn-confirm-delete" class="flex-1 py-3 bg-red-500 text-white font-bold rounded-xl hover:bg-red-600 transition-colors">삭제</button>
+            </div>
         </div>
     </div>
 
@@ -560,13 +576,14 @@
         const viewPostDetail = document.getElementById('view-post-detail');
         const searchInput = document.getElementById('search-input');
         
-        // 로그인, 회원가입, 프로필, 채팅 뷰
+        // 로그인, 회원가입, 프로필, 채팅, 확인 뷰
         const viewLogin = document.getElementById('view-login');
         const viewAuth = document.getElementById('view-auth');
         const viewProfile = document.getElementById('view-profile');
         const viewEditProfile = document.getElementById('view-edit-profile');
         const viewChatList = document.getElementById('view-chat-list');
         const viewChatRoom = document.getElementById('view-chat-room');
+        const viewConfirmDelete = document.getElementById('view-confirm-delete');
 
         // 버튼 요소
         const btnUniv = document.getElementById('btn-univ');
@@ -607,13 +624,17 @@
         const btnBackEditProfile = document.getElementById('btn-back-edit-profile');
         const btnSubmitEditProfile = document.getElementById('btn-submit-edit-profile');
 
-        // 채팅 관련 요소
+        // 채팅 및 삭제 관련 요소
         const btnChatList = document.getElementById('btn-chat-list');
         const btnBackChatList = document.getElementById('btn-back-chat-list');
         const btnBackChatRoom = document.getElementById('btn-back-chat-room');
         const btnSendChat = document.getElementById('btn-send-chat');
         const chatInput = document.getElementById('chat-input');
         const chatMessagesContainer = document.getElementById('chat-messages-container');
+        
+        const btnDeletePost = document.getElementById('btn-delete-post');
+        const btnCancelDelete = document.getElementById('btn-cancel-delete');
+        const btnConfirmDelete = document.getElementById('btn-confirm-delete');
 
         let currentUser = null; 
         let currentUserNickname = null;
@@ -625,7 +646,7 @@
         let chatRoomsUnsubscribe = null;
         let chatMessagesUnsubscribe = null;
 
-        // 채팅 데이터 저장 배열
+        // 데이터 저장 배열
         let allChatRooms = [];
         let allChatMessages = [];
         let currentChatRoomId = null;
@@ -658,7 +679,7 @@
             setTimeout(() => { toast.classList.add('opacity-0'); }, 2500); 
         }
 
-        // Firebase 초기 인증 (익명 권한을 바탕으로 가상 세션 연결)
+        // Firebase 초기 인증
         const initAuth = async () => {
             if (!auth) return; 
             if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
@@ -673,7 +694,7 @@
                 onAuthStateChanged(auth, async (user) => {
                     currentUser = user;
                     if (user) {
-                        // 세션 확인 (모의 로그인 유지)
+                        // 세션 확인
                         const sessionRef = doc(db, 'artifacts', appId, 'public', 'data', 'sessions', user.uid);
                         try {
                             const docSnap = await new Promise((resolve, reject) => {
@@ -1435,6 +1456,13 @@
                 }
             }
 
+            // 본인 글인 경우 삭제 버튼 표시
+            if (currentUser && post.authorUid === currentUser.uid) {
+                btnDeletePost.classList.replace('hidden', 'block');
+            } else {
+                btnDeletePost.classList.replace('block', 'hidden');
+            }
+
             document.getElementById('detail-title').textContent = post.title;
             document.getElementById('detail-author').textContent = post.author || "익명 사용자";
             document.getElementById('detail-content').textContent = post.content || "이 게시글에는 상세 설명이 작성되지 않았습니다.";
@@ -1481,6 +1509,45 @@
                 viewBeforeDetail.classList.add('fade-in');
             }
             window.currentDetailPost = null;
+        });
+
+        // 🌟 게시글 삭제 로직 🌟
+        btnDeletePost.addEventListener('click', () => {
+            viewConfirmDelete.classList.remove('hidden');
+            viewConfirmDelete.classList.add('flex');
+        });
+
+        btnCancelDelete.addEventListener('click', () => {
+            viewConfirmDelete.classList.add('hidden');
+            viewConfirmDelete.classList.remove('flex');
+        });
+
+        btnConfirmDelete.addEventListener('click', async () => {
+            if (!window.currentDetailPost || !db) return;
+            
+            // 임시 테스트용 게시물 예외 처리
+            if (window.currentDetailPost.id === "test-dummy-post") {
+                showToast("테스트용 임시 게시물은 삭제할 수 없습니다.");
+                viewConfirmDelete.classList.add('hidden');
+                viewConfirmDelete.classList.remove('flex');
+                return;
+            }
+
+            try {
+                const postRef = doc(db, 'artifacts', appId, 'public', 'data', 'posts', window.currentDetailPost.id);
+                await deleteDoc(postRef);
+                
+                showToast("게시글이 삭제되었습니다.");
+                
+                viewConfirmDelete.classList.add('hidden');
+                viewConfirmDelete.classList.remove('flex');
+                
+                // 상세 창 닫기
+                btnBackDetail.click();
+            } catch (e) {
+                console.error("게시글 삭제 실패:", e);
+                showToast("게시글 삭제 중 오류가 발생했습니다.");
+            }
         });
 
 
