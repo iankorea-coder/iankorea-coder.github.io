@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>플로폴피스</title>
+    <title>플로폴피스 - 스케치 기반 웹사이트</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -57,7 +57,6 @@
             </section>
 
             <section class="mb-10">
-                <!-- 2열 구조 (대학, 학과) -->
                 <div class="grid grid-cols-2 gap-4 sm:gap-6">
                     <div id="btn-univ" class="aspect-square bg-white rounded-2xl border-2 border-slate-200 shadow-sm flex flex-col items-center justify-center cursor-pointer hover:border-blue-400 hover:shadow-md transition-all group">
                         <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mb-2 group-hover:bg-blue-100 transition-colors">
@@ -214,7 +213,7 @@
                 <input type="file" id="image-input" accept="image/*" class="hidden">
                 <button id="btn-camera" class="shrink-0 w-20 h-20 border border-gray-300 rounded-xl flex flex-col items-center justify-center text-gray-400 hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-200">
                     <i data-lucide="camera" class="w-7 h-7 mb-1 text-gray-500 fill-gray-500"></i>
-                    <span class="text-xs font-medium" id="image-count">0/10</span>
+                    <span class="text-xs font-medium" id="image-count">0/1</span>
                 </button>
                 <div id="image-preview-container" class="flex gap-3 h-20"></div>
             </div>
@@ -245,8 +244,8 @@
         </header>
 
         <main class="flex-1 overflow-y-auto">
+            <!-- 이미지 영역 (이미지가 없으면 학과 아이콘 노출) -->
             <div id="detail-image-container" class="w-full bg-slate-100 aspect-video relative flex items-center justify-center overflow-hidden">
-                <!-- 이미지 영역 -->
             </div>
             
             <div class="p-5">
@@ -261,6 +260,7 @@
                 </div>
                 
                 <h2 id="detail-title" class="text-xl font-bold text-gray-900 mb-3 leading-snug">제목</h2>
+                <!-- 해시태그 렌더링 영역 -->
                 <div id="detail-tags" class="flex flex-wrap gap-1.5 mb-6"></div>
                 
                 <p id="detail-content" class="text-[15.5px] text-gray-700 leading-relaxed whitespace-pre-wrap">내용</p>
@@ -509,7 +509,7 @@
 
         lucide.createIcons();
 
-        // 🔥 요청하신 실제 Firebase 연결 정보를 반영했습니다.
+        // 파이어베이스 설정
         const firebaseConfig = {
             apiKey: "AIzaSyBxBUOco-7Z7xY1Bl5L0nz3uDcxxUY0mHw",
             authDomain: "floforpiece-bbebb.firebaseapp.com",
@@ -643,7 +643,6 @@
         onAuthStateChanged(auth, async (user) => {
             currentUser = user;
             if (user) {
-                // 세션 확인
                 const sessionRef = doc(db, 'artifacts', appId, 'public', 'data', 'sessions', user.uid);
                 try {
                     const docSnap = await new Promise((resolve, reject) => {
@@ -676,7 +675,7 @@
                     console.warn("세션 가져오기 실패:", e);
                 }
 
-                // 서버 데이터 실시간 구독
+                // 게시글 리얼타임 구독
                 if (!postsUnsubscribe) {
                     const postsRef = collection(db, 'artifacts', appId, 'public', 'data', 'posts');
                     postsUnsubscribe = onSnapshot(postsRef, (snapshot) => {
@@ -685,6 +684,8 @@
                         refreshAllFeeds(); 
                     }, (error) => console.error("게시글 가져오기 실패:", error));
                 }
+                
+                // 채팅 관련 구독
                 if (!chatRoomsUnsubscribe) {
                     const roomsRef = collection(db, 'artifacts', appId, 'public', 'data', 'chatRooms');
                     chatRoomsUnsubscribe = onSnapshot(roomsRef, (snap) => {
@@ -701,6 +702,31 @@
                 }
             }
         });
+
+        // 🌟 해시태그 클릭 시 전용 게시판 띄우는 함수 🌟
+        window.handleTagClick = function(tag) {
+            // 상세 뷰 등 열려있는 다른 창을 모두 숨기고 메인 상태를 정리합니다.
+            if (!viewPostDetail.classList.contains('hidden')) viewPostDetail.classList.replace('flex', 'hidden');
+            if (!viewHome.classList.contains('hidden')) viewHome.classList.replace('block', 'hidden');
+            if (!viewUniv.classList.contains('hidden')) viewUniv.classList.replace('block', 'hidden');
+            if (!viewDept.classList.contains('hidden')) viewDept.classList.replace('block', 'hidden');
+
+            document.getElementById('board-title').textContent = tag + " 검색결과";
+            
+            // 필터링 적용
+            const filtered = firestorePosts.filter(post => post.tag.includes(tag));
+            renderPostItems('board-posts-container', filtered);
+            
+            // 뒤로가기 처리를 위해 기본 화면을 홈으로 설정
+            currentPreviousView = viewHome;
+
+            // 게시판 뷰 오픈
+            viewBoard.classList.replace('hidden', 'block');
+            viewBoard.classList.add('fade-in');
+            btnWritePost.classList.replace('hidden', 'flex');
+            btnChatList.classList.replace('hidden', 'flex');
+            window.scrollTo(0, 0);
+        };
 
         // 로그인/회원가입/프로필 로직
         function isValidEmail(email) {
@@ -926,9 +952,9 @@
             showToast("로그아웃 되었습니다.");
         });
 
-        // 🌟 전국 주요 대학교 위치 데이터 추가 🌟
+        // 🌟 전국 대규모 주요 대학교 위치 데이터 모음 🌟
         const universitiesData = [
-            // 서울
+            // 서울권
             { name: "서울대학교", lat: 37.4598, lng: 126.9519, color: "text-blue-900" },
             { name: "연세대학교", lat: 37.5657, lng: 126.9385, color: "text-blue-600" },
             { name: "고려대학교", lat: 37.5907, lng: 127.0277, color: "text-red-800" },
@@ -938,7 +964,7 @@
             { name: "이화여자대학교", lat: 37.5618, lng: 126.9468, color: "text-green-700" },
             { name: "중앙대학교", lat: 37.5050, lng: 126.9570, color: "text-blue-500" },
             { name: "경희대학교", lat: 37.5961, lng: 127.0525, color: "text-red-900" },
-            { name: "한국외국어대학교", lat: 37.5970, lng: 127.0587, color: "text-indigo-800" },
+            { name: "한국외대", lat: 37.5970, lng: 127.0587, color: "text-indigo-800" },
             { name: "서울시립대학교", lat: 37.5838, lng: 127.0589, color: "text-blue-400" },
             { name: "건국대학교", lat: 37.5400, lng: 127.0731, color: "text-green-600" },
             { name: "동국대학교", lat: 37.5582, lng: 126.9984, color: "text-orange-600" },
@@ -946,44 +972,75 @@
             { name: "국민대학교", lat: 37.6105, lng: 126.9968, color: "text-blue-600" },
             { name: "숭실대학교", lat: 37.4963, lng: 126.9568, color: "text-cyan-700" },
             { name: "세종대학교", lat: 37.5502, lng: 127.0731, color: "text-red-600" },
+            { name: "명지대학교", lat: 37.5802, lng: 126.9228, color: "text-blue-600" },
+            { name: "상명대학교", lat: 37.6025, lng: 126.9553, color: "text-blue-800" },
+            { name: "가톨릭대학교", lat: 37.4860, lng: 126.8023, color: "text-indigo-700" },
+            { name: "광운대학교", lat: 37.6195, lng: 127.0598, color: "text-red-700" },
+            { name: "서울과기대", lat: 37.6316, lng: 127.0775, color: "text-blue-900" },
+            { name: "성신여자대학교", lat: 37.5913, lng: 127.0221, color: "text-purple-600" },
+            { name: "숙명여자대학교", lat: 37.5465, lng: 126.9648, color: "text-blue-500" },
+            { name: "동덕여자대학교", lat: 37.6063, lng: 127.0418, color: "text-pink-600" },
+            { name: "덕성여자대학교", lat: 37.6512, lng: 127.0162, color: "text-pink-700" },
+            { name: "서울여자대학교", lat: 37.6281, lng: 127.0905, color: "text-orange-700" },
+            { name: "한성대학교", lat: 37.5824, lng: 127.0105, color: "text-blue-400" },
+            { name: "서경대학교", lat: 37.6151, lng: 127.0132, color: "text-green-600" },
+            { name: "삼육대학교", lat: 37.6429, lng: 127.1068, color: "text-green-500" },
             
-            // 경기/인천
+            // 경기/인천권
             { name: "인하대학교", lat: 37.4495, lng: 126.6531, color: "text-blue-700" },
+            { name: "인천대학교", lat: 37.3752, lng: 126.6328, color: "text-sky-600" },
             { name: "아주대학교", lat: 37.2829, lng: 127.0463, color: "text-blue-500" },
-            { name: "가천대학교", lat: 37.4503, lng: 127.1298, color: "text-sky-600" },
+            { name: "가천대학교", lat: 37.4503, lng: 127.1298, color: "text-blue-800" },
             { name: "경기대학교", lat: 37.3005, lng: 127.0358, color: "text-orange-500" },
-            { name: "단국대학교", lat: 37.3218, lng: 127.1267, color: "text-blue-800" },
+            { name: "단국대학교(죽전)", lat: 37.3218, lng: 127.1267, color: "text-blue-800" },
+            { name: "명지대학교(용인)", lat: 37.2223, lng: 127.1862, color: "text-blue-600" },
+            { name: "한양대학교(ERICA)", lat: 37.2959, lng: 126.8365, color: "text-blue-800" },
+            { name: "경희대학교(국제)", lat: 37.2398, lng: 127.0811, color: "text-red-900" },
+            { name: "한국항공대학교", lat: 37.6006, lng: 126.8646, color: "text-blue-500" },
+            { name: "강남대학교", lat: 37.2755, lng: 127.1326, color: "text-blue-400" },
+            { name: "안양대학교", lat: 37.3941, lng: 126.9189, color: "text-green-600" },
+            { name: "수원대학교", lat: 37.2104, lng: 126.9754, color: "text-red-600" },
             
-            // 강원
+            // 강원권
             { name: "강원대학교", lat: 37.8694, lng: 127.7441, color: "text-green-600" },
             { name: "한림대학교", lat: 37.8864, lng: 127.7371, color: "text-blue-500" },
             { name: "연세대학교(미래)", lat: 37.2721, lng: 127.9047, color: "text-blue-600" },
+            { name: "상지대학교", lat: 37.3719, lng: 127.9304, color: "text-green-700" },
             
-            // 충청/대전
+            // 충청/대전권
             { name: "KAIST", lat: 36.3721, lng: 127.3604, color: "text-blue-900" },
             { name: "충남대학교", lat: 36.3622, lng: 127.3435, color: "text-green-700" },
             { name: "충북대학교", lat: 36.6291, lng: 127.4563, color: "text-red-700" },
-            { name: "한국기술교육대학교", lat: 36.7643, lng: 127.2811, color: "text-orange-600" },
             { name: "고려대학교(세종)", lat: 36.6231, lng: 127.2905, color: "text-red-800" },
             { name: "단국대학교(천안)", lat: 36.8396, lng: 127.1685, color: "text-blue-800" },
+            { name: "백석대학교", lat: 36.8394, lng: 127.1751, color: "text-blue-600" },
+            { name: "순천향대학교", lat: 36.7699, lng: 126.9317, color: "text-teal-600" },
+            { name: "한남대학교", lat: 36.3533, lng: 127.4228, color: "text-red-600" },
             
-            // 경상/대구/부산
+            // 경상/부산/대구/울산권
             { name: "부산대학교", lat: 35.2332, lng: 129.0792, color: "text-green-800" },
             { name: "경북대학교", lat: 35.8906, lng: 128.6121, color: "text-red-700" },
             { name: "포항공과대학교", lat: 36.0119, lng: 129.3229, color: "text-red-600" },
             { name: "UNIST", lat: 35.5732, lng: 129.1901, color: "text-blue-700" },
             { name: "영남대학교", lat: 35.8303, lng: 128.7540, color: "text-blue-600" },
+            { name: "계명대학교", lat: 35.8307, lng: 128.4800, color: "text-red-800" },
             { name: "동아대학교", lat: 35.1166, lng: 128.9685, color: "text-blue-800" },
             { name: "부경대학교", lat: 35.1336, lng: 129.1054, color: "text-indigo-600" },
             { name: "경상국립대학교", lat: 35.1531, lng: 128.0984, color: "text-green-600" },
+            { name: "동의대학교", lat: 35.1432, lng: 129.0343, color: "text-blue-700" },
+            { name: "경성대학교", lat: 35.1378, lng: 129.1001, color: "text-orange-600" },
+            { name: "창원대학교", lat: 35.2443, lng: 128.6946, color: "text-blue-500" },
+            { name: "한동대학교", lat: 36.1032, lng: 129.3888, color: "text-blue-400" },
+            { name: "대구대학교", lat: 35.9015, lng: 128.8488, color: "text-green-500" },
             
-            // 전라/광주
+            // 전라/광주권
             { name: "전남대학교", lat: 35.1768, lng: 126.9058, color: "text-green-700" },
             { name: "전북대학교", lat: 35.8468, lng: 127.1293, color: "text-red-800" },
             { name: "조선대학교", lat: 35.1401, lng: 126.9304, color: "text-blue-500" },
             { name: "원광대학교", lat: 35.9696, lng: 126.9575, color: "text-teal-600" },
+            { name: "전주대학교", lat: 35.8144, lng: 127.0906, color: "text-blue-600" },
             
-            // 제주
+            // 제주권
             { name: "제주대학교", lat: 33.4561, lng: 126.5616, color: "text-green-600" }
         ];
 
@@ -1018,17 +1075,7 @@
                     <span class="text-[14px] text-blue-500 font-medium bg-blue-50 px-2 py-1 rounded-md">${distanceStr}</span>
                 `;
                 li.addEventListener('click', () => {
-                    currentPreviousView = viewUniv;
-                    document.getElementById('board-title').textContent = univ.name + " 게시판";
-                    const shortName = univ.name.replace(/대학교$/, '대');
-                    const filtered = getAllCombinedPosts().filter(post => post.tag.includes(univ.name) || post.tag.includes(shortName));
-                    renderPostItems('board-posts-container', filtered);
-                    viewUniv.classList.replace('block', 'hidden');
-                    viewBoard.classList.replace('hidden', 'block');
-                    viewBoard.classList.add('fade-in');
-                    btnWritePost.classList.replace('hidden', 'flex');
-                    btnChatList.classList.replace('hidden', 'flex');
-                    window.scrollTo(0, 0);
+                    window.handleTagClick('#' + univ.name.replace(/대학교$/, '대')); 
                 });
                 listContainer.appendChild(li);
             });
@@ -1037,7 +1084,6 @@
 
         // 대학 버튼 클릭 시 로케이션 요청 로직
         btnUniv.addEventListener('click', () => {
-            // UI를 먼저 전환
             viewHome.classList.replace('block', 'hidden');
             btnWritePost.classList.replace('flex', 'hidden'); 
             btnChatList.classList.replace('flex', 'hidden');
@@ -1078,54 +1124,49 @@
             viewHome.classList.add('fade-in');
         });
 
+        // 🌟 학과별 기본 이미지(아이콘) 처리 🌟
         const deptInfo = {
-            "조소학과": { icon: "hammer", color: "text-stone-500" },
-            "산업디자인학과": { icon: "monitor", color: "text-indigo-500" },
-            "시각디자인과": { icon: "pen-tool", color: "text-pink-500" },
-            "서양학과": { icon: "palette", color: "text-blue-500" },
-            "컴퓨터공학과": { icon: "terminal", color: "text-cyan-500" }
+            "조소과": { icon: "hammer", color: "text-stone-500", bg: "bg-stone-50" },
+            "조소학과": { icon: "hammer", color: "text-stone-500", bg: "bg-stone-50" },
+            "산업디자인": { icon: "monitor", color: "text-indigo-500", bg: "bg-indigo-50" },
+            "시각디자인": { icon: "pen-tool", color: "text-pink-500", bg: "bg-pink-50" },
+            "서양화": { icon: "palette", color: "text-blue-500", bg: "bg-blue-50" },
+            "동양화": { icon: "brush", color: "text-emerald-500", bg: "bg-emerald-50" },
+            "문창과": { icon: "book-open", color: "text-amber-500", bg: "bg-amber-50" },
+            "문예창작": { icon: "book-open", color: "text-amber-500", bg: "bg-amber-50" },
+            "사진": { icon: "camera", color: "text-gray-700", bg: "bg-gray-100" },
+            "컴공": { icon: "terminal", color: "text-cyan-500", bg: "bg-cyan-50" },
+            "컴퓨터공학": { icon: "terminal", color: "text-cyan-500", bg: "bg-cyan-50" },
+            "소프트웨어": { icon: "code", color: "text-indigo-600", bg: "bg-indigo-50" },
+            "게임": { icon: "gamepad-2", color: "text-purple-600", bg: "bg-purple-50" },
+            "경영": { icon: "briefcase", color: "text-blue-700", bg: "bg-blue-50" },
+            "건축": { icon: "building", color: "text-slate-600", bg: "bg-slate-100" }
         };
 
         function getDeptFallback(tagStr) {
             for(let dept in deptInfo) {
                 if(tagStr.includes(dept)) return { name: dept, ...deptInfo[dept] };
             }
-            return { name: "자유게시판", icon: "message-square", color: "text-slate-400" };
+            return { name: "자유게시판", icon: "message-square", color: "text-slate-400", bg: "bg-slate-50" };
         }
 
+        // 🌟 테스트 임시 데이터 제거! 서버 데이터만 사용함 🌟
         let firestorePosts = [];
-        
-        const testDummyPost = {
-            id: "test-dummy-post",
-            title: "[테스트] 게시글 렌더링 확인용 임시 게시물",
-            author: "운영자",
-            authorUid: "admin_test_uid",
-            createdAt: Date.now() - (1000 * 60 * 5),
-            img: "", 
-            tag: "#홍익대 #시각디자인과",
-            content: "게시판 목록과 상세 화면이 어떻게 보이는지 테스트하기 위한 임시 게시글입니다.\n\n대학/학과 필터링이나 대화하기 버튼 등 기능들이 정상 작동하는지 편하게 확인해보세요!"
-        };
-
-        function getAllCombinedPosts() {
-            return [...firestorePosts, testDummyPost];
-        }
 
         function refreshAllFeeds() {
-            const combined = getAllCombinedPosts();
             if (!viewHome.classList.contains('hidden')) {
                 const keyword = searchInput.value.toLowerCase().trim();
                 if (keyword === "") {
-                    renderPostItems('home-posts-container', combined);
+                    renderPostItems('home-posts-container', firestorePosts);
                 } else {
-                    renderPostItems('home-posts-container', combined.filter(p => p.title.toLowerCase().includes(keyword) || p.tag.toLowerCase().includes(keyword)));
+                    renderPostItems('home-posts-container', firestorePosts.filter(p => p.title.toLowerCase().includes(keyword) || p.tag.toLowerCase().includes(keyword)));
                 }
             }
             if (!viewBoard.classList.contains('hidden')) {
                 const currentTitle = document.getElementById('board-title').textContent;
                 if (currentTitle && currentTitle !== "게시판") {
-                    const filterKeyword = currentTitle.replace(" 게시판", "");
-                    const shortName = filterKeyword.replace(/대학교$/, '대');
-                    const filtered = combined.filter(post => post.tag.includes(filterKeyword) || post.tag.includes(shortName));
+                    const filterKeyword = currentTitle.replace(" 검색결과", "");
+                    const filtered = firestorePosts.filter(post => post.tag.includes(filterKeyword));
                     renderPostItems('board-posts-container', filtered);
                 }
             }
@@ -1143,7 +1184,11 @@
             posts.forEach(post => {
                  const article = document.createElement('article');
                  article.className = "bg-white rounded-2xl border-2 border-slate-200 overflow-hidden shadow-sm hover:shadow-lg transition-shadow cursor-pointer flex flex-col";
-                 const tagsHtml = post.tag.split(' ').map(t => `<span class="font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md text-[11px] sm:text-[12px] whitespace-nowrap">${t}</span>`).join('');
+                 
+                 // 해시태그 렌더링 (클릭 이벤트 적용)
+                 const tagsHtml = post.tag.split(' ').map(t => 
+                    `<button onclick="event.stopPropagation(); handleTagClick('${t}')" class="font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md text-[11px] sm:text-[12px] whitespace-nowrap hover:bg-blue-100 transition-colors">${t}</button>`
+                 ).join('');
 
                  let mediaContent = '';
                  if (post.img && post.img !== "") {
@@ -1151,7 +1196,7 @@
                  } else {
                      const fallback = getDeptFallback(post.tag);
                      mediaContent = `
-                         <div class="w-full h-full flex flex-col items-center justify-center bg-slate-50 group-hover:bg-slate-100 transition-colors">
+                         <div class="w-full h-full flex flex-col items-center justify-center ${fallback.bg} group-hover:bg-opacity-80 transition-colors">
                              <i data-lucide="${fallback.icon}" class="w-10 h-10 ${fallback.color} mb-2 opacity-80"></i>
                              <span class="text-[12px] font-bold text-slate-400 tracking-wide">${fallback.name}</span>
                          </div>
@@ -1214,17 +1259,8 @@
         const deptItems = document.querySelectorAll('.dept-item');
         deptItems.forEach(item => {
             item.addEventListener('click', () => {
-                currentPreviousView = viewDept; 
                 const deptName = item.getAttribute('data-dept');
-                document.getElementById('board-title').textContent = deptName + " 게시판";
-                const filtered = getAllCombinedPosts().filter(post => post.tag.includes(deptName));
-                renderPostItems('board-posts-container', filtered);
-                viewDept.classList.replace('block', 'hidden');
-                viewBoard.classList.replace('hidden', 'block');
-                viewBoard.classList.add('fade-in');
-                btnWritePost.classList.replace('hidden', 'flex'); 
-                btnChatList.classList.replace('hidden', 'flex'); 
-                window.scrollTo(0, 0);
+                window.handleTagClick('#' + deptName);
             });
         });
 
@@ -1447,17 +1483,20 @@
             }
             document.getElementById('detail-time').textContent = timeDisplay;
             
-            const tagsHtml = post.tag.split(' ').map(t => `<span class="font-medium text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md text-[13px] whitespace-nowrap">${t}</span>`).join('');
+            // 상세 화면에서도 해시태그 클릭 가능하도록 업데이트
+            const tagsHtml = post.tag.split(' ').map(t => 
+                `<button onclick="handleTagClick('${t}')" class="font-medium text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md text-[13px] whitespace-nowrap hover:bg-blue-100 transition-colors">${t}</button>`
+            ).join('');
             document.getElementById('detail-tags').innerHTML = tagsHtml;
 
             const imgContainer = document.getElementById('detail-image-container');
             if (post.img && post.img !== "") {
                 imgContainer.innerHTML = `<img src="${post.img}" class="w-full h-full object-cover">`;
-                imgContainer.classList.remove('p-8');
+                imgContainer.className = "w-full bg-slate-100 aspect-video relative flex items-center justify-center overflow-hidden";
             } else {
                 const fallback = getDeptFallback(post.tag);
                 imgContainer.innerHTML = `<i data-lucide="${fallback.icon}" class="w-20 h-20 ${fallback.color} opacity-80 mb-2"></i><span class="text-sm font-bold text-slate-400 tracking-wide">${fallback.name}</span>`;
-                imgContainer.classList.add('p-8', 'flex-col');
+                imgContainer.className = `w-full ${fallback.bg} aspect-video relative flex flex-col items-center justify-center overflow-hidden p-8`;
             }
             lucide.createIcons();
 
@@ -1494,12 +1533,6 @@
 
         btnConfirmDelete.addEventListener('click', async () => {
             if (!window.currentDetailPost || !db) return;
-            if (window.currentDetailPost.id === "test-dummy-post") {
-                showToast("테스트용 임시 게시물은 삭제할 수 없습니다.");
-                viewConfirmDelete.classList.add('hidden');
-                viewConfirmDelete.classList.remove('flex');
-                return;
-            }
 
             try {
                 const postRef = doc(db, 'artifacts', appId, 'public', 'data', 'posts', window.currentDetailPost.id);
