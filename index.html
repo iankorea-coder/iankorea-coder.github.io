@@ -8,304 +8,344 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         html { scroll-behavior: smooth; }
-        body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; background-color: #FAF8FC; }
+        /* One UI 특유의 깔끔한 고딕 폰트 적용 */
+        body { font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Segoe UI", Roboto, sans-serif; background-color: #F2F2F7; color: #000000; }
         
-        .fade-in { animation: fadeIn 0.3s cubic-bezier(0.2, 0, 0, 1) forwards; }
+        .fade-in { animation: fadeIn 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) forwards; }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(12px); }
+            from { opacity: 0; transform: translateY(16px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         
-        .shadow-m3 { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02); }
-        .shadow-m3-hover { box-shadow: 0 8px 24px rgba(103, 80, 164, 0.08), 0 2px 6px rgba(103, 80, 164, 0.04); }
+        /* One UI 스타일의 부드럽고 넓게 퍼지는 그림자 */
+        .shadow-oneui { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04); }
+        .shadow-oneui-hover { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); }
+        
+        /* 아크릴/블러 효과 (One UI 상단바/하단바 특징) */
+        .glass-header { background-color: rgba(242, 242, 247, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .glass-surface { background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        
+        /* 스퀘어클(Squircle) 모양을 위한 클래스 */
+        .squircle { border-radius: 26%; }
     </style>
 </head>
-<body class="text-[#1D1B20] relative min-h-screen">
+<body class="relative min-h-screen">
 
     <!-- 1. 홈 화면 -->
-    <div id="view-home" class="block pb-24 min-h-screen">
-        <main class="max-w-3xl mx-auto px-5 sm:px-6 relative">
-            <section class="pt-8 pb-6 sticky top-0 bg-[#FAF8FC]/90 backdrop-blur-md z-10 transition-all">
-                <div class="flex justify-between items-center mb-6">
-                    <h1 class="text-[28px] font-black text-[#6750A4] tracking-tight">플로폴피스</h1>
-                    <div id="auth-container">
-                        <button id="btn-show-login" class="text-[14px] font-bold text-[#6750A4] bg-[#EADDFF] px-5 py-2.5 rounded-full shadow-sm hover:bg-[#D0BCFF] transition-colors flex items-center gap-2">
-                            <i data-lucide="log-in" class="w-4 h-4"></i> 로그인
-                        </button>
-                        <div id="profile-indicator" class="hidden items-center gap-2.5 bg-[#EADDFF] pl-1.5 pr-4 py-1.5 rounded-full shadow-sm cursor-pointer hover:bg-[#D0BCFF] transition-colors">
-                            <div class="w-8 h-8 bg-[#6750A4] rounded-full flex items-center justify-center text-white shrink-0">
-                                <i data-lucide="user" class="w-4 h-4"></i>
-                            </div>
-                            <span id="profile-email" class="text-[14px] font-bold text-[#21005D] truncate max-w-[80px]"></span>
+    <div id="view-home" class="block pb-28 min-h-screen">
+        <!-- App Bar -->
+        <header class="pt-14 pb-4 px-5 sticky top-0 glass-header z-20 transition-all border-b border-black/5">
+            <div class="max-w-3xl mx-auto flex justify-between items-center">
+                <h1 class="text-[32px] font-bold text-[#000000] tracking-tight">플로폴피스</h1>
+                <div id="auth-container">
+                    <button id="btn-show-login" class="text-[14px] font-bold text-[#007AFF] bg-[#007AFF]/10 px-5 py-2.5 rounded-full hover:bg-[#007AFF]/20 transition-colors flex items-center gap-2">
+                        <i data-lucide="log-in" class="w-4 h-4"></i> 로그인
+                    </button>
+                    <div id="profile-indicator" class="hidden items-center gap-2.5 bg-[#007AFF]/10 pl-1.5 pr-4 py-1.5 rounded-full cursor-pointer hover:bg-[#007AFF]/20 transition-colors">
+                        <div class="w-8 h-8 bg-[#007AFF] rounded-full flex items-center justify-center text-white shrink-0 shadow-sm">
+                            <i data-lucide="user" class="w-4 h-4"></i>
                         </div>
+                        <span id="profile-email" class="text-[14px] font-bold text-[#007AFF] truncate max-w-[80px]"></span>
                     </div>
                 </div>
-                <div class="relative w-full">
-                    <input id="search-input" type="text" placeholder="검색어 또는 해시태그(#홍익대) 입력" class="w-full bg-[#EFEAF6] text-[#1D1B20] placeholder-[#49454F] border-none rounded-full py-4 pl-14 pr-6 text-[16px] font-medium focus:outline-none focus:ring-2 focus:ring-[#6750A4] focus:bg-white transition-all shadow-sm">
-                    <div class="absolute left-5 top-1/2 transform -translate-y-1/2 text-[#49454F]"><i data-lucide="search" class="w-6 h-6"></i></div>
-                </div>
-            </section>
+            </div>
+        </header>
 
-            <section class="mb-10">
-                <div class="grid grid-cols-3 gap-4">
-                    <div id="btn-univ" class="aspect-[4/3] bg-[#EADDFF] text-[#21005D] rounded-[24px] flex flex-col items-center justify-center cursor-pointer hover:shadow-m3-hover transition-all group">
-                        <i data-lucide="graduation-cap" class="w-8 h-8 mb-2 group-hover:scale-110 transition-transform"></i>
-                        <span class="text-[15px] font-bold">대학</span>
+        <main class="max-w-3xl mx-auto px-5 mt-6 relative">
+            <!-- Search Bar -->
+            <div class="relative w-full mb-8">
+                <input id="search-input" type="text" placeholder="검색어 또는 해시태그 입력" class="w-full bg-[#E5E5EA] text-[#000000] placeholder-[#8E8E93] border-none rounded-[20px] py-4 pl-12 pr-6 text-[16px] font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all">
+                <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#8E8E93]"><i data-lucide="search" class="w-5 h-5"></i></div>
+            </div>
+
+            <!-- 카테고리 버튼 (흰색 아이콘, 외부 텍스트 적용) -->
+            <section class="mb-10 px-2">
+                <div class="grid grid-cols-3 gap-6">
+                    <div id="btn-univ" class="flex flex-col items-center gap-2.5 group cursor-pointer">
+                        <div class="w-full aspect-square bg-gradient-to-br from-[#E3F2FD] to-[#BBDEFB] squircle shadow-oneui flex items-center justify-center group-hover:shadow-oneui-hover group-hover:scale-[1.03] transition-all border border-white/60">
+                            <!-- 밝은 배경에서도 잘 보이도록 약간의 drop-shadow 적용 -->
+                            <i data-lucide="graduation-cap" class="w-10 h-10 text-white drop-shadow-md"></i>
+                        </div>
+                        <span class="text-[14px] font-bold text-[#1C1C1E]">대학</span>
                     </div>
-                    <div id="btn-dept" class="aspect-[4/3] bg-[#FFD8E4] text-[#31111D] rounded-[24px] flex flex-col items-center justify-center cursor-pointer hover:shadow-m3-hover transition-all group">
-                        <i data-lucide="pencil" class="w-8 h-8 mb-2 group-hover:scale-110 transition-transform"></i>
-                        <span class="text-[15px] font-bold">학과</span>
+                    
+                    <div id="btn-dept" class="flex flex-col items-center gap-2.5 group cursor-pointer">
+                        <div class="w-full aspect-square bg-gradient-to-br from-[#FFEBEE] to-[#FFCDD2] squircle shadow-oneui flex items-center justify-center group-hover:shadow-oneui-hover group-hover:scale-[1.03] transition-all border border-white/60">
+                            <i data-lucide="pencil" class="w-10 h-10 text-white drop-shadow-md"></i>
+                        </div>
+                        <span class="text-[14px] font-bold text-[#1C1C1E]">학과</span>
                     </div>
-                    <div id="btn-map" class="aspect-[4/3] bg-[#C4E7FF] text-[#001D35] rounded-[24px] flex flex-col items-center justify-center cursor-pointer hover:shadow-m3-hover transition-all group">
-                        <i data-lucide="map" class="w-8 h-8 mb-2 group-hover:scale-110 transition-transform"></i>
-                        <span class="text-[15px] font-bold">지도</span>
+                    
+                    <div id="btn-map" class="flex flex-col items-center gap-2.5 group cursor-pointer">
+                        <div class="w-full aspect-square bg-gradient-to-br from-[#E8F5E9] to-[#C8E6C9] squircle shadow-oneui flex items-center justify-center group-hover:shadow-oneui-hover group-hover:scale-[1.03] transition-all border border-white/60">
+                            <i data-lucide="map" class="w-10 h-10 text-white drop-shadow-md"></i>
+                        </div>
+                        <span class="text-[14px] font-bold text-[#1C1C1E]">지도</span>
                     </div>
                 </div>
             </section>
-            <section><div id="home-posts-container" class="grid grid-cols-2 sm:grid-cols-3 gap-5"></div></section>
+            
+            <section><div id="home-posts-container" class="grid grid-cols-2 sm:grid-cols-3 gap-4"></div></section>
         </main>
     </div>
 
     <!-- 2. 지도 화면 -->
-    <div id="view-map" class="hidden bg-[#FAF8FC] h-screen w-full max-w-3xl mx-auto flex-col relative z-50">
-        <header class="flex items-center px-4 py-4 sticky top-0 bg-[#FAF8FC]/90 backdrop-blur-md z-20 shrink-0">
-            <button id="btn-back-map" class="p-2.5 text-[#1D1B20] bg-[#EFEAF6] hover:bg-[#EADDFF] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
-            <h1 class="text-[19px] font-bold text-[#1D1B20] absolute left-1/2 transform -translate-x-1/2">주변 대학 지도</h1>
+    <div id="view-map" class="hidden bg-[#F2F2F7] h-screen w-full max-w-3xl mx-auto flex-col relative z-50">
+        <header class="flex items-center px-4 py-4 sticky top-0 glass-header z-20 shrink-0">
+            <button id="btn-back-map" class="p-2.5 text-[#000000] hover:bg-[#E5E5EA] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
+            <h1 class="text-[20px] font-bold text-[#000000] absolute left-1/2 transform -translate-x-1/2">주변 대학 지도</h1>
         </header>
-        <main class="flex-1 relative w-full h-full bg-[#EFEAF6] overflow-hidden rounded-t-[32px] shadow-inner">
-            <div id="map-loading" class="flex flex-col items-center justify-center text-[#49454F] absolute inset-0 bg-[#FAF8FC] z-10 hidden">
-                <i data-lucide="map-pin" class="w-12 h-12 mb-4 animate-bounce text-[#6750A4]"></i>
-                <p class="font-bold text-[16px]">위치를 탐색 중입니다</p>
+        <main class="flex-1 relative w-full h-full bg-[#E5E5EA] overflow-hidden rounded-t-[32px] shadow-inner">
+            <div id="map-loading" class="flex flex-col items-center justify-center text-[#8E8E93] absolute inset-0 bg-[#F2F2F7] z-10 hidden">
+                <i data-lucide="map-pin" class="w-12 h-12 mb-4 animate-bounce text-[#007AFF]"></i>
+                <p class="font-bold text-[16px] text-[#1C1C1E]">위치를 탐색 중입니다</p>
                 <p class="text-sm mt-2">브라우저 상단의 위치 허용 팝업을 확인해주세요.</p>
             </div>
             <iframe id="google-map-iframe" width="100%" height="100%" class="absolute inset-0 border-0" allowfullscreen="" loading="lazy"></iframe>
-            <button id="btn-find-location" class="absolute bottom-8 right-8 w-16 h-16 bg-[#C4E7FF] text-[#001D35] rounded-[20px] shadow-lg flex items-center justify-center hover:bg-[#7fc2f5] transition-all z-20 group">
-                <i data-lucide="navigation" class="w-7 h-7 group-hover:scale-110 transition-transform"></i>
+            <button id="btn-find-location" class="absolute bottom-8 right-8 w-14 h-14 bg-white text-[#007AFF] rounded-full shadow-lg flex items-center justify-center hover:bg-[#F2F2F7] transition-all z-20">
+                <i data-lucide="navigation" class="w-6 h-6"></i>
             </button>
         </main>
     </div>
 
     <!-- 3. 대학 선택 화면 -->
-    <div id="view-univ" class="hidden bg-[#FAF8FC] min-h-screen pb-12 w-full max-w-3xl mx-auto">
-        <header class="flex items-center px-4 py-4 sticky top-0 bg-[#FAF8FC]/90 backdrop-blur-md z-20">
-            <button id="btn-back-univ" class="p-2.5 text-[#1D1B20] bg-[#EFEAF6] hover:bg-[#EADDFF] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
-            <h1 class="text-[19px] font-bold text-[#1D1B20] absolute left-1/2 transform -translate-x-1/2">내 주변 대학</h1>
+    <div id="view-univ" class="hidden bg-[#F2F2F7] min-h-screen pb-12 w-full max-w-3xl mx-auto">
+        <header class="flex items-center px-4 pt-12 pb-4 sticky top-0 glass-header z-20 border-b border-black/5">
+            <button id="btn-back-univ" class="p-2 text-[#000000] mr-3 hover:bg-[#E5E5EA] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
+            <h1 class="text-[28px] font-bold text-[#000000]">내 주변 대학</h1>
         </header>
-        <section class="px-5">
-            <div class="px-2 py-4 text-[14px] text-[#6750A4] font-bold tracking-wide">가장 가까운 대학 Top 10</div>
+        <section class="px-5 mt-4">
+            <div class="px-2 py-3 text-[13px] text-[#8E8E93] font-bold tracking-wide">가장 가까운 대학 Top 10</div>
             <ul id="univ-list" class="flex flex-col gap-3"></ul>
         </section>
     </div>
 
     <!-- 4. 학과 선택 화면 -->
-    <div id="view-dept" class="hidden bg-[#FAF8FC] min-h-screen pb-12 w-full max-w-3xl mx-auto">
-        <header class="flex items-center px-4 py-4 sticky top-0 bg-[#FAF8FC]/90 backdrop-blur-md z-20">
-            <button id="btn-back-dept" class="p-2.5 text-[#1D1B20] bg-[#EFEAF6] hover:bg-[#EADDFF] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
-            <h1 class="text-[19px] font-bold text-[#1D1B20] absolute left-1/2 transform -translate-x-1/2">학과 선택</h1>
+    <div id="view-dept" class="hidden bg-[#F2F2F7] min-h-screen pb-12 w-full max-w-3xl mx-auto">
+        <header class="flex items-center px-4 pt-12 pb-4 sticky top-0 glass-header z-20 border-b border-black/5">
+            <button id="btn-back-dept" class="p-2 text-[#000000] mr-3 hover:bg-[#E5E5EA] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
+            <h1 class="text-[28px] font-bold text-[#000000]">학과 선택</h1>
         </header>
-        <section class="px-5">
-            <div class="px-2 py-4 text-[14px] text-[#6750A4] font-bold tracking-wide">주요 학과</div>
+        <section class="px-5 mt-4">
+            <div class="px-2 py-3 text-[13px] text-[#8E8E93] font-bold tracking-wide">주요 학과</div>
             <ul class="flex flex-col gap-3">
-                <li class="dept-item flex items-center gap-4 bg-white rounded-[24px] p-4 shadow-sm cursor-pointer hover:shadow-md transition-all" data-dept="조소학과">
-                    <div class="w-14 h-14 bg-[#EFEAF6] text-[#6750A4] rounded-full flex items-center justify-center shrink-0"><i data-lucide="hammer" class="w-6 h-6"></i></div>
-                    <div class="flex flex-col"><span class="text-[17px] font-bold text-[#1D1B20]">조소학과</span><span class="text-[14px] text-[#49454F] mt-1">입체적인 조형물, 피규어 등을 깎고 빚어드려요.</span></div>
+                <li class="dept-item flex items-center gap-4 bg-white rounded-[24px] p-5 shadow-oneui cursor-pointer hover:bg-[#F9F9F9] transition-all" data-dept="조소학과">
+                    <div class="w-14 h-14 bg-gradient-to-br from-[#E3F2FD] to-[#BBDEFB] text-[#007AFF] squircle flex items-center justify-center shrink-0"><i data-lucide="hammer" class="w-6 h-6"></i></div>
+                    <div class="flex flex-col"><span class="text-[17px] font-bold text-[#1C1C1E]">조소학과</span><span class="text-[14px] text-[#8E8E93] mt-0.5">입체적인 조형물, 피규어 제작 전문가</span></div>
                 </li>
-                <li class="dept-item flex items-center gap-4 bg-white rounded-[24px] p-4 shadow-sm cursor-pointer hover:shadow-md transition-all" data-dept="산업디자인학과">
-                    <div class="w-14 h-14 bg-[#EADDFF] text-[#21005D] rounded-full flex items-center justify-center shrink-0"><i data-lucide="monitor" class="w-6 h-6"></i></div>
-                    <div class="flex flex-col"><span class="text-[17px] font-bold text-[#1D1B20]">산업디자인학과</span><span class="text-[14px] text-[#49454F] mt-1">제품의 외관 디자인, 3D 모델링 구현을 지원해요.</span></div>
+                <li class="dept-item flex items-center gap-4 bg-white rounded-[24px] p-5 shadow-oneui cursor-pointer hover:bg-[#F9F9F9] transition-all" data-dept="산업디자인학과">
+                    <div class="w-14 h-14 bg-gradient-to-br from-[#F3E5F5] to-[#E1BEE7] text-[#5856D6] squircle flex items-center justify-center shrink-0"><i data-lucide="monitor" class="w-6 h-6"></i></div>
+                    <div class="flex flex-col"><span class="text-[17px] font-bold text-[#1C1C1E]">산업디자인학과</span><span class="text-[14px] text-[#8E8E93] mt-0.5">제품 외관 디자인, 3D 모델링 구현</span></div>
                 </li>
-                <li class="dept-item flex items-center gap-4 bg-white rounded-[24px] p-4 shadow-sm cursor-pointer hover:shadow-md transition-all" data-dept="시각디자인과">
-                    <div class="w-14 h-14 bg-[#FFD8E4] text-[#31111D] rounded-full flex items-center justify-center shrink-0"><i data-lucide="pen-tool" class="w-6 h-6"></i></div>
-                    <div class="flex flex-col"><span class="text-[17px] font-bold text-[#1D1B20]">시각디자인과</span><span class="text-[14px] text-[#49454F] mt-1">포스터, 로고 등 감각적인 그래픽 디자인을 만나요.</span></div>
+                <li class="dept-item flex items-center gap-4 bg-white rounded-[24px] p-5 shadow-oneui cursor-pointer hover:bg-[#F9F9F9] transition-all" data-dept="시각디자인과">
+                    <div class="w-14 h-14 bg-gradient-to-br from-[#FFEBEE] to-[#FFCDD2] text-[#FF2D55] squircle flex items-center justify-center shrink-0"><i data-lucide="pen-tool" class="w-6 h-6"></i></div>
+                    <div class="flex flex-col"><span class="text-[17px] font-bold text-[#1C1C1E]">시각디자인과</span><span class="text-[14px] text-[#8E8E93] mt-0.5">포스터, 로고 등 감각적인 그래픽 디자인</span></div>
                 </li>
-                <li class="dept-item flex items-center gap-4 bg-white rounded-[24px] p-4 shadow-sm cursor-pointer hover:shadow-md transition-all" data-dept="서양학과">
-                    <div class="w-14 h-14 bg-[#C4E7FF] text-[#001D35] rounded-full flex items-center justify-center shrink-0"><i data-lucide="palette" class="w-6 h-6"></i></div>
-                    <div class="flex flex-col"><span class="text-[17px] font-bold text-[#1D1B20]">서양학과</span><span class="text-[14px] text-[#49454F] mt-1">캔버스 위에 개성이 담긴 멋진 그림을 그려드려요.</span></div>
+                <li class="dept-item flex items-center gap-4 bg-white rounded-[24px] p-5 shadow-oneui cursor-pointer hover:bg-[#F9F9F9] transition-all" data-dept="서양학과">
+                    <div class="w-14 h-14 bg-gradient-to-br from-[#E8F5E9] to-[#C8E6C9] text-[#34C759] squircle flex items-center justify-center shrink-0"><i data-lucide="palette" class="w-6 h-6"></i></div>
+                    <div class="flex flex-col"><span class="text-[17px] font-bold text-[#1C1C1E]">서양학과</span><span class="text-[14px] text-[#8E8E93] mt-0.5">캔버스 위에 개성이 담긴 멋진 회화</span></div>
                 </li>
-                <li class="dept-item flex items-center gap-4 bg-white rounded-[24px] p-4 shadow-sm cursor-pointer hover:shadow-md transition-all" data-dept="문창과">
-                    <div class="w-14 h-14 bg-[#FFDEAB] text-[#2B1700] rounded-full flex items-center justify-center shrink-0"><i data-lucide="book-open" class="w-6 h-6"></i></div>
-                    <div class="flex flex-col"><span class="text-[17px] font-bold text-[#1D1B20]">문창과</span><span class="text-[14px] text-[#49454F] mt-1">마음을 움직이는 매력적인 글과 시나리오를 창작해요.</span></div>
+                <li class="dept-item flex items-center gap-4 bg-white rounded-[24px] p-5 shadow-oneui cursor-pointer hover:bg-[#F9F9F9] transition-all" data-dept="문창과">
+                    <div class="w-14 h-14 bg-gradient-to-br from-[#FFF8E1] to-[#FFECB3] text-[#FF9500] squircle flex items-center justify-center shrink-0"><i data-lucide="book-open" class="w-6 h-6"></i></div>
+                    <div class="flex flex-col"><span class="text-[17px] font-bold text-[#1C1C1E]">문창과</span><span class="text-[14px] text-[#8E8E93] mt-0.5">마음을 움직이는 글과 시나리오 창작</span></div>
                 </li>
-                <li class="dept-item flex items-center gap-4 bg-white rounded-[24px] p-4 shadow-sm cursor-pointer hover:shadow-md transition-all" data-dept="컴퓨터공학과">
-                    <div class="w-14 h-14 bg-[#C2E7FF] text-[#001D35] rounded-full flex items-center justify-center shrink-0"><i data-lucide="terminal" class="w-6 h-6"></i></div>
-                    <div class="flex flex-col"><span class="text-[17px] font-bold text-[#1D1B20]">컴퓨터공학과</span><span class="text-[14px] text-[#49454F] mt-1">아이디어를 실제 작동하는 웹이나 앱으로 개발해요.</span></div>
+                <li class="dept-item flex items-center gap-4 bg-white rounded-[24px] p-5 shadow-oneui cursor-pointer hover:bg-[#F9F9F9] transition-all" data-dept="컴퓨터공학과">
+                    <div class="w-14 h-14 bg-gradient-to-br from-[#E0F7FA] to-[#B2EBF2] text-[#32ADE6] squircle flex items-center justify-center shrink-0"><i data-lucide="terminal" class="w-6 h-6"></i></div>
+                    <div class="flex flex-col"><span class="text-[17px] font-bold text-[#1C1C1E]">컴퓨터공학과</span><span class="text-[14px] text-[#8E8E93] mt-0.5">아이디어를 작동하는 웹이나 앱으로 개발</span></div>
                 </li>
             </ul>
         </section>
     </div>
 
     <!-- 5. 게시판(필터 결과) 화면 -->
-    <div id="view-board" class="hidden bg-[#FAF8FC] min-h-screen pb-12 w-full max-w-3xl mx-auto flex-col relative z-40">
-        <header class="flex items-center px-4 py-4 sticky top-0 bg-[#FAF8FC]/90 backdrop-blur-md z-20 shrink-0"><button id="btn-back-board" class="p-2.5 text-[#1D1B20] bg-[#EFEAF6] hover:bg-[#EADDFF] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button><h1 id="board-title" class="text-[19px] font-bold text-[#1D1B20] absolute left-1/2 transform -translate-x-1/2">게시판</h1></header>
-        <main class="p-5"><div id="board-posts-container" class="grid grid-cols-2 sm:grid-cols-3 gap-5"></div></main>
+    <div id="view-board" class="hidden bg-[#F2F2F7] min-h-screen pb-12 w-full max-w-3xl mx-auto flex-col relative z-40">
+        <header class="flex items-center px-4 pt-12 pb-4 sticky top-0 glass-header z-20 border-b border-black/5">
+            <button id="btn-back-board" class="p-2 text-[#000000] mr-3 hover:bg-[#E5E5EA] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
+            <h1 id="board-title" class="text-[28px] font-bold text-[#000000] truncate">게시판</h1>
+        </header>
+        <main class="p-5 pt-6"><div id="board-posts-container" class="grid grid-cols-2 sm:grid-cols-3 gap-4"></div></main>
     </div>
 
     <!-- 6. 글 작성 화면 -->
-    <div id="view-write" class="hidden bg-[#FAF8FC] min-h-screen pb-12 w-full max-w-3xl mx-auto flex-col relative z-50">
-        <header class="flex items-center justify-between px-4 py-4 sticky top-0 bg-[#FAF8FC]/90 backdrop-blur-md z-20">
-            <div class="flex items-center gap-3">
-                <button id="btn-back-write" class="p-2.5 text-[#1D1B20] bg-[#EFEAF6] hover:bg-[#EADDFF] rounded-full transition-colors"><i data-lucide="x" class="w-6 h-6"></i></button>
-                <h1 class="text-[19px] font-bold text-[#1D1B20]">나의 자료 올리기</h1>
+    <div id="view-write" class="hidden bg-[#F2F2F7] min-h-screen pb-12 w-full max-w-3xl mx-auto flex-col relative z-50">
+        <header class="flex items-center justify-between px-4 pt-12 pb-4 sticky top-0 glass-header z-20 border-b border-black/5">
+            <div class="flex items-center">
+                <button id="btn-back-write" class="p-2 text-[#000000] mr-3 hover:bg-[#E5E5EA] rounded-full transition-colors"><i data-lucide="x" class="w-6 h-6"></i></button>
+                <h1 class="text-[28px] font-bold text-[#000000]">자료 올리기</h1>
             </div>
-            <button id="btn-upload" class="bg-[#6750A4] text-white px-5 py-2.5 rounded-full font-bold text-[15px] hover:bg-[#4F378B] transition-colors shadow-sm">업로드</button>
+            <button id="btn-upload" class="bg-[#007AFF] text-white px-5 py-2 rounded-full font-bold text-[15px] hover:bg-[#005BFF] transition-colors shadow-sm">업로드</button>
         </header>
-        <main class="px-5 py-6 flex flex-col gap-6">
-            <div class="bg-white p-6 rounded-[28px] shadow-sm flex flex-col gap-6">
+        <main class="px-5 py-6">
+            <div class="bg-white p-6 rounded-[28px] shadow-oneui flex flex-col gap-6">
                 <div class="flex gap-4 overflow-x-auto pb-2 scrollbar-hide items-center">
                     <input type="file" id="image-input" accept="image/*" class="hidden">
-                    <button id="btn-camera" class="shrink-0 w-24 h-24 bg-[#EFEAF6] text-[#6750A4] rounded-[24px] flex flex-col items-center justify-center hover:bg-[#EADDFF] transition-colors focus:outline-none focus:ring-4 focus:ring-[#D0BCFF]">
-                        <i data-lucide="camera" class="w-8 h-8 mb-1"></i><span class="text-[13px] font-bold" id="image-count">0/1</span>
+                    <button id="btn-camera" class="shrink-0 w-24 h-24 bg-[#E5E5EA] text-[#8E8E93] squircle flex flex-col items-center justify-center hover:bg-[#D1D1D6] transition-colors">
+                        <i data-lucide="camera" class="w-8 h-8 mb-1 text-[#000000]"></i><span class="text-[13px] font-bold text-[#000000]" id="image-count">0/1</span>
                     </button>
                     <div id="image-preview-container" class="flex gap-3 h-24"></div>
                 </div>
-                <div><input type="text" id="post-title" placeholder="멋진 제목을 입력하세요" class="w-full bg-transparent border-b-2 border-[#EFEAF6] px-2 py-4 text-[20px] font-bold text-[#1D1B20] placeholder-[#49454F]/50 focus:outline-none focus:border-[#6750A4] transition-colors"></div>
-                <div><textarea id="post-content" placeholder="작품이나 자료에 대해 설명해주세요.&#10;예: #계명대 #시각디자인과" class="w-full bg-[#FAF8FC] border-none rounded-[20px] px-5 py-5 h-56 text-[16px] text-[#1D1B20] placeholder-[#49454F]/60 focus:outline-none focus:ring-2 focus:ring-[#6750A4] transition-all resize-none leading-relaxed"></textarea></div>
+                <div><input type="text" id="post-title" placeholder="멋진 제목을 입력하세요" class="w-full bg-transparent border-b border-[#E5E5EA] px-1 py-3 text-[22px] font-bold text-[#000000] placeholder-[#C7C7CC] focus:outline-none focus:border-[#007AFF] transition-colors"></div>
+                <div><textarea id="post-content" placeholder="작품이나 자료에 대해 설명해주세요.&#10;예: #계명대 #시각디자인과" class="w-full bg-[#F2F2F7] border-none rounded-[20px] px-5 py-5 h-56 text-[16px] text-[#1C1C1E] placeholder-[#8E8E93] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition-all resize-none leading-relaxed"></textarea></div>
             </div>
         </main>
     </div>
 
     <!-- 7. 게시글 상세 화면 -->
-    <div id="view-post-detail" class="hidden bg-[#FAF8FC] min-h-screen pb-28 w-full max-w-3xl mx-auto flex-col relative z-50">
-        <header class="flex items-center justify-between px-4 py-4 sticky top-0 bg-[#FAF8FC]/90 backdrop-blur-md z-20">
-            <button id="btn-back-detail" class="p-2.5 text-[#1D1B20] bg-[#EFEAF6] hover:bg-[#EADDFF] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
-            <button id="btn-delete-post" class="hidden p-2.5 text-[#BA1A1A] bg-[#FFDAD6] hover:bg-[#FFB4AB] rounded-full transition-colors"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
+    <div id="view-post-detail" class="hidden bg-[#F2F2F7] min-h-screen pb-28 w-full max-w-3xl mx-auto flex-col relative z-50">
+        <header class="flex items-center justify-between px-4 py-4 sticky top-0 glass-header z-20">
+            <button id="btn-back-detail" class="p-2.5 text-[#000000] bg-white shadow-sm hover:bg-[#F2F2F7] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
+            <button id="btn-delete-post" class="hidden p-2.5 text-[#FF3B30] bg-white shadow-sm hover:bg-[#FFE5E5] rounded-full transition-colors"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
         </header>
         <main class="flex-1 px-5 overflow-y-auto">
-            <div class="bg-white rounded-[32px] overflow-hidden shadow-sm mb-6">
-                <div id="detail-image-container" class="w-full bg-[#EFEAF6] aspect-[4/3] relative flex items-center justify-center overflow-hidden"></div>
-                <div class="p-6">
-                    <div class="flex flex-wrap gap-2 mb-4" id="detail-tags"></div>
-                    <h2 id="detail-title" class="text-[24px] font-black text-[#1D1B20] mb-4 leading-snug">제목</h2>
-                    <p id="detail-content" class="text-[16px] text-[#49454F] leading-relaxed whitespace-pre-wrap mb-6">내용</p>
-                    <div class="flex items-center gap-3 pt-5 border-t border-[#EFEAF6]">
-                        <div class="w-10 h-10 bg-[#EADDFF] text-[#21005D] rounded-full flex items-center justify-center shrink-0"><i data-lucide="user" class="w-5 h-5"></i></div>
-                        <div><div class="font-bold text-[15px] text-[#1D1B20]" id="detail-author">익명 사용자</div><div class="text-[13px] text-[#49454F]" id="detail-time">방금 전</div></div>
+            <div class="bg-white rounded-[32px] overflow-hidden shadow-oneui mb-6">
+                <div id="detail-image-container" class="w-full bg-[#E5E5EA] aspect-[4/3] relative flex items-center justify-center overflow-hidden"></div>
+                <div class="p-7">
+                    <div class="flex flex-wrap gap-2 mb-5" id="detail-tags"></div>
+                    <h2 id="detail-title" class="text-[26px] font-bold text-[#000000] mb-3 leading-snug">제목</h2>
+                    <p id="detail-content" class="text-[17px] text-[#3A3A3C] leading-relaxed whitespace-pre-wrap mb-8">내용</p>
+                    
+                    <div class="flex items-center gap-3 pt-5 border-t border-[#E5E5EA]">
+                        <div class="w-11 h-11 bg-[#F2F2F7] text-[#007AFF] rounded-full flex items-center justify-center shrink-0"><i data-lucide="user" class="w-5 h-5"></i></div>
+                        <div><div class="font-bold text-[16px] text-[#1C1C1E]" id="detail-author">익명 사용자</div><div class="text-[13px] text-[#8E8E93]" id="detail-time">방금 전</div></div>
                     </div>
                 </div>
             </div>
         </main>
-        <div class="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-3xl bg-[#FAF8FC]/90 backdrop-blur-md px-5 py-4 z-20 pb-8 sm:pb-5">
-            <button class="w-full bg-[#6750A4] text-white font-bold text-[16px] py-4 rounded-full hover:bg-[#4F378B] transition-colors shadow-m3 flex items-center justify-center gap-2" id="btn-start-chat"><i data-lucide="message-circle" class="w-5 h-5"></i> 작성자와 대화하기</button>
+        <div class="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-3xl glass-surface px-5 py-4 z-20 pb-8 sm:pb-5">
+            <button class="w-full bg-[#007AFF] text-white font-bold text-[17px] py-4 rounded-[20px] hover:bg-[#005BFF] transition-colors shadow-oneui flex items-center justify-center gap-2" id="btn-start-chat"><i data-lucide="message-circle" class="w-5 h-5"></i> 작성자와 대화하기</button>
         </div>
     </div>
 
     <!-- 8. 내 프로필 화면 -->
-    <div id="view-profile" class="hidden bg-[#FAF8FC] min-h-screen pb-12 w-full max-w-3xl mx-auto flex-col relative z-50">
-        <header class="flex items-center px-4 py-4 sticky top-0 bg-[#FAF8FC]/90 backdrop-blur-md z-20">
-            <button id="btn-back-profile" class="p-2.5 text-[#1D1B20] bg-[#EFEAF6] hover:bg-[#EADDFF] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
-            <h1 class="text-[19px] font-bold text-[#1D1B20] absolute left-1/2 transform -translate-x-1/2">내 프로필</h1>
+    <div id="view-profile" class="hidden bg-[#F2F2F7] min-h-screen pb-12 w-full max-w-3xl mx-auto flex-col relative z-50">
+        <header class="flex items-center px-4 pt-12 pb-4 sticky top-0 glass-header z-20 border-b border-black/5">
+            <button id="btn-back-profile" class="p-2 text-[#000000] mr-3 hover:bg-[#E5E5EA] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
+            <h1 class="text-[28px] font-bold text-[#000000]">내 프로필</h1>
         </header>
-        <main class="p-5">
-            <div class="bg-white rounded-[32px] p-8 shadow-sm mb-6 flex flex-col items-center text-center">
-                <div class="w-24 h-24 bg-[#EADDFF] text-[#6750A4] rounded-[32px] flex items-center justify-center mb-5 shadow-inner"><i data-lucide="user" class="w-10 h-10"></i></div>
-                <h2 id="profile-display-nickname" class="text-[24px] font-black text-[#1D1B20]">닉네임</h2>
-                <p id="profile-display-email" class="text-[15px] text-[#49454F] mt-1 mb-6">이메일</p>
-                <div class="w-full bg-[#FAF8FC] rounded-[24px] p-5 flex flex-col gap-3 text-left">
-                    <div class="flex justify-between items-center"><span class="text-[15px] font-bold text-[#49454F]">대학</span><span id="profile-display-univ" class="text-[16px] font-bold text-[#6750A4] bg-[#EADDFF] px-3 py-1 rounded-lg">대학</span></div>
-                    <div class="flex justify-between items-center"><span class="text-[15px] font-bold text-[#49454F]">학과</span><span id="profile-display-dept" class="text-[16px] font-bold text-[#31111D] bg-[#FFD8E4] px-3 py-1 rounded-lg">학과</span></div>
+        <main class="p-5 mt-4">
+            <div class="bg-white rounded-[32px] p-8 shadow-oneui mb-6 flex flex-col items-center text-center">
+                <div class="w-24 h-24 bg-gradient-to-br from-[#E3F2FD] to-[#BBDEFB] text-[#007AFF] squircle flex items-center justify-center mb-4"><i data-lucide="user" class="w-10 h-10"></i></div>
+                <h2 id="profile-display-nickname" class="text-[24px] font-bold text-[#000000]">닉네임</h2>
+                <p id="profile-display-email" class="text-[15px] text-[#8E8E93] mt-1 mb-6">이메일</p>
+                <div class="w-full bg-[#F2F2F7] rounded-[24px] p-5 flex flex-col gap-4 text-left">
+                    <div class="flex justify-between items-center"><span class="text-[15px] font-bold text-[#8E8E93]">대학</span><span id="profile-display-univ" class="text-[16px] font-bold text-[#1C1C1E]">대학</span></div>
+                    <div class="w-full h-[1px] bg-[#E5E5EA]"></div>
+                    <div class="flex justify-between items-center"><span class="text-[15px] font-bold text-[#8E8E93]">학과</span><span id="profile-display-dept" class="text-[16px] font-bold text-[#1C1C1E]">학과</span></div>
                 </div>
             </div>
             <div class="flex flex-col gap-3">
-                <button id="btn-edit-profile" class="w-full bg-[#EFEAF6] text-[#6750A4] font-bold text-[16px] py-4 rounded-full hover:bg-[#EADDFF] transition-colors flex items-center justify-center gap-2"><i data-lucide="settings" class="w-5 h-5"></i> 프로필 수정</button>
-                <button id="btn-logout" class="w-full bg-[#FFDAD6] text-[#BA1A1A] font-bold text-[16px] py-4 rounded-full hover:bg-[#FFB4AB] transition-colors flex items-center justify-center gap-2"><i data-lucide="log-out" class="w-5 h-5"></i> 로그아웃</button>
+                <button id="btn-edit-profile" class="w-full bg-white text-[#007AFF] font-bold text-[16px] py-4 rounded-[20px] shadow-oneui hover:bg-[#F9F9F9] transition-colors">프로필 수정</button>
+                <button id="btn-logout" class="w-full bg-white text-[#FF3B30] font-bold text-[16px] py-4 rounded-[20px] shadow-oneui hover:bg-[#F9F9F9] transition-colors">로그아웃</button>
             </div>
         </main>
     </div>
 
     <!-- 9. 채팅 목록 화면 -->
-    <div id="view-chat-list" class="hidden bg-[#FAF8FC] min-h-screen pb-12 w-full max-w-3xl mx-auto flex-col relative z-50">
-        <header class="flex items-center px-4 py-4 sticky top-0 bg-[#FAF8FC]/90 backdrop-blur-md z-20">
-            <button id="btn-back-chat-list" class="p-2.5 text-[#1D1B20] bg-[#EFEAF6] hover:bg-[#EADDFF] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
-            <h1 class="text-[19px] font-bold text-[#1D1B20] absolute left-1/2 transform -translate-x-1/2">채팅 목록</h1>
+    <div id="view-chat-list" class="hidden bg-[#F2F2F7] min-h-screen pb-12 w-full max-w-3xl mx-auto flex-col relative z-50">
+        <header class="flex items-center px-4 pt-12 pb-4 sticky top-0 glass-header z-20 border-b border-black/5">
+            <button id="btn-back-chat-list" class="p-2 text-[#000000] mr-3 hover:bg-[#E5E5EA] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
+            <h1 class="text-[28px] font-bold text-[#000000]">채팅 목록</h1>
         </header>
-        <main class="flex-1 px-5"><ul id="chat-list-container" class="flex flex-col gap-3 mt-2"></ul></main>
+        <main class="flex-1 px-5 mt-4"><ul id="chat-list-container" class="flex flex-col gap-3"></ul></main>
     </div>
 
     <!-- 10. 1:1 채팅방 화면 -->
-    <div id="view-chat-room" class="hidden bg-[#FAF8FC] min-h-screen pb-24 w-full max-w-3xl mx-auto flex-col relative z-50">
-        <header class="flex items-center px-4 py-4 sticky top-0 bg-[#FAF8FC]/90 backdrop-blur-md z-20 shadow-sm">
-            <button id="btn-back-chat-room" class="p-2.5 text-[#1D1B20] bg-[#EFEAF6] hover:bg-[#EADDFF] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
-            <h1 id="chat-room-title" class="text-[19px] font-bold text-[#1D1B20] absolute left-1/2 transform -translate-x-1/2">상대방 이름</h1>
+    <div id="view-chat-room" class="hidden bg-[#F2F2F7] min-h-screen pb-24 w-full max-w-3xl mx-auto flex-col relative z-50">
+        <header class="flex items-center px-4 py-4 sticky top-0 glass-header z-20 border-b border-black/5">
+            <button id="btn-back-chat-room" class="p-2.5 text-[#000000] hover:bg-[#E5E5EA] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
+            <h1 id="chat-room-title" class="text-[20px] font-bold text-[#000000] absolute left-1/2 transform -translate-x-1/2">상대방 이름</h1>
         </header>
         <main id="chat-messages-container" class="flex-1 p-5 flex flex-col gap-5 overflow-y-auto"></main>
-        <footer class="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-3xl bg-[#FAF8FC] px-5 py-4 pb-8 sm:pb-5 z-20">
-            <div class="flex gap-2 relative bg-[#EFEAF6] rounded-full p-1 border border-transparent focus-within:border-[#6750A4] transition-colors">
-                <input type="text" id="chat-input" placeholder="메시지를 입력하세요" class="flex-1 bg-transparent pl-5 py-3 text-[16px] text-[#1D1B20] focus:outline-none placeholder-[#49454F]">
-                <button id="btn-send-chat" class="w-12 h-12 bg-[#6750A4] text-white rounded-full flex items-center justify-center hover:bg-[#4F378B] transition-colors shrink-0"><i data-lucide="send" class="w-5 h-5 ml-1"></i></button>
+        <footer class="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-3xl glass-surface px-5 py-4 pb-8 sm:pb-5 z-20 border-t border-black/5">
+            <div class="flex gap-2 relative bg-[#E5E5EA] rounded-[24px] p-1.5 focus-within:bg-[#D1D1D6] transition-colors">
+                <input type="text" id="chat-input" placeholder="메시지 보내기" class="flex-1 bg-transparent pl-4 py-2.5 text-[16px] text-[#000000] focus:outline-none placeholder-[#8E8E93]">
+                <button id="btn-send-chat" class="w-11 h-11 bg-[#007AFF] text-white rounded-full flex items-center justify-center hover:bg-[#005BFF] transition-colors shrink-0"><i data-lucide="arrow-up" class="w-5 h-5"></i></button>
             </div>
         </footer>
     </div>
 
     <!-- 모달(로그인/가입/수정/삭제) -->
-    <div id="view-login" class="hidden fixed inset-0 z-[100] bg-black/40 flex items-end sm:items-center justify-center sm:p-5">
-        <div class="bg-[#FAF8FC] w-full max-w-md rounded-t-[32px] sm:rounded-[32px] flex flex-col shadow-2xl fade-in overflow-hidden max-h-[90vh]">
-            <header class="flex items-center justify-between p-5 pb-0"><div class="w-8"></div><div class="w-12 h-1.5 bg-[#CAC4D0] rounded-full sm:hidden"></div><button id="btn-back-login" class="p-2 text-[#49454F] bg-[#EFEAF6] rounded-full hover:bg-[#EADDFF]"><i data-lucide="x" class="w-5 h-5"></i></button></header>
-            <main class="p-8 pt-4 overflow-y-auto">
-                <h2 class="text-[28px] font-black text-[#1D1B20] mb-2">시작하기</h2>
-                <p class="text-[#49454F] text-[15px] mb-8">이메일과 비밀번호로 로그인해주세요.</p>
-                <div class="flex flex-col gap-5">
-                    <input type="email" id="login-email" placeholder="이메일 (example@univ.ac.kr)" class="w-full bg-white border border-[#CAC4D0] rounded-[16px] px-5 py-4 focus:outline-none focus:border-[#6750A4]">
-                    <input type="password" id="login-pw" placeholder="비밀번호" class="w-full bg-white border border-[#CAC4D0] rounded-[16px] px-5 py-4 focus:outline-none focus:border-[#6750A4]">
+    <div id="view-login" class="hidden fixed inset-0 z-[100] bg-black/30 flex items-end sm:items-center justify-center sm:p-5 backdrop-blur-sm">
+        <div class="bg-[#F2F2F7] w-full max-w-md rounded-t-[32px] sm:rounded-[32px] flex flex-col shadow-2xl fade-in overflow-hidden max-h-[90vh]">
+            <header class="flex flex-col items-center pt-4 pb-2 relative">
+                <div class="w-12 h-1.5 bg-[#C7C7CC] rounded-full mb-4"></div>
+                <h2 class="text-[22px] font-bold text-[#000000]">로그인</h2>
+                <button id="btn-back-login" class="absolute right-5 top-5 p-2 text-[#8E8E93] bg-[#E5E5EA] rounded-full hover:bg-[#D1D1D6]"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </header>
+            <main class="p-6 overflow-y-auto">
+                <div class="flex flex-col gap-4 bg-white p-2 rounded-[24px] shadow-oneui">
+                    <input type="email" id="login-email" placeholder="이메일 (example@univ.ac.kr)" class="w-full bg-transparent px-4 py-4 text-[16px] focus:outline-none border-b border-[#E5E5EA]">
+                    <input type="password" id="login-pw" placeholder="비밀번호" class="w-full bg-transparent px-4 py-4 text-[16px] focus:outline-none">
                 </div>
-                <button id="btn-submit-login" class="w-full bg-[#6750A4] text-white font-bold text-[16px] py-4 rounded-full hover:bg-[#4F378B] transition-colors mt-8 shadow-m3">로그인</button>
+                <button id="btn-submit-login" class="w-full bg-[#007AFF] text-white font-bold text-[17px] py-4 rounded-[20px] hover:bg-[#005BFF] transition-colors mt-6 shadow-oneui">로그인</button>
             </main>
         </div>
     </div>
 
-    <div id="view-auth" class="hidden fixed inset-0 z-[100] bg-black/40 flex items-end sm:items-center justify-center sm:p-5">
-        <div class="bg-[#FAF8FC] w-full max-w-md rounded-t-[32px] sm:rounded-[32px] flex flex-col shadow-2xl fade-in overflow-hidden max-h-[90vh]">
-            <header class="flex items-center justify-between p-5 pb-0"><div class="w-8"></div><button id="btn-back-auth" class="p-2 text-[#49454F] bg-[#EFEAF6] rounded-full hover:bg-[#EADDFF]"><i data-lucide="x" class="w-5 h-5"></i></button></header>
-            <main class="p-8 pt-4 overflow-y-auto">
-                <h2 class="text-[28px] font-black text-[#1D1B20] mb-2">회원가입</h2>
-                <p class="text-[#49454F] text-[15px] mb-6">몇 가지 정보만 입력하면 끝나요!</p>
-                <div class="flex flex-col gap-4">
-                    <input type="email" id="auth-email" placeholder="이메일" class="w-full bg-white border border-[#CAC4D0] rounded-[16px] px-5 py-4 focus:outline-none focus:border-[#6750A4]">
-                    <input type="password" id="auth-pw" placeholder="비밀번호" class="w-full bg-white border border-[#CAC4D0] rounded-[16px] px-5 py-4 focus:outline-none focus:border-[#6750A4]">
-                    <input type="password" id="auth-pw-confirm" placeholder="비밀번호 확인" class="w-full bg-white border border-[#CAC4D0] rounded-[16px] px-5 py-4 focus:outline-none focus:border-[#6750A4]">
-                    <p id="auth-pw-error" class="hidden text-[#BA1A1A] text-[13px] ml-2 font-bold -mt-2">비밀번호가 일치하지 않습니다.</p>
-                    <input type="text" id="auth-nickname" placeholder="닉네임" class="w-full bg-white border border-[#CAC4D0] rounded-[16px] px-5 py-4 focus:outline-none focus:border-[#6750A4]">
-                    <div class="flex gap-3">
-                        <input type="text" id="auth-univ" placeholder="대학 (예: 홍익대)" class="flex-1 bg-white border border-[#CAC4D0] rounded-[16px] px-4 py-4 focus:outline-none focus:border-[#6750A4]">
-                        <input type="text" id="auth-dept" placeholder="학과 (예: 디자인과)" class="flex-1 bg-white border border-[#CAC4D0] rounded-[16px] px-4 py-4 focus:outline-none focus:border-[#6750A4]">
+    <div id="view-auth" class="hidden fixed inset-0 z-[100] bg-black/30 flex items-end sm:items-center justify-center sm:p-5 backdrop-blur-sm">
+        <div class="bg-[#F2F2F7] w-full max-w-md rounded-t-[32px] sm:rounded-[32px] flex flex-col shadow-2xl fade-in overflow-hidden max-h-[90vh]">
+            <header class="flex flex-col items-center pt-4 pb-2 relative">
+                <div class="w-12 h-1.5 bg-[#C7C7CC] rounded-full mb-4"></div>
+                <h2 class="text-[22px] font-bold text-[#000000]">회원가입</h2>
+                <button id="btn-back-auth" class="absolute right-5 top-5 p-2 text-[#8E8E93] bg-[#E5E5EA] rounded-full hover:bg-[#D1D1D6]"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </header>
+            <main class="p-6 overflow-y-auto">
+                <div class="flex flex-col bg-white rounded-[24px] shadow-oneui overflow-hidden">
+                    <input type="email" id="auth-email" placeholder="이메일" class="w-full bg-transparent px-5 py-4 border-b border-[#E5E5EA] text-[16px] focus:outline-none">
+                    <input type="password" id="auth-pw" placeholder="비밀번호" class="w-full bg-transparent px-5 py-4 border-b border-[#E5E5EA] text-[16px] focus:outline-none">
+                    <input type="password" id="auth-pw-confirm" placeholder="비밀번호 확인" class="w-full bg-transparent px-5 py-4 text-[16px] focus:outline-none">
+                </div>
+                <p id="auth-pw-error" class="hidden text-[#FF3B30] text-[13px] ml-4 font-bold mt-2">비밀번호가 일치하지 않습니다.</p>
+                <div class="flex flex-col bg-white rounded-[24px] shadow-oneui overflow-hidden mt-4">
+                    <input type="text" id="auth-nickname" placeholder="닉네임" class="w-full bg-transparent px-5 py-4 border-b border-[#E5E5EA] text-[16px] focus:outline-none">
+                    <div class="flex border-b border-[#E5E5EA]">
+                        <input type="text" id="auth-univ" placeholder="대학 (예: 홍익대)" class="w-1/2 bg-transparent px-5 py-4 border-r border-[#E5E5EA] text-[15px] focus:outline-none">
+                        <input type="text" id="auth-dept" placeholder="학과 (예: 디자인과)" class="w-1/2 bg-transparent px-5 py-4 text-[15px] focus:outline-none">
                     </div>
                 </div>
-                <button id="btn-submit-auth" class="w-full bg-[#6750A4] text-white font-bold text-[16px] py-4 rounded-full hover:bg-[#4F378B] transition-colors mt-8 shadow-m3">가입 완료</button>
+                <button id="btn-submit-auth" class="w-full bg-[#007AFF] text-white font-bold text-[17px] py-4 rounded-[20px] hover:bg-[#005BFF] transition-colors mt-6 shadow-oneui">가입 완료</button>
             </main>
         </div>
     </div>
 
-    <div id="view-edit-profile" class="hidden fixed inset-0 z-[100] bg-black/40 flex items-center justify-center p-5">
-        <div class="bg-[#FAF8FC] w-full max-w-sm rounded-[32px] flex flex-col shadow-2xl p-6 fade-in">
-            <h2 class="text-[20px] font-bold text-[#1D1B20] mb-6">프로필 수정</h2>
-            <div class="flex flex-col gap-4">
-                <input type="text" id="edit-nickname" placeholder="닉네임" class="w-full bg-white border border-[#CAC4D0] rounded-[16px] px-4 py-3.5 focus:outline-none focus:border-[#6750A4]">
-                <input type="text" id="edit-univ" placeholder="대학" class="w-full bg-white border border-[#CAC4D0] rounded-[16px] px-4 py-3.5 focus:outline-none focus:border-[#6750A4]">
-                <input type="text" id="edit-dept" placeholder="학과" class="w-full bg-white border border-[#CAC4D0] rounded-[16px] px-4 py-3.5 focus:outline-none focus:border-[#6750A4]">
+    <div id="view-edit-profile" class="hidden fixed inset-0 z-[100] bg-black/30 flex items-center justify-center p-5 backdrop-blur-sm">
+        <div class="bg-[#F2F2F7] w-full max-w-sm rounded-[32px] flex flex-col shadow-2xl p-6 fade-in">
+            <h2 class="text-[22px] font-bold text-[#000000] mb-6 text-center">프로필 수정</h2>
+            <div class="flex flex-col bg-white rounded-[24px] overflow-hidden shadow-oneui">
+                <input type="text" id="edit-nickname" placeholder="닉네임" class="w-full bg-transparent px-5 py-4 border-b border-[#E5E5EA] text-[16px] focus:outline-none">
+                <input type="text" id="edit-univ" placeholder="대학" class="w-full bg-transparent px-5 py-4 border-b border-[#E5E5EA] text-[16px] focus:outline-none">
+                <input type="text" id="edit-dept" placeholder="학과" class="w-full bg-transparent px-5 py-4 text-[16px] focus:outline-none">
             </div>
             <div class="flex gap-3 mt-6">
-                <button id="btn-back-edit-profile" class="flex-1 bg-[#EFEAF6] text-[#49454F] font-bold py-3.5 rounded-full hover:bg-[#EADDFF]">취소</button>
-                <button id="btn-submit-edit-profile" class="flex-1 bg-[#6750A4] text-white font-bold py-3.5 rounded-full hover:bg-[#4F378B]">저장</button>
+                <button id="btn-back-edit-profile" class="flex-1 bg-white text-[#8E8E93] font-bold py-3.5 rounded-[16px] shadow-oneui hover:bg-[#F9F9F9]">취소</button>
+                <button id="btn-submit-edit-profile" class="flex-1 bg-[#007AFF] text-white font-bold py-3.5 rounded-[16px] shadow-oneui hover:bg-[#005BFF]">저장</button>
             </div>
         </div>
     </div>
 
-    <div id="view-confirm-delete" class="hidden fixed inset-0 z-[200] bg-black/40 flex items-center justify-center p-5">
-        <div class="bg-[#FAF8FC] w-full max-w-sm rounded-[32px] p-8 shadow-2xl fade-in text-center">
-            <i data-lucide="alert-circle" class="w-12 h-12 text-[#BA1A1A] mx-auto mb-4"></i>
-            <h3 class="text-[22px] font-bold text-[#1D1B20] mb-2">게시글 삭제</h3>
-            <p class="text-[15px] text-[#49454F] mb-8">정말 삭제할까요? 복구할 수 없어요.</p>
+    <div id="view-confirm-delete" class="hidden fixed inset-0 z-[200] bg-black/30 flex items-center justify-center p-5 backdrop-blur-sm">
+        <div class="bg-[#F2F2F7] w-full max-w-sm rounded-[32px] p-8 shadow-2xl fade-in text-center">
+            <h3 class="text-[22px] font-bold text-[#000000] mb-2">게시글 삭제</h3>
+            <p class="text-[15px] text-[#8E8E93] mb-8">정말 삭제할까요? 복구할 수 없어요.</p>
             <div class="flex gap-3">
-                <button id="btn-cancel-delete" class="flex-1 py-3.5 bg-[#EFEAF6] text-[#49454F] font-bold rounded-full hover:bg-[#EADDFF]">취소</button>
-                <button id="btn-confirm-delete" class="flex-1 py-3.5 bg-[#BA1A1A] text-white font-bold rounded-full hover:bg-[#93000A]">삭제</button>
+                <button id="btn-cancel-delete" class="flex-1 py-3.5 bg-white text-[#8E8E93] font-bold rounded-[16px] shadow-oneui hover:bg-[#F9F9F9]">취소</button>
+                <button id="btn-confirm-delete" class="flex-1 py-3.5 bg-[#FF3B30] text-white font-bold rounded-[16px] shadow-oneui hover:bg-[#D70015]">삭제</button>
             </div>
         </div>
     </div>
 
-    <!-- 플로팅 버튼(FABs) -->
-    <button id="btn-write-post" class="fixed bottom-6 right-6 sm:right-10 w-16 h-16 bg-[#D0BCFF] text-[#21005D] rounded-[20px] shadow-m3 flex items-center justify-center hover:bg-[#EADDFF] transition-all z-50 group"><i data-lucide="pen" class="w-7 h-7 group-hover:scale-110 transition-transform"></i></button>
-    <button id="btn-chat-list" class="fixed bottom-[104px] right-6 sm:right-10 w-16 h-16 bg-[#F3EEFA] text-[#6750A4] rounded-[20px] shadow-m3 flex items-center justify-center hover:bg-[#EFEAF6] transition-all z-50 group border border-[#D0BCFF]/50"><i data-lucide="message-square" class="w-7 h-7 group-hover:scale-110 transition-transform"></i></button>
+    <!-- 플로팅 버튼(FABs) - 그라데이션 적용 -->
+    <!-- 글쓰기 버튼 (블루 그라데이션) -->
+    <button id="btn-write-post" class="fixed bottom-6 right-6 sm:right-10 w-16 h-16 bg-gradient-to-br from-[#32ADE6] to-[#007AFF] text-white rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-all z-50 group border border-white/40">
+        <i data-lucide="pen" class="w-7 h-7 drop-shadow-sm"></i>
+    </button>
+    
+    <!-- 채팅 목록 버튼 (퍼플/인디고 그라데이션) -->
+    <button id="btn-chat-list" class="fixed bottom-[104px] right-6 sm:right-10 w-16 h-16 bg-gradient-to-br from-[#AF52DE] to-[#5856D6] text-white rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-all z-50 group border border-white/40">
+        <i data-lucide="message-square" class="w-7 h-7 drop-shadow-sm"></i>
+    </button>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -335,25 +375,19 @@
             let toast = document.getElementById('toast-msg');
             if(!toast) {
                 toast = document.createElement('div'); toast.id = 'toast-msg';
-                toast.className = 'fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-[#313033] text-[#F4EFF4] px-6 py-3.5 rounded-xl shadow-lg z-[200] text-[15px] font-medium transition-opacity duration-300 opacity-0 pointer-events-none text-center max-w-[90vw]';
+                toast.className = 'fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-[rgba(30,30,30,0.85)] backdrop-blur-md text-white px-6 py-3 rounded-full shadow-lg z-[200] text-[15px] font-bold transition-opacity duration-300 opacity-0 pointer-events-none text-center max-w-[90vw] whitespace-nowrap';
                 document.body.appendChild(toast);
             }
-            toast.textContent = msg; toast.classList.remove('opacity-0'); setTimeout(() => toast.classList.add('opacity-0'), 3000); 
+            toast.textContent = msg; toast.classList.remove('opacity-0'); setTimeout(() => toast.classList.add('opacity-0'), 2500); 
         };
 
         // ------------------ 3. Firebase 인증 및 초기화 ------------------
         const initAuth = async () => {
             try {
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    try {
-                        await signInWithCustomToken(auth, __initial_auth_token);
-                    } catch (customTokenError) {
-                        console.warn("Custom token mismatch, falling back to anonymous auth...", customTokenError);
-                        await signInAnonymously(auth);
-                    }
-                } else {
-                    await signInAnonymously(auth);
-                }
+                    try { await signInWithCustomToken(auth, __initial_auth_token); } 
+                    catch (e) { await signInAnonymously(auth); }
+                } else { await signInAnonymously(auth); }
             } catch (error) { console.error("Auth init failed", error); }
         };
         initAuth();
@@ -386,7 +420,6 @@
                 }, () => {});
             } catch (e) { console.error(e); }
 
-            // 데이터 실시간 동기화
             onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'posts'), (snapshot) => {
                 firestorePosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })).sort((a, b) => b.createdAt - a.createdAt);
                 refreshAllFeeds();
@@ -408,13 +441,12 @@
             document.getElementById(hideId).classList.replace('block', 'hidden');
             document.getElementById(hideId).classList.replace('flex', 'hidden');
             const showEl = document.getElementById(showId);
-            if(showId === 'view-map' || showId === 'view-post-detail' || showId === 'view-profile' || showId === 'view-chat-list' || showId === 'view-chat-room' || showId === 'view-write') {
+            if(['view-map', 'view-post-detail', 'view-profile', 'view-chat-list', 'view-chat-room', 'view-write'].includes(showId)) {
                 showEl.classList.replace('hidden', 'flex');
             } else {
                 showEl.classList.replace('hidden', 'block');
             }
-            showEl.classList.add('fade-in');
-            window.scrollTo(0, 0);
+            showEl.classList.add('fade-in'); window.scrollTo(0, 0);
         }
 
         function toggleFABs(show) {
@@ -423,11 +455,9 @@
             document.getElementById('btn-chat-list').classList.replace(show ? 'hidden' : 'flex', display);
         }
 
-        // 대학 버튼
         document.getElementById('btn-univ').addEventListener('click', () => {
             switchView('view-home', 'view-univ'); toggleFABs(false);
-            document.getElementById('univ-list').innerHTML = '<div class="py-16 text-[#49454F] font-bold flex flex-col items-center"><i data-lucide="loader-2" class="w-8 h-8 animate-spin mb-3 text-[#6750A4]"></i>위치를 확인하고 있어요</div>';
-            lucide.createIcons();
+            const ul = document.getElementById('univ-list'); if(ul) ul.innerHTML = '<div class="py-16 text-[#8E8E93] font-bold flex flex-col items-center"><i data-lucide="loader-2" class="w-8 h-8 animate-spin mb-3 text-[#007AFF]"></i>위치를 확인하고 있어요</div>'; lucide.createIcons();
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (p) => { baseLat = p.coords.latitude; baseLng = p.coords.longitude; renderSortedUnivs(); },
@@ -438,11 +468,9 @@
         });
         document.getElementById('btn-back-univ').addEventListener('click', () => { switchView('view-univ', 'view-home'); toggleFABs(true); });
 
-        // 학과 버튼
         document.getElementById('btn-dept').addEventListener('click', () => { switchView('view-home', 'view-dept'); toggleFABs(false); });
         document.getElementById('btn-back-dept').addEventListener('click', () => { switchView('view-dept', 'view-home'); toggleFABs(true); });
 
-        // 지도 버튼
         document.getElementById('btn-map').addEventListener('click', () => {
             switchView('view-home', 'view-map'); toggleFABs(false);
             const loadMap = () => {
@@ -479,8 +507,8 @@
         function renderSortedUnivs() {
             const list = document.getElementById('univ-list'); if(!list) return; list.innerHTML = '';
             universitiesData.map(u => ({ ...u, dist: calcDist(baseLat, baseLng, u.lat, u.lng) })).sort((a,b) => a.dist - b.dist).slice(0, 10).forEach(u => {
-                const li = document.createElement('li'); li.className = "flex items-center justify-between bg-white rounded-[24px] p-4 shadow-sm cursor-pointer hover:shadow-md transition-all";
-                li.innerHTML = `<div class="flex items-center gap-4"><div class="w-12 h-12 bg-[#EADDFF] text-[#21005D] rounded-full flex items-center justify-center"><i data-lucide="library" class="w-6 h-6"></i></div><span class="font-bold">${u.name}</span></div><span class="text-[14px] font-bold text-[#6750A4] bg-[#EFEAF6] px-3 py-1.5 rounded-lg">${u.dist < 1 ? (u.dist*1000).toFixed(0)+'m' : u.dist.toFixed(1)+'km'}</span>`;
+                const li = document.createElement('li'); li.className = "flex items-center justify-between bg-white rounded-[24px] p-4 shadow-oneui cursor-pointer hover:bg-[#F9F9F9] transition-all";
+                li.innerHTML = `<div class="flex items-center gap-4"><div class="w-12 h-12 bg-[#F2F2F7] text-[#007AFF] rounded-full flex items-center justify-center"><i data-lucide="library" class="w-6 h-6"></i></div><span class="font-bold text-[17px]">${u.name}</span></div><span class="text-[14px] font-bold text-[#8E8E93] bg-[#E5E5EA] px-3 py-1.5 rounded-full">${u.dist < 1 ? (u.dist*1000).toFixed(0)+'m' : u.dist.toFixed(1)+'km'}</span>`;
                 li.addEventListener('click', () => window.handleTagClick('#' + u.name.replace(/대학교$/, '대'))); list.appendChild(li);
             }); lucide.createIcons();
         }
@@ -498,8 +526,9 @@
         document.querySelectorAll('.dept-item').forEach(item => { item.addEventListener('click', () => window.handleTagClick('#' + item.getAttribute('data-dept'))); });
         document.getElementById('btn-back-board').addEventListener('click', () => { switchView('view-board', 'view-home'); toggleFABs(true); });
 
-        const deptInfo = { "조소과": { icon: "hammer", color: "text-[#1D1B20]", bg: "bg-[#EFEAF6]" }, "산업디자인": { icon: "monitor", color: "text-[#21005D]", bg: "bg-[#EADDFF]" }, "시각디자인": { icon: "pen-tool", color: "text-[#31111D]", bg: "bg-[#FFD8E4]" }, "서양화": { icon: "palette", color: "text-[#001D35]", bg: "bg-[#C4E7FF]" }, "문창과": { icon: "book-open", color: "text-[#2B1700]", bg: "bg-[#FFDEAB]" }, "컴공": { icon: "terminal", color: "text-[#001F25]", bg: "bg-[#C2E7FF]" } };
-        function getDeptFallback(tagStr) { for(let d in deptInfo) { if(tagStr.includes(d)) return { name: d, ...deptInfo[d] }; } return { name: "게시판", icon: "message-square", color: "text-[#49454F]", bg: "bg-[#EFEAF6]" }; }
+        function getDeptFallback(tagStr) {
+            return { name: "게시판", icon: "message-square", color: "text-[#007AFF]", bg: "bg-[#F2F2F7]" };
+        }
 
         function refreshAllFeeds() {
             if (!document.getElementById('view-home').classList.contains('hidden')) {
@@ -514,13 +543,13 @@
 
         function renderPostItems(containerId, posts) {
             const container = document.getElementById(containerId); if (!container) return; container.innerHTML = '';
-            if (posts.length === 0) { container.innerHTML = '<div class="col-span-full py-20 text-center text-[#49454F] font-bold bg-white rounded-[24px] shadow-sm">아직 작성된 자료가 없어요.</div>'; return; }
+            if (posts.length === 0) { container.innerHTML = '<div class="col-span-full py-20 text-center text-[#8E8E93] font-bold bg-white rounded-[24px] shadow-oneui">아직 작성된 자료가 없어요.</div>'; return; }
             posts.forEach(post => {
-                 const article = document.createElement('article'); article.className = "bg-white rounded-[24px] overflow-hidden shadow-m3 hover:shadow-m3-hover transition-all cursor-pointer flex flex-col group";
-                 const tagsHtml = post.tag.split(' ').map(t => `<button onclick="event.stopPropagation(); window.handleTagClick('${t}')" class="font-bold text-[#6750A4] bg-[#F4EFF4] px-3 py-1 rounded-full text-[11px] sm:text-[12px] whitespace-nowrap hover:bg-[#EADDFF] transition-colors border border-[#EFEAF6]">${t}</button>`).join('');
-                 let media = post.img ? `<img src="${post.img}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">` : (fb => `<div class="w-full h-full flex flex-col items-center justify-center ${fb.bg}"><i data-lucide="${fb.icon}" class="w-10 h-10 ${fb.color} mb-2 opacity-80"></i><span class="text-[13px] font-bold text-[#49454F]">${fb.name}</span></div>`)(getDeptFallback(post.tag));
+                 const article = document.createElement('article'); article.className = "bg-white rounded-[24px] overflow-hidden shadow-oneui hover:shadow-oneui-hover transition-all cursor-pointer flex flex-col group p-2";
+                 const tagsHtml = post.tag.split(' ').map(t => `<button onclick="event.stopPropagation(); window.handleTagClick('${t}')" class="font-bold text-[#007AFF] bg-[#F2F2F7] px-3 py-1 rounded-full text-[12px] whitespace-nowrap hover:bg-[#E5E5EA] transition-colors">${t}</button>`).join('');
+                 let media = post.img ? `<img src="${post.img}" class="w-full h-full object-cover rounded-[16px]">` : `<div class="w-full h-full flex flex-col items-center justify-center bg-[#F2F2F7] rounded-[16px]"><i data-lucide="image" class="w-8 h-8 text-[#8E8E93] mb-1"></i></div>`;
                  let timeD = post.time; if (post.createdAt) { const dm = Math.floor((Date.now() - post.createdAt)/60000); timeD = dm<1?"방금 전":dm<60?`${dm}분 전`:dm<1440?`${Math.floor(dm/60)}시간 전`:`${Math.floor(dm/1440)}일 전`; }
-                 article.innerHTML = `<div class="h-44 bg-[#EFEAF6] relative overflow-hidden">${media}</div><div class="p-5 flex flex-col flex-1"><div class="mb-4"><span class="font-black text-[#1D1B20] text-[16px] line-clamp-2">${post.title}</span></div><div class="flex flex-col gap-3 mt-auto"><div class="flex flex-wrap gap-1.5">${tagsHtml}</div><span class="text-[12px] font-medium text-[#49454F] text-right">${timeD}</span></div></div>`;
+                 article.innerHTML = `<div class="h-36 relative overflow-hidden shrink-0">${media}</div><div class="px-2 pt-3 pb-2 flex flex-col flex-1"><div class="mb-3"><span class="font-bold text-[#000000] text-[15px] line-clamp-2 leading-snug">${post.title}</span></div><div class="flex flex-col gap-2 mt-auto"><div class="flex flex-wrap gap-1">${tagsHtml}</div><span class="text-[12px] font-medium text-[#8E8E93] text-right">${timeD}</span></div></div>`;
                  article.addEventListener('click', () => window.openPostDetail(post)); container.appendChild(article);
             }); lucide.createIcons();
         }
@@ -532,9 +561,9 @@
             document.getElementById('btn-delete-post').classList.replace(currentUser && post.authorUid === currentUser.uid ? 'hidden' : 'block', currentUser && post.authorUid === currentUser.uid ? 'block' : 'hidden');
             document.getElementById('detail-title').textContent = post.title; document.getElementById('detail-author').textContent = post.author || "익명"; document.getElementById('detail-content').textContent = post.content || "";
             let timeD = post.time; if (post.createdAt) { const dm = Math.floor((Date.now() - post.createdAt)/60000); timeD = dm<1?"방금 전":dm<60?`${dm}분 전`:dm<1440?`${Math.floor(dm/60)}시간 전`:`${Math.floor(dm/1440)}일 전`; } document.getElementById('detail-time').textContent = timeD;
-            document.getElementById('detail-tags').innerHTML = post.tag.split(' ').map(t => `<button onclick="window.handleTagClick('${t}')" class="font-bold text-[#6750A4] bg-[#F4EFF4] px-4 py-1.5 rounded-full text-[13px] hover:bg-[#EADDFF] border border-[#EFEAF6]">${t}</button>`).join('');
+            document.getElementById('detail-tags').innerHTML = post.tag.split(' ').map(t => `<button onclick="window.handleTagClick('${t}')" class="font-bold text-[#007AFF] bg-[#F2F2F7] px-4 py-1.5 rounded-full text-[13px] hover:bg-[#E5E5EA] transition-colors">${t}</button>`).join('');
             const imgC = document.getElementById('detail-image-container');
-            if (post.img) { imgC.innerHTML = `<img src="${post.img}" class="w-full h-full object-cover">`; imgC.className = "w-full bg-[#EFEAF6] aspect-[4/3] relative flex items-center justify-center overflow-hidden"; } else { const fb = getDeptFallback(post.tag); imgC.innerHTML = `<i data-lucide="${fb.icon}" class="w-20 h-20 ${fb.color} opacity-80 mb-2"></i>`; imgC.className = `w-full ${fb.bg} aspect-[4/3] relative flex flex-col items-center justify-center p-8`; }
+            if (post.img) { imgC.innerHTML = `<img src="${post.img}" class="w-full h-full object-cover">`; imgC.className = "w-full bg-[#E5E5EA] aspect-[4/3] relative flex items-center justify-center overflow-hidden"; } else { imgC.innerHTML = `<i data-lucide="image" class="w-16 h-16 text-[#8E8E93]"></i>`; imgC.className = `w-full bg-[#F2F2F7] aspect-[4/3] relative flex flex-col items-center justify-center`; }
             lucide.createIcons(); document.getElementById('view-post-detail').classList.replace('hidden', 'flex'); document.getElementById('view-post-detail').classList.add('fade-in'); window.scrollTo(0, 0);
         };
         document.getElementById('btn-back-detail').addEventListener('click', () => { document.getElementById('view-post-detail').classList.replace('flex', 'hidden'); if(viewBeforeDetail) { viewBeforeDetail.classList.replace('hidden', viewBeforeDetail.id === 'view-board' || viewBeforeDetail.id === 'view-home' ? 'block' : 'flex'); if(viewBeforeDetail.id === 'view-home') toggleFABs(true); } window.currentDetailPost = null; });
@@ -542,7 +571,7 @@
         document.getElementById('btn-cancel-delete').addEventListener('click', () => { document.getElementById('view-confirm-delete').classList.add('hidden'); document.getElementById('view-confirm-delete').classList.remove('flex'); });
         document.getElementById('btn-confirm-delete').addEventListener('click', async () => { if (!window.currentDetailPost || !db || !currentUser) return; try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'posts', window.currentDetailPost.id)); window.showToast("삭제 완료"); document.getElementById('btn-cancel-delete').click(); document.getElementById('btn-back-detail').click(); } catch (e) { window.showToast("삭제 오류"); } });
 
-        // ------------------ 6. 글 작성 (이미지 업로드 포함) ------------------
+        // ------------------ 6. 글 작성 ------------------
         document.getElementById('btn-write-post').addEventListener('click', () => {
             if (!currentUserNickname) { window.showToast("로그인 후 이용할 수 있어요."); document.getElementById('view-login').classList.replace('hidden', 'flex'); return; }
             ['view-home', 'view-board'].forEach(id => { const el = document.getElementById(id); if(!el.classList.contains('hidden')) el.classList.replace('block', 'hidden'); }); toggleFABs(false); switchView('view-home', 'view-write');
@@ -562,7 +591,7 @@
         });
         function updateImgPreview() {
             const container = document.getElementById('image-preview-container'); container.innerHTML = '';
-            uploadedImages.forEach((src, idx) => { container.innerHTML += `<div class="relative shrink-0 w-24 h-24"><img src="${src}" class="w-full h-full object-cover rounded-[24px] shadow-sm"><button class="absolute -top-2 -right-2 bg-[#1D1B20] text-white rounded-full p-1" onclick="window.removeImage(${idx})"><i data-lucide="x" class="w-4 h-4"></i></button></div>`; }); lucide.createIcons(); document.getElementById('image-count').textContent = `${uploadedImages.length}/1`;
+            uploadedImages.forEach((src, idx) => { container.innerHTML += `<div class="relative shrink-0 w-24 h-24"><img src="${src}" class="w-full h-full object-cover rounded-[16px] shadow-sm"><button class="absolute -top-2 -right-2 bg-white shadow-sm text-[#000000] rounded-full p-1 border border-[#E5E5EA]" onclick="window.removeImage(${idx})"><i data-lucide="x" class="w-4 h-4"></i></button></div>`; }); lucide.createIcons(); document.getElementById('image-count').textContent = `${uploadedImages.length}/1`;
         }
         window.removeImage = function(idx) { uploadedImages.splice(idx, 1); updateImgPreview(); };
 
@@ -593,11 +622,11 @@
         function renderChatList() {
             const container = document.getElementById('chat-list-container'); if (!container || !currentUser) return; container.innerHTML = '';
             const myRooms = allChatRooms.filter(r => r.participants && r.participants.includes(currentUser.uid)).sort((a,b) => b.updatedAt - a.updatedAt);
-            if (myRooms.length === 0) { container.innerHTML = '<div class="text-center py-24 text-[#49454F] font-bold bg-white rounded-[24px] shadow-sm mt-5">채팅 목록이 없어요.</div>'; return; }
+            if (myRooms.length === 0) { container.innerHTML = '<div class="text-center py-24 text-[#8E8E93] font-bold bg-white rounded-[24px] shadow-oneui mt-5">채팅 목록이 없어요.</div>'; return; }
             myRooms.forEach(room => {
                 const oUid = room.participants.find(id => id !== currentUser.uid), oNick = room.participantNicknames[oUid] || '알 수 없음'; const tStr = room.updatedAt ? new Date(room.updatedAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : "";
-                const li = document.createElement('li'); li.className = "flex items-center gap-4 bg-white p-4 rounded-[24px] shadow-sm cursor-pointer hover:shadow-md transition-all";
-                li.innerHTML = `<div class="w-14 h-14 bg-[#EADDFF] text-[#21005D] rounded-full flex items-center justify-center shrink-0"><i data-lucide="user" class="w-6 h-6"></i></div><div class="flex flex-col flex-1 overflow-hidden"><div class="flex justify-between items-center mb-1"><span class="font-black text-[16px] text-[#1D1B20] truncate">${oNick}</span><span class="text-[12px] font-bold text-[#6750A4] shrink-0">${tStr}</span></div><span class="text-[15px] text-[#49454F] truncate">${room.lastMessage || ''}</span></div>`;
+                const li = document.createElement('li'); li.className = "flex items-center gap-4 bg-white p-5 rounded-[24px] shadow-oneui cursor-pointer hover:bg-[#F9F9F9] transition-all";
+                li.innerHTML = `<div class="w-14 h-14 bg-[#F2F2F7] text-[#007AFF] rounded-full flex items-center justify-center shrink-0"><i data-lucide="user" class="w-6 h-6"></i></div><div class="flex flex-col flex-1 overflow-hidden"><div class="flex justify-between items-center mb-1"><span class="font-bold text-[17px] text-[#000000] truncate">${oNick}</span><span class="text-[12px] font-bold text-[#8E8E93] shrink-0">${tStr}</span></div><span class="text-[15px] text-[#8E8E93] truncate">${room.lastMessage || ''}</span></div>`;
                 li.addEventListener('click', () => openChatRoom(oUid, oNick, document.getElementById('view-chat-list'))); container.appendChild(li);
             }); lucide.createIcons();
         }
@@ -611,10 +640,10 @@
         function renderChatMessages() {
             const container = document.getElementById('chat-messages-container'); if (!currentChatRoomId || !container) return; container.innerHTML = '';
             const roomMsgs = allChatMessages.filter(m => m.roomId === currentChatRoomId).sort((a, b) => a.createdAt - b.createdAt);
-            if (roomMsgs.length === 0) { container.innerHTML = '<div class="text-center text-[#49454F] mt-20 text-[15px] font-bold">인사를 건네보세요!</div>'; return; }
+            if (roomMsgs.length === 0) { container.innerHTML = '<div class="text-center text-[#8E8E93] mt-20 text-[15px] font-bold">인사를 건네보세요!</div>'; return; }
             roomMsgs.forEach(msg => {
                 const isMe = msg.senderId === currentUser.uid; const div = document.createElement('div'); div.className = `flex w-full ${isMe ? 'justify-end' : 'justify-start'}`; const tStr = new Date(msg.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-                div.innerHTML = isMe ? `<div class="flex items-end gap-2 max-w-[80%]"><span class="text-[11px] font-bold text-[#49454F] mb-1">${tStr}</span><div class="bg-[#6750A4] text-white px-5 py-3 rounded-[24px] rounded-tr-sm text-[15px] break-words shadow-sm">${msg.text}</div></div>` : `<div class="flex flex-col gap-1 w-full items-start"><span class="text-[12px] font-bold text-[#49454F] ml-2">${currentChatOtherNickname}</span><div class="flex items-end gap-2 max-w-[80%]"><div class="bg-white text-[#1D1B20] px-5 py-3 rounded-[24px] rounded-tl-sm text-[15px] break-words shadow-sm">${msg.text}</div><span class="text-[11px] font-bold text-[#49454F] mb-1">${tStr}</span></div></div>`; container.appendChild(div);
+                div.innerHTML = isMe ? `<div class="flex items-end gap-2 max-w-[80%]"><span class="text-[11px] font-bold text-[#8E8E93] mb-1">${tStr}</span><div class="bg-[#007AFF] text-white px-5 py-3 rounded-[24px] rounded-tr-sm text-[16px] break-words shadow-sm">${msg.text}</div></div>` : `<div class="flex flex-col gap-1 w-full items-start"><span class="text-[13px] font-bold text-[#8E8E93] ml-2">${currentChatOtherNickname}</span><div class="flex items-end gap-2 max-w-[80%]"><div class="bg-white text-[#000000] px-5 py-3 rounded-[24px] rounded-tl-sm text-[16px] break-words shadow-sm">${msg.text}</div><span class="text-[11px] font-bold text-[#8E8E93] mb-1">${tStr}</span></div></div>`; container.appendChild(div);
             }); setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }), 50);
         }
         document.getElementById('btn-send-chat').addEventListener('click', async () => {
