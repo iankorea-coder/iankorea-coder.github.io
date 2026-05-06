@@ -24,6 +24,7 @@
 </head>
 <body class="text-[#1D1B20] relative min-h-screen">
 
+    <!-- 1. 홈 화면 -->
     <div id="view-home" class="block pb-24 min-h-screen">
         <main class="max-w-3xl mx-auto px-5 sm:px-6 relative">
             <section class="pt-8 pb-6 sticky top-0 bg-[#FAF8FC]/90 backdrop-blur-md z-10 transition-all">
@@ -67,6 +68,7 @@
         </main>
     </div>
 
+    <!-- 2. 지도 화면 -->
     <div id="view-map" class="hidden bg-[#FAF8FC] h-screen w-full max-w-3xl mx-auto flex-col relative z-50">
         <header class="flex items-center px-4 py-4 sticky top-0 bg-[#FAF8FC]/90 backdrop-blur-md z-20 shrink-0">
             <button id="btn-back-map" class="p-2.5 text-[#1D1B20] bg-[#EFEAF6] hover:bg-[#EADDFF] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
@@ -85,6 +87,7 @@
         </main>
     </div>
 
+    <!-- 3. 대학 선택 화면 -->
     <div id="view-univ" class="hidden bg-[#FAF8FC] min-h-screen pb-12 w-full max-w-3xl mx-auto">
         <header class="flex items-center px-4 py-4 sticky top-0 bg-[#FAF8FC]/90 backdrop-blur-md z-20">
             <button id="btn-back-univ" class="p-2.5 text-[#1D1B20] bg-[#EFEAF6] hover:bg-[#EADDFF] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
@@ -96,6 +99,7 @@
         </section>
     </div>
 
+    <!-- 4. 학과 선택 화면 -->
     <div id="view-dept" class="hidden bg-[#FAF8FC] min-h-screen pb-12 w-full max-w-3xl mx-auto">
         <header class="flex items-center px-4 py-4 sticky top-0 bg-[#FAF8FC]/90 backdrop-blur-md z-20">
             <button id="btn-back-dept" class="p-2.5 text-[#1D1B20] bg-[#EFEAF6] hover:bg-[#EADDFF] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
@@ -106,39 +110,227 @@
             <ul class="flex flex-col gap-3">
                 <li class="dept-item flex items-center gap-4 bg-white rounded-[24px] p-4 shadow-sm cursor-pointer hover:shadow-md transition-all" data-dept="조소학과">
                     <div class="w-14 h-14 bg-[#EFEAF6] text-[#6750A4] rounded-full flex items-center justify-center shrink-0"><i data-lucide="hammer" class="w-6 h-6"></i></div>
-                    <div class="flex flex-col"><span class="text-[17px] font-bold text-[#1D1B20]">조소학과</span><span class="text-[14px] text-[#49454F] mt-1">입체적인 조형물 제작 전문가를 연결해드려요.</span></div>
+                    <div class="flex flex-col"><span class="text-[17px] font-bold text-[#1D1B20]">조소학과</span><span class="text-[14px] text-[#49454F] mt-1">입체적인 조형물, 피규어 등을 깎고 빚어드려요.</span></div>
+                </li>
+                <li class="dept-item flex items-center gap-4 bg-white rounded-[24px] p-4 shadow-sm cursor-pointer hover:shadow-md transition-all" data-dept="산업디자인학과">
+                    <div class="w-14 h-14 bg-[#EADDFF] text-[#21005D] rounded-full flex items-center justify-center shrink-0"><i data-lucide="monitor" class="w-6 h-6"></i></div>
+                    <div class="flex flex-col"><span class="text-[17px] font-bold text-[#1D1B20]">산업디자인학과</span><span class="text-[14px] text-[#49454F] mt-1">제품의 외관 디자인, 3D 모델링 구현을 지원해요.</span></div>
                 </li>
                 <li class="dept-item flex items-center gap-4 bg-white rounded-[24px] p-4 shadow-sm cursor-pointer hover:shadow-md transition-all" data-dept="시각디자인과">
                     <div class="w-14 h-14 bg-[#FFD8E4] text-[#31111D] rounded-full flex items-center justify-center shrink-0"><i data-lucide="pen-tool" class="w-6 h-6"></i></div>
-                    <div class="flex flex-col"><span class="text-[17px] font-bold text-[#1D1B20]">시각디자인과</span><span class="text-[14px] text-[#49454F] mt-1">로고, 포스터 등 감각적인 그래픽 디자인을 만나요.</span></div>
+                    <div class="flex flex-col"><span class="text-[17px] font-bold text-[#1D1B20]">시각디자인과</span><span class="text-[14px] text-[#49454F] mt-1">포스터, 로고 등 감각적인 그래픽 디자인을 만나요.</span></div>
+                </li>
+                <li class="dept-item flex items-center gap-4 bg-white rounded-[24px] p-4 shadow-sm cursor-pointer hover:shadow-md transition-all" data-dept="서양학과">
+                    <div class="w-14 h-14 bg-[#C4E7FF] text-[#001D35] rounded-full flex items-center justify-center shrink-0"><i data-lucide="palette" class="w-6 h-6"></i></div>
+                    <div class="flex flex-col"><span class="text-[17px] font-bold text-[#1D1B20]">서양학과</span><span class="text-[14px] text-[#49454F] mt-1">캔버스 위에 개성이 담긴 멋진 그림을 그려드려요.</span></div>
+                </li>
+                <li class="dept-item flex items-center gap-4 bg-white rounded-[24px] p-4 shadow-sm cursor-pointer hover:shadow-md transition-all" data-dept="문창과">
+                    <div class="w-14 h-14 bg-[#FFDEAB] text-[#2B1700] rounded-full flex items-center justify-center shrink-0"><i data-lucide="book-open" class="w-6 h-6"></i></div>
+                    <div class="flex flex-col"><span class="text-[17px] font-bold text-[#1D1B20]">문창과</span><span class="text-[14px] text-[#49454F] mt-1">마음을 움직이는 매력적인 글과 시나리오를 창작해요.</span></div>
+                </li>
+                <li class="dept-item flex items-center gap-4 bg-white rounded-[24px] p-4 shadow-sm cursor-pointer hover:shadow-md transition-all" data-dept="컴퓨터공학과">
+                    <div class="w-14 h-14 bg-[#C2E7FF] text-[#001D35] rounded-full flex items-center justify-center shrink-0"><i data-lucide="terminal" class="w-6 h-6"></i></div>
+                    <div class="flex flex-col"><span class="text-[17px] font-bold text-[#1D1B20]">컴퓨터공학과</span><span class="text-[14px] text-[#49454F] mt-1">아이디어를 실제 작동하는 웹이나 앱으로 개발해요.</span></div>
                 </li>
             </ul>
         </section>
     </div>
 
+    <!-- 5. 게시판(필터 결과) 화면 -->
     <div id="view-board" class="hidden bg-[#FAF8FC] min-h-screen pb-12 w-full max-w-3xl mx-auto flex-col relative z-40">
         <header class="flex items-center px-4 py-4 sticky top-0 bg-[#FAF8FC]/90 backdrop-blur-md z-20 shrink-0"><button id="btn-back-board" class="p-2.5 text-[#1D1B20] bg-[#EFEAF6] hover:bg-[#EADDFF] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button><h1 id="board-title" class="text-[19px] font-bold text-[#1D1B20] absolute left-1/2 transform -translate-x-1/2">게시판</h1></header>
         <main class="p-5"><div id="board-posts-container" class="grid grid-cols-2 sm:grid-cols-3 gap-5"></div></main>
     </div>
 
-    <button id="btn-write-post" class="fixed bottom-6 right-6 w-16 h-16 bg-[#D0BCFF] text-[#21005D] rounded-[20px] shadow-m3 flex items-center justify-center hover:bg-[#EADDFF] transition-all z-50 group"><i data-lucide="pen" class="w-7 h-7 group-hover:scale-110 transition-transform"></i></button>
-    <button id="btn-chat-list" class="fixed bottom-[104px] right-6 w-16 h-16 bg-[#F3EEFA] text-[#6750A4] rounded-[20px] shadow-m3 flex items-center justify-center hover:bg-[#EFEAF6] transition-all z-50 group border border-[#D0BCFF]/50"><i data-lucide="message-square" class="w-7 h-7 group-hover:scale-110 transition-transform"></i></button>
+    <!-- 6. 글 작성 화면 -->
+    <div id="view-write" class="hidden bg-[#FAF8FC] min-h-screen pb-12 w-full max-w-3xl mx-auto flex-col relative z-50">
+        <header class="flex items-center justify-between px-4 py-4 sticky top-0 bg-[#FAF8FC]/90 backdrop-blur-md z-20">
+            <div class="flex items-center gap-3">
+                <button id="btn-back-write" class="p-2.5 text-[#1D1B20] bg-[#EFEAF6] hover:bg-[#EADDFF] rounded-full transition-colors"><i data-lucide="x" class="w-6 h-6"></i></button>
+                <h1 class="text-[19px] font-bold text-[#1D1B20]">나의 자료 올리기</h1>
+            </div>
+            <button id="btn-upload" class="bg-[#6750A4] text-white px-5 py-2.5 rounded-full font-bold text-[15px] hover:bg-[#4F378B] transition-colors shadow-sm">업로드</button>
+        </header>
+        <main class="px-5 py-6 flex flex-col gap-6">
+            <div class="bg-white p-6 rounded-[28px] shadow-sm flex flex-col gap-6">
+                <div class="flex gap-4 overflow-x-auto pb-2 scrollbar-hide items-center">
+                    <input type="file" id="image-input" accept="image/*" class="hidden">
+                    <button id="btn-camera" class="shrink-0 w-24 h-24 bg-[#EFEAF6] text-[#6750A4] rounded-[24px] flex flex-col items-center justify-center hover:bg-[#EADDFF] transition-colors focus:outline-none focus:ring-4 focus:ring-[#D0BCFF]">
+                        <i data-lucide="camera" class="w-8 h-8 mb-1"></i><span class="text-[13px] font-bold" id="image-count">0/1</span>
+                    </button>
+                    <div id="image-preview-container" class="flex gap-3 h-24"></div>
+                </div>
+                <div><input type="text" id="post-title" placeholder="멋진 제목을 입력하세요" class="w-full bg-transparent border-b-2 border-[#EFEAF6] px-2 py-4 text-[20px] font-bold text-[#1D1B20] placeholder-[#49454F]/50 focus:outline-none focus:border-[#6750A4] transition-colors"></div>
+                <div><textarea id="post-content" placeholder="작품이나 자료에 대해 설명해주세요.&#10;예: #계명대 #시각디자인과" class="w-full bg-[#FAF8FC] border-none rounded-[20px] px-5 py-5 h-56 text-[16px] text-[#1D1B20] placeholder-[#49454F]/60 focus:outline-none focus:ring-2 focus:ring-[#6750A4] transition-all resize-none leading-relaxed"></textarea></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 7. 게시글 상세 화면 -->
+    <div id="view-post-detail" class="hidden bg-[#FAF8FC] min-h-screen pb-28 w-full max-w-3xl mx-auto flex-col relative z-50">
+        <header class="flex items-center justify-between px-4 py-4 sticky top-0 bg-[#FAF8FC]/90 backdrop-blur-md z-20">
+            <button id="btn-back-detail" class="p-2.5 text-[#1D1B20] bg-[#EFEAF6] hover:bg-[#EADDFF] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
+            <button id="btn-delete-post" class="hidden p-2.5 text-[#BA1A1A] bg-[#FFDAD6] hover:bg-[#FFB4AB] rounded-full transition-colors"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
+        </header>
+        <main class="flex-1 px-5 overflow-y-auto">
+            <div class="bg-white rounded-[32px] overflow-hidden shadow-sm mb-6">
+                <div id="detail-image-container" class="w-full bg-[#EFEAF6] aspect-[4/3] relative flex items-center justify-center overflow-hidden"></div>
+                <div class="p-6">
+                    <div class="flex flex-wrap gap-2 mb-4" id="detail-tags"></div>
+                    <h2 id="detail-title" class="text-[24px] font-black text-[#1D1B20] mb-4 leading-snug">제목</h2>
+                    <p id="detail-content" class="text-[16px] text-[#49454F] leading-relaxed whitespace-pre-wrap mb-6">내용</p>
+                    <div class="flex items-center gap-3 pt-5 border-t border-[#EFEAF6]">
+                        <div class="w-10 h-10 bg-[#EADDFF] text-[#21005D] rounded-full flex items-center justify-center shrink-0"><i data-lucide="user" class="w-5 h-5"></i></div>
+                        <div><div class="font-bold text-[15px] text-[#1D1B20]" id="detail-author">익명 사용자</div><div class="text-[13px] text-[#49454F]" id="detail-time">방금 전</div></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div class="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-3xl bg-[#FAF8FC]/90 backdrop-blur-md px-5 py-4 z-20 pb-8 sm:pb-5">
+            <button class="w-full bg-[#6750A4] text-white font-bold text-[16px] py-4 rounded-full hover:bg-[#4F378B] transition-colors shadow-m3 flex items-center justify-center gap-2" id="btn-start-chat"><i data-lucide="message-circle" class="w-5 h-5"></i> 작성자와 대화하기</button>
+        </div>
+    </div>
+
+    <!-- 8. 내 프로필 화면 -->
+    <div id="view-profile" class="hidden bg-[#FAF8FC] min-h-screen pb-12 w-full max-w-3xl mx-auto flex-col relative z-50">
+        <header class="flex items-center px-4 py-4 sticky top-0 bg-[#FAF8FC]/90 backdrop-blur-md z-20">
+            <button id="btn-back-profile" class="p-2.5 text-[#1D1B20] bg-[#EFEAF6] hover:bg-[#EADDFF] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
+            <h1 class="text-[19px] font-bold text-[#1D1B20] absolute left-1/2 transform -translate-x-1/2">내 프로필</h1>
+        </header>
+        <main class="p-5">
+            <div class="bg-white rounded-[32px] p-8 shadow-sm mb-6 flex flex-col items-center text-center">
+                <div class="w-24 h-24 bg-[#EADDFF] text-[#6750A4] rounded-[32px] flex items-center justify-center mb-5 shadow-inner"><i data-lucide="user" class="w-10 h-10"></i></div>
+                <h2 id="profile-display-nickname" class="text-[24px] font-black text-[#1D1B20]">닉네임</h2>
+                <p id="profile-display-email" class="text-[15px] text-[#49454F] mt-1 mb-6">이메일</p>
+                <div class="w-full bg-[#FAF8FC] rounded-[24px] p-5 flex flex-col gap-3 text-left">
+                    <div class="flex justify-between items-center"><span class="text-[15px] font-bold text-[#49454F]">대학</span><span id="profile-display-univ" class="text-[16px] font-bold text-[#6750A4] bg-[#EADDFF] px-3 py-1 rounded-lg">대학</span></div>
+                    <div class="flex justify-between items-center"><span class="text-[15px] font-bold text-[#49454F]">학과</span><span id="profile-display-dept" class="text-[16px] font-bold text-[#31111D] bg-[#FFD8E4] px-3 py-1 rounded-lg">학과</span></div>
+                </div>
+            </div>
+            <div class="flex flex-col gap-3">
+                <button id="btn-edit-profile" class="w-full bg-[#EFEAF6] text-[#6750A4] font-bold text-[16px] py-4 rounded-full hover:bg-[#EADDFF] transition-colors flex items-center justify-center gap-2"><i data-lucide="settings" class="w-5 h-5"></i> 프로필 수정</button>
+                <button id="btn-logout" class="w-full bg-[#FFDAD6] text-[#BA1A1A] font-bold text-[16px] py-4 rounded-full hover:bg-[#FFB4AB] transition-colors flex items-center justify-center gap-2"><i data-lucide="log-out" class="w-5 h-5"></i> 로그아웃</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- 9. 채팅 목록 화면 -->
+    <div id="view-chat-list" class="hidden bg-[#FAF8FC] min-h-screen pb-12 w-full max-w-3xl mx-auto flex-col relative z-50">
+        <header class="flex items-center px-4 py-4 sticky top-0 bg-[#FAF8FC]/90 backdrop-blur-md z-20">
+            <button id="btn-back-chat-list" class="p-2.5 text-[#1D1B20] bg-[#EFEAF6] hover:bg-[#EADDFF] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
+            <h1 class="text-[19px] font-bold text-[#1D1B20] absolute left-1/2 transform -translate-x-1/2">채팅 목록</h1>
+        </header>
+        <main class="flex-1 px-5"><ul id="chat-list-container" class="flex flex-col gap-3 mt-2"></ul></main>
+    </div>
+
+    <!-- 10. 1:1 채팅방 화면 -->
+    <div id="view-chat-room" class="hidden bg-[#FAF8FC] min-h-screen pb-24 w-full max-w-3xl mx-auto flex-col relative z-50">
+        <header class="flex items-center px-4 py-4 sticky top-0 bg-[#FAF8FC]/90 backdrop-blur-md z-20 shadow-sm">
+            <button id="btn-back-chat-room" class="p-2.5 text-[#1D1B20] bg-[#EFEAF6] hover:bg-[#EADDFF] rounded-full transition-colors"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
+            <h1 id="chat-room-title" class="text-[19px] font-bold text-[#1D1B20] absolute left-1/2 transform -translate-x-1/2">상대방 이름</h1>
+        </header>
+        <main id="chat-messages-container" class="flex-1 p-5 flex flex-col gap-5 overflow-y-auto"></main>
+        <footer class="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-3xl bg-[#FAF8FC] px-5 py-4 pb-8 sm:pb-5 z-20">
+            <div class="flex gap-2 relative bg-[#EFEAF6] rounded-full p-1 border border-transparent focus-within:border-[#6750A4] transition-colors">
+                <input type="text" id="chat-input" placeholder="메시지를 입력하세요" class="flex-1 bg-transparent pl-5 py-3 text-[16px] text-[#1D1B20] focus:outline-none placeholder-[#49454F]">
+                <button id="btn-send-chat" class="w-12 h-12 bg-[#6750A4] text-white rounded-full flex items-center justify-center hover:bg-[#4F378B] transition-colors shrink-0"><i data-lucide="send" class="w-5 h-5 ml-1"></i></button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 모달(로그인/가입/수정/삭제) -->
+    <div id="view-login" class="hidden fixed inset-0 z-[100] bg-black/40 flex items-end sm:items-center justify-center sm:p-5">
+        <div class="bg-[#FAF8FC] w-full max-w-md rounded-t-[32px] sm:rounded-[32px] flex flex-col shadow-2xl fade-in overflow-hidden max-h-[90vh]">
+            <header class="flex items-center justify-between p-5 pb-0"><div class="w-8"></div><div class="w-12 h-1.5 bg-[#CAC4D0] rounded-full sm:hidden"></div><button id="btn-back-login" class="p-2 text-[#49454F] bg-[#EFEAF6] rounded-full hover:bg-[#EADDFF]"><i data-lucide="x" class="w-5 h-5"></i></button></header>
+            <main class="p-8 pt-4 overflow-y-auto">
+                <h2 class="text-[28px] font-black text-[#1D1B20] mb-2">시작하기</h2>
+                <p class="text-[#49454F] text-[15px] mb-8">이메일과 비밀번호로 로그인해주세요.</p>
+                <div class="flex flex-col gap-5">
+                    <input type="email" id="login-email" placeholder="이메일 (example@univ.ac.kr)" class="w-full bg-white border border-[#CAC4D0] rounded-[16px] px-5 py-4 focus:outline-none focus:border-[#6750A4]">
+                    <input type="password" id="login-pw" placeholder="비밀번호" class="w-full bg-white border border-[#CAC4D0] rounded-[16px] px-5 py-4 focus:outline-none focus:border-[#6750A4]">
+                </div>
+                <button id="btn-submit-login" class="w-full bg-[#6750A4] text-white font-bold text-[16px] py-4 rounded-full hover:bg-[#4F378B] transition-colors mt-8 shadow-m3">로그인</button>
+            </main>
+        </div>
+    </div>
+
+    <div id="view-auth" class="hidden fixed inset-0 z-[100] bg-black/40 flex items-end sm:items-center justify-center sm:p-5">
+        <div class="bg-[#FAF8FC] w-full max-w-md rounded-t-[32px] sm:rounded-[32px] flex flex-col shadow-2xl fade-in overflow-hidden max-h-[90vh]">
+            <header class="flex items-center justify-between p-5 pb-0"><div class="w-8"></div><button id="btn-back-auth" class="p-2 text-[#49454F] bg-[#EFEAF6] rounded-full hover:bg-[#EADDFF]"><i data-lucide="x" class="w-5 h-5"></i></button></header>
+            <main class="p-8 pt-4 overflow-y-auto">
+                <h2 class="text-[28px] font-black text-[#1D1B20] mb-2">회원가입</h2>
+                <p class="text-[#49454F] text-[15px] mb-6">몇 가지 정보만 입력하면 끝나요!</p>
+                <div class="flex flex-col gap-4">
+                    <input type="email" id="auth-email" placeholder="이메일" class="w-full bg-white border border-[#CAC4D0] rounded-[16px] px-5 py-4 focus:outline-none focus:border-[#6750A4]">
+                    <input type="password" id="auth-pw" placeholder="비밀번호" class="w-full bg-white border border-[#CAC4D0] rounded-[16px] px-5 py-4 focus:outline-none focus:border-[#6750A4]">
+                    <input type="password" id="auth-pw-confirm" placeholder="비밀번호 확인" class="w-full bg-white border border-[#CAC4D0] rounded-[16px] px-5 py-4 focus:outline-none focus:border-[#6750A4]">
+                    <p id="auth-pw-error" class="hidden text-[#BA1A1A] text-[13px] ml-2 font-bold -mt-2">비밀번호가 일치하지 않습니다.</p>
+                    <input type="text" id="auth-nickname" placeholder="닉네임" class="w-full bg-white border border-[#CAC4D0] rounded-[16px] px-5 py-4 focus:outline-none focus:border-[#6750A4]">
+                    <div class="flex gap-3">
+                        <input type="text" id="auth-univ" placeholder="대학 (예: 홍익대)" class="flex-1 bg-white border border-[#CAC4D0] rounded-[16px] px-4 py-4 focus:outline-none focus:border-[#6750A4]">
+                        <input type="text" id="auth-dept" placeholder="학과 (예: 디자인과)" class="flex-1 bg-white border border-[#CAC4D0] rounded-[16px] px-4 py-4 focus:outline-none focus:border-[#6750A4]">
+                    </div>
+                </div>
+                <button id="btn-submit-auth" class="w-full bg-[#6750A4] text-white font-bold text-[16px] py-4 rounded-full hover:bg-[#4F378B] transition-colors mt-8 shadow-m3">가입 완료</button>
+            </main>
+        </div>
+    </div>
+
+    <div id="view-edit-profile" class="hidden fixed inset-0 z-[100] bg-black/40 flex items-center justify-center p-5">
+        <div class="bg-[#FAF8FC] w-full max-w-sm rounded-[32px] flex flex-col shadow-2xl p-6 fade-in">
+            <h2 class="text-[20px] font-bold text-[#1D1B20] mb-6">프로필 수정</h2>
+            <div class="flex flex-col gap-4">
+                <input type="text" id="edit-nickname" placeholder="닉네임" class="w-full bg-white border border-[#CAC4D0] rounded-[16px] px-4 py-3.5 focus:outline-none focus:border-[#6750A4]">
+                <input type="text" id="edit-univ" placeholder="대학" class="w-full bg-white border border-[#CAC4D0] rounded-[16px] px-4 py-3.5 focus:outline-none focus:border-[#6750A4]">
+                <input type="text" id="edit-dept" placeholder="학과" class="w-full bg-white border border-[#CAC4D0] rounded-[16px] px-4 py-3.5 focus:outline-none focus:border-[#6750A4]">
+            </div>
+            <div class="flex gap-3 mt-6">
+                <button id="btn-back-edit-profile" class="flex-1 bg-[#EFEAF6] text-[#49454F] font-bold py-3.5 rounded-full hover:bg-[#EADDFF]">취소</button>
+                <button id="btn-submit-edit-profile" class="flex-1 bg-[#6750A4] text-white font-bold py-3.5 rounded-full hover:bg-[#4F378B]">저장</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-confirm-delete" class="hidden fixed inset-0 z-[200] bg-black/40 flex items-center justify-center p-5">
+        <div class="bg-[#FAF8FC] w-full max-w-sm rounded-[32px] p-8 shadow-2xl fade-in text-center">
+            <i data-lucide="alert-circle" class="w-12 h-12 text-[#BA1A1A] mx-auto mb-4"></i>
+            <h3 class="text-[22px] font-bold text-[#1D1B20] mb-2">게시글 삭제</h3>
+            <p class="text-[15px] text-[#49454F] mb-8">정말 삭제할까요? 복구할 수 없어요.</p>
+            <div class="flex gap-3">
+                <button id="btn-cancel-delete" class="flex-1 py-3.5 bg-[#EFEAF6] text-[#49454F] font-bold rounded-full hover:bg-[#EADDFF]">취소</button>
+                <button id="btn-confirm-delete" class="flex-1 py-3.5 bg-[#BA1A1A] text-white font-bold rounded-full hover:bg-[#93000A]">삭제</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 플로팅 버튼(FABs) -->
+    <button id="btn-write-post" class="fixed bottom-6 right-6 sm:right-10 w-16 h-16 bg-[#D0BCFF] text-[#21005D] rounded-[20px] shadow-m3 flex items-center justify-center hover:bg-[#EADDFF] transition-all z-50 group"><i data-lucide="pen" class="w-7 h-7 group-hover:scale-110 transition-transform"></i></button>
+    <button id="btn-chat-list" class="fixed bottom-[104px] right-6 sm:right-10 w-16 h-16 bg-[#F3EEFA] text-[#6750A4] rounded-[20px] shadow-m3 flex items-center justify-center hover:bg-[#EFEAF6] transition-all z-50 group border border-[#D0BCFF]/50"><i data-lucide="message-square" class="w-7 h-7 group-hover:scale-110 transition-transform"></i></button>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         lucide.createIcons();
 
-        const firebaseConfig = { apiKey: "AIzaSyBxBUOco-7Z7xY1Bl5L0nz3uDcxxUY0mHw", authDomain: "floforpiece-bbebb.firebaseapp.com", projectId: "floforpiece-bbebb", storageBucket: "floforpiece-bbebb.firebasestorage.app", messagingSenderId: "566295327781", appId: "1:566295327781:web:450f2c4ddffe8f1b293bcc" };
-        const app = initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app), appId = 'floforpiece-app';
+        // ------------------ 1. 전역 변수 및 Firebase 설정 ------------------
+        let firebaseConfig;
+        if (typeof __firebase_config !== 'undefined') {
+            firebaseConfig = JSON.parse(__firebase_config);
+        } else {
+            firebaseConfig = { apiKey: "AIzaSyBxBUOco-7Z7xY1Bl5L0nz3uDcxxUY0mHw", authDomain: "floforpiece-bbebb.firebaseapp.com", projectId: "floforpiece-bbebb", storageBucket: "floforpiece-bbebb.firebasestorage.app", messagingSenderId: "566295327781", appId: "1:566295327781:web:450f2c4ddffe8f1b293bcc" };
+        }
+        
+        const app = initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'floforpiece-app';
 
-        const viewHome = document.getElementById('view-home'), viewMap = document.getElementById('view-map'), viewUniv = document.getElementById('view-univ'), viewDept = document.getElementById('view-dept');
-        const btnMap = document.getElementById('btn-map'), btnBackMap = document.getElementById('btn-back-map'), btnFindLocation = document.getElementById('btn-find-location');
-        const btnUniv = document.getElementById('btn-univ'), btnBackUniv = document.getElementById('btn-back-univ'), btnWritePost = document.getElementById('btn-write-post'), btnChatList = document.getElementById('btn-chat-list');
-        let baseLat = 37.5665, baseLng = 126.9780, firestorePosts = [];
+        let currentUser = null, currentUserNickname = null, currentUserProfileDocId = null, currentUserProfileData = null;
+        let firestorePosts = [], allChatRooms = [], allChatMessages = [];
+        let currentChatRoomId = null, currentChatOtherUid = null, currentChatOtherNickname = null, previousViewBeforeChatRoom = null, viewBeforeDetail = null, currentPreviousView = document.getElementById('view-home');
+        let baseLat = 37.5665, baseLng = 126.9780;
 
+        // ------------------ 2. 공통 유틸리티 (Toast 등) ------------------
         window.showToast = function(msg) {
             let toast = document.getElementById('toast-msg');
             if(!toast) {
@@ -149,117 +341,314 @@
             toast.textContent = msg; toast.classList.remove('opacity-0'); setTimeout(() => toast.classList.add('opacity-0'), 3000); 
         };
 
-        // 🌟 수정 포인트 1: 위치 권한 요청 함수 고도화 (에러 원인 상세 출력)
-        function getMyLocation(successCallback, failCallback) {
-            if (!navigator.geolocation) {
-                showToast("이 브라우저에서는 위치 기능을 지원하지 않습니다.");
-                if(failCallback) failCallback();
+        // ------------------ 3. Firebase 인증 및 초기화 ------------------
+        const initAuth = async () => {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    try {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } catch (customTokenError) {
+                        console.warn("Custom token mismatch, falling back to anonymous auth...", customTokenError);
+                        await signInAnonymously(auth);
+                    }
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (error) { console.error("Auth init failed", error); }
+        };
+        initAuth();
+
+        onAuthStateChanged(auth, async (user) => {
+            currentUser = user;
+            if (!user) {
+                document.getElementById('btn-show-login').classList.remove('hidden');
+                document.getElementById('profile-indicator').classList.replace('flex', 'hidden');
                 return;
             }
 
-            const options = { timeout: 8000, enableHighAccuracy: true };
-            
-            navigator.geolocation.getCurrentPosition(
-                (pos) => {
-                    baseLat = pos.coords.latitude;
-                    baseLng = pos.coords.longitude;
-                    successCallback();
-                },
-                (err) => {
-                    let msg = "";
-                    switch(err.code) {
-                        case err.PERMISSION_DENIED:
-                            msg = "위치 권한 승인이 거절되었습니다. 브라우저 설정에서 허용해주세요.";
-                            break;
-                        case err.POSITION_UNAVAILABLE:
-                            msg = "현재 위치 정보를 사용할 수 없습니다.";
-                            break;
-                        case err.TIMEOUT:
-                            msg = "위치 정보 응답 시간이 초과되었습니다.";
-                            break;
-                        default:
-                            msg = "위치 정보를 가져오는 중 오류가 발생했습니다.";
-                            break;
+            try {
+                const sessionRef = doc(db, 'artifacts', appId, 'public', 'data', 'sessions', user.uid);
+                onSnapshot(sessionRef, (docSnap) => {
+                    if (docSnap.exists() && docSnap.data().email) {
+                        const userEmail = docSnap.data().email;
+                        onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'profiles'), (profilesSnap) => {
+                            profilesSnap.forEach(profileDoc => {
+                                if (profileDoc.data().email === userEmail) {
+                                    currentUserProfileDocId = profileDoc.id; currentUserProfileData = profileDoc.data();
+                                    currentUserNickname = profileDoc.data().nickname; document.getElementById('profile-email').textContent = currentUserNickname; 
+                                    document.getElementById('btn-show-login').classList.add('hidden'); document.getElementById('profile-indicator').classList.replace('hidden', 'flex');
+                                }
+                            });
+                        });
+                    } else {
+                        document.getElementById('btn-show-login').classList.remove('hidden'); document.getElementById('profile-indicator').classList.replace('flex', 'hidden');
                     }
-                    showToast(msg);
-                    if(failCallback) failCallback();
-                },
-                options
-            );
+                }, () => {});
+            } catch (e) { console.error(e); }
+
+            // 데이터 실시간 동기화
+            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'posts'), (snapshot) => {
+                firestorePosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })).sort((a, b) => b.createdAt - a.createdAt);
+                refreshAllFeeds();
+            }, () => {});
+
+            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'chatRooms'), (snap) => {
+                allChatRooms = snap.docs.map(d => ({id: d.id, ...d.data()}));
+                if (!document.getElementById('view-chat-list').classList.contains('hidden')) renderChatList();
+            }, () => {});
+
+            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'chatMessages'), (snap) => {
+                allChatMessages = snap.docs.map(d => ({id: d.id, ...d.data()}));
+                if (!document.getElementById('view-chat-room').classList.contains('hidden')) renderChatMessages();
+            }, () => {});
+        });
+
+        // ------------------ 4. 네비게이션 및 화면 전환 ------------------
+        function switchView(hideId, showId) {
+            document.getElementById(hideId).classList.replace('block', 'hidden');
+            document.getElementById(hideId).classList.replace('flex', 'hidden');
+            const showEl = document.getElementById(showId);
+            if(showId === 'view-map' || showId === 'view-post-detail' || showId === 'view-profile' || showId === 'view-chat-list' || showId === 'view-chat-room' || showId === 'view-write') {
+                showEl.classList.replace('hidden', 'flex');
+            } else {
+                showEl.classList.replace('hidden', 'block');
+            }
+            showEl.classList.add('fade-in');
+            window.scrollTo(0, 0);
         }
 
-        // 🌟 수정 포인트 2: 구글 지도 마커 연동 URL 수정 (주변 대학 마킹)
-        function loadGoogleMap(lat, lng) {
-            const iframe = document.getElementById('google-map-iframe'), loading = document.getElementById('map-loading');
-            loading.classList.remove('hidden');
-            iframe.onload = () => loading.classList.add('hidden');
-            // 좌표를 중심(ll)으로 '대학교'를 검색(q)하여 마커를 표시하는 임베드 방식
-            iframe.src = `https://maps.google.com/maps?q=대학교&ll=${lat},${lng}&z=14&t=m&output=embed`;
+        function toggleFABs(show) {
+            const display = show ? 'flex' : 'hidden';
+            document.getElementById('btn-write-post').classList.replace(show ? 'hidden' : 'flex', display);
+            document.getElementById('btn-chat-list').classList.replace(show ? 'hidden' : 'flex', display);
         }
 
-        btnMap.addEventListener('click', () => {
-            viewHome.classList.replace('block', 'hidden'); btnWritePost.classList.replace('flex', 'hidden'); btnChatList.classList.replace('flex', 'hidden');
-            viewMap.classList.replace('hidden', 'flex'); viewMap.classList.add('fade-in');
-            
-            getMyLocation(
-                () => loadGoogleMap(baseLat, baseLng),
-                () => loadGoogleMap(baseLat, baseLng) // 실패해도 기본위치로 로드
-            );
+        // 대학 버튼
+        document.getElementById('btn-univ').addEventListener('click', () => {
+            switchView('view-home', 'view-univ'); toggleFABs(false);
+            document.getElementById('univ-list').innerHTML = '<div class="py-16 text-[#49454F] font-bold flex flex-col items-center"><i data-lucide="loader-2" class="w-8 h-8 animate-spin mb-3 text-[#6750A4]"></i>위치를 확인하고 있어요</div>';
+            lucide.createIcons();
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (p) => { baseLat = p.coords.latitude; baseLng = p.coords.longitude; renderSortedUnivs(); },
+                    (e) => { window.showToast("위치 권한이 차단되어 기본 위치를 사용합니다."); renderSortedUnivs(); },
+                    { timeout: 5000, enableHighAccuracy: true }
+                );
+            } else renderSortedUnivs();
         });
+        document.getElementById('btn-back-univ').addEventListener('click', () => { switchView('view-univ', 'view-home'); toggleFABs(true); });
 
-        btnFindLocation.addEventListener('click', () => {
-            getMyLocation(() => loadGoogleMap(baseLat, baseLng));
+        // 학과 버튼
+        document.getElementById('btn-dept').addEventListener('click', () => { switchView('view-home', 'view-dept'); toggleFABs(false); });
+        document.getElementById('btn-back-dept').addEventListener('click', () => { switchView('view-dept', 'view-home'); toggleFABs(true); });
+
+        // 지도 버튼
+        document.getElementById('btn-map').addEventListener('click', () => {
+            switchView('view-home', 'view-map'); toggleFABs(false);
+            const loadMap = () => {
+                const iframe = document.getElementById('google-map-iframe'), loading = document.getElementById('map-loading');
+                loading.classList.remove('hidden'); iframe.onload = () => loading.classList.add('hidden');
+                iframe.src = `https://www.google.com/maps?q=대학교&ll=${baseLat},${baseLng}&z=14&t=m&hl=ko&output=embed`;
+            };
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (p) => { baseLat = p.coords.latitude; baseLng = p.coords.longitude; loadMap(); },
+                    (e) => { window.showToast("기본 위치 지도를 엽니다."); loadMap(); },
+                    { timeout: 5000, enableHighAccuracy: true }
+                );
+            } else loadMap();
         });
+        document.getElementById('btn-back-map').addEventListener('click', () => { switchView('view-map', 'view-home'); toggleFABs(true); });
+        document.getElementById('btn-find-location').addEventListener('click', () => document.getElementById('btn-map').click());
 
-        btnBackMap.addEventListener('click', () => {
-            viewMap.classList.replace('flex', 'hidden'); viewHome.classList.replace('hidden', 'block');
-            btnWritePost.classList.replace('hidden', 'flex'); btnChatList.classList.replace('hidden', 'flex');
-        });
-
-        // 대학 리스트 (데이터 유지)
+        // ------------------ 5. 대학/학과/게시판/게시물 로직 ------------------
         const universitiesData = [
-            { name: "서울대학교", lat: 37.4598, lng: 126.9519 },
-            { name: "연세대학교", lat: 37.5657, lng: 126.9385 },
-            { name: "고려대학교", lat: 37.5907, lng: 127.0277 },
-            { name: "홍익대학교", lat: 37.5514, lng: 126.9250 },
-            { name: "계명대학교", lat: 35.8307, lng: 128.4800 }
-            // ... 생략 ...
+            { name: "서울대학교", lat: 37.4598, lng: 126.9519 }, { name: "연세대학교", lat: 37.5657, lng: 126.9385 },
+            { name: "고려대학교", lat: 37.5907, lng: 127.0277 }, { name: "서강대학교", lat: 37.5512, lng: 126.9415 },
+            { name: "성균관대학교", lat: 37.5833, lng: 126.9954 }, { name: "한양대학교", lat: 37.5559, lng: 127.0436 },
+            { name: "홍익대학교", lat: 37.5514, lng: 126.9250 }, { name: "부산대학교", lat: 35.2332, lng: 129.0792 },
+            { name: "경북대학교", lat: 35.8906, lng: 128.6121 }, { name: "계명대학교", lat: 35.8307, lng: 128.4800 },
+            { name: "전남대학교", lat: 35.1768, lng: 126.9058 }, { name: "충남대학교", lat: 36.3622, lng: 127.3435 },
+            { name: "KAIST", lat: 36.3721, lng: 127.3604 }, { name: "제주대학교", lat: 33.4561, lng: 126.5616 }
         ];
-
-        function calculateDistance(lat1, lon1, lat2, lon2) {
+        function calcDist(lat1, lon1, lat2, lon2) {
             const R = 6371, dLat = (lat2 - lat1) * Math.PI / 180, dLon = (lon2 - lon1) * Math.PI / 180;
             const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
             return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
         }
-
         function renderSortedUnivs() {
-            const list = document.getElementById('univ-list'); list.innerHTML = '';
-            const sorted = universitiesData.map(u => ({ ...u, dist: calculateDistance(baseLat, baseLng, u.lat, u.lng) })).sort((a,b) => a.dist - b.dist).slice(0, 10);
-            sorted.forEach(u => {
-                const li = document.createElement('li');
-                li.className = "flex items-center justify-between bg-white rounded-[24px] p-4 shadow-sm";
+            const list = document.getElementById('univ-list'); if(!list) return; list.innerHTML = '';
+            universitiesData.map(u => ({ ...u, dist: calcDist(baseLat, baseLng, u.lat, u.lng) })).sort((a,b) => a.dist - b.dist).slice(0, 10).forEach(u => {
+                const li = document.createElement('li'); li.className = "flex items-center justify-between bg-white rounded-[24px] p-4 shadow-sm cursor-pointer hover:shadow-md transition-all";
                 li.innerHTML = `<div class="flex items-center gap-4"><div class="w-12 h-12 bg-[#EADDFF] text-[#21005D] rounded-full flex items-center justify-center"><i data-lucide="library" class="w-6 h-6"></i></div><span class="font-bold">${u.name}</span></div><span class="text-[14px] font-bold text-[#6750A4] bg-[#EFEAF6] px-3 py-1.5 rounded-lg">${u.dist < 1 ? (u.dist*1000).toFixed(0)+'m' : u.dist.toFixed(1)+'km'}</span>`;
-                list.appendChild(li);
-            });
-            lucide.createIcons();
+                li.addEventListener('click', () => window.handleTagClick('#' + u.name.replace(/대학교$/, '대'))); list.appendChild(li);
+            }); lucide.createIcons();
         }
 
-        btnUniv.addEventListener('click', () => {
-            viewHome.classList.replace('block', 'hidden'); viewUniv.classList.replace('hidden', 'block');
-            getMyLocation(renderSortedUnivs, renderSortedUnivs);
-        });
-
-        btnBackUniv.addEventListener('click', () => { viewUniv.classList.replace('block', 'hidden'); viewHome.classList.replace('hidden', 'block'); });
-
-        // Firebase Auth & Post 초기화 (간략)
-        onAuthStateChanged(auth, (user) => {
-            if (user) onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'posts'), (snap) => {
-                firestorePosts = snap.docs.map(d => ({id: d.id, ...d.data()}));
-                // render logic...
+        window.handleTagClick = function(tag) {
+            ['view-home', 'view-univ', 'view-dept', 'view-map', 'view-post-detail'].forEach(id => {
+                const el = document.getElementById(id); if(el) { el.classList.replace('block', 'hidden'); el.classList.replace('flex', 'hidden'); }
             });
-        });
-        signInAnonymously(auth);
+            document.getElementById('board-title').textContent = tag + " 검색결과";
+            renderPostItems('board-posts-container', firestorePosts.filter(post => post.tag.includes(tag)));
+            currentPreviousView = document.getElementById('view-home');
+            document.getElementById('view-board').classList.replace('hidden', 'block'); toggleFABs(false); window.scrollTo(0, 0);
+        };
 
+        document.querySelectorAll('.dept-item').forEach(item => { item.addEventListener('click', () => window.handleTagClick('#' + item.getAttribute('data-dept'))); });
+        document.getElementById('btn-back-board').addEventListener('click', () => { switchView('view-board', 'view-home'); toggleFABs(true); });
+
+        const deptInfo = { "조소과": { icon: "hammer", color: "text-[#1D1B20]", bg: "bg-[#EFEAF6]" }, "산업디자인": { icon: "monitor", color: "text-[#21005D]", bg: "bg-[#EADDFF]" }, "시각디자인": { icon: "pen-tool", color: "text-[#31111D]", bg: "bg-[#FFD8E4]" }, "서양화": { icon: "palette", color: "text-[#001D35]", bg: "bg-[#C4E7FF]" }, "문창과": { icon: "book-open", color: "text-[#2B1700]", bg: "bg-[#FFDEAB]" }, "컴공": { icon: "terminal", color: "text-[#001F25]", bg: "bg-[#C2E7FF]" } };
+        function getDeptFallback(tagStr) { for(let d in deptInfo) { if(tagStr.includes(d)) return { name: d, ...deptInfo[d] }; } return { name: "게시판", icon: "message-square", color: "text-[#49454F]", bg: "bg-[#EFEAF6]" }; }
+
+        function refreshAllFeeds() {
+            if (!document.getElementById('view-home').classList.contains('hidden')) {
+                const kw = document.getElementById('search-input').value.toLowerCase().trim();
+                renderPostItems('home-posts-container', kw === "" ? firestorePosts : firestorePosts.filter(p => p.title.toLowerCase().includes(kw) || p.tag.toLowerCase().includes(kw)));
+            }
+            if (!document.getElementById('view-board').classList.contains('hidden')) {
+                const t = document.getElementById('board-title').textContent; if (t && t !== "게시판") renderPostItems('board-posts-container', firestorePosts.filter(p => p.tag.includes(t.replace(" 검색결과", ""))));
+            }
+        }
+        document.getElementById('search-input').addEventListener('input', refreshAllFeeds);
+
+        function renderPostItems(containerId, posts) {
+            const container = document.getElementById(containerId); if (!container) return; container.innerHTML = '';
+            if (posts.length === 0) { container.innerHTML = '<div class="col-span-full py-20 text-center text-[#49454F] font-bold bg-white rounded-[24px] shadow-sm">아직 작성된 자료가 없어요.</div>'; return; }
+            posts.forEach(post => {
+                 const article = document.createElement('article'); article.className = "bg-white rounded-[24px] overflow-hidden shadow-m3 hover:shadow-m3-hover transition-all cursor-pointer flex flex-col group";
+                 const tagsHtml = post.tag.split(' ').map(t => `<button onclick="event.stopPropagation(); window.handleTagClick('${t}')" class="font-bold text-[#6750A4] bg-[#F4EFF4] px-3 py-1 rounded-full text-[11px] sm:text-[12px] whitespace-nowrap hover:bg-[#EADDFF] transition-colors border border-[#EFEAF6]">${t}</button>`).join('');
+                 let media = post.img ? `<img src="${post.img}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">` : (fb => `<div class="w-full h-full flex flex-col items-center justify-center ${fb.bg}"><i data-lucide="${fb.icon}" class="w-10 h-10 ${fb.color} mb-2 opacity-80"></i><span class="text-[13px] font-bold text-[#49454F]">${fb.name}</span></div>`)(getDeptFallback(post.tag));
+                 let timeD = post.time; if (post.createdAt) { const dm = Math.floor((Date.now() - post.createdAt)/60000); timeD = dm<1?"방금 전":dm<60?`${dm}분 전`:dm<1440?`${Math.floor(dm/60)}시간 전`:`${Math.floor(dm/1440)}일 전`; }
+                 article.innerHTML = `<div class="h-44 bg-[#EFEAF6] relative overflow-hidden">${media}</div><div class="p-5 flex flex-col flex-1"><div class="mb-4"><span class="font-black text-[#1D1B20] text-[16px] line-clamp-2">${post.title}</span></div><div class="flex flex-col gap-3 mt-auto"><div class="flex flex-wrap gap-1.5">${tagsHtml}</div><span class="text-[12px] font-medium text-[#49454F] text-right">${timeD}</span></div></div>`;
+                 article.addEventListener('click', () => window.openPostDetail(post)); container.appendChild(article);
+            }); lucide.createIcons();
+        }
+
+        window.openPostDetail = function(post) {
+            window.currentDetailPost = post;
+            ['view-home', 'view-board', 'view-univ', 'view-dept'].forEach(id => { const el = document.getElementById(id); if(!el.classList.contains('hidden')) viewBeforeDetail = el; });
+            if (viewBeforeDetail) { viewBeforeDetail.classList.replace('block', 'hidden'); viewBeforeDetail.classList.replace('flex', 'hidden'); toggleFABs(false); }
+            document.getElementById('btn-delete-post').classList.replace(currentUser && post.authorUid === currentUser.uid ? 'hidden' : 'block', currentUser && post.authorUid === currentUser.uid ? 'block' : 'hidden');
+            document.getElementById('detail-title').textContent = post.title; document.getElementById('detail-author').textContent = post.author || "익명"; document.getElementById('detail-content').textContent = post.content || "";
+            let timeD = post.time; if (post.createdAt) { const dm = Math.floor((Date.now() - post.createdAt)/60000); timeD = dm<1?"방금 전":dm<60?`${dm}분 전`:dm<1440?`${Math.floor(dm/60)}시간 전`:`${Math.floor(dm/1440)}일 전`; } document.getElementById('detail-time').textContent = timeD;
+            document.getElementById('detail-tags').innerHTML = post.tag.split(' ').map(t => `<button onclick="window.handleTagClick('${t}')" class="font-bold text-[#6750A4] bg-[#F4EFF4] px-4 py-1.5 rounded-full text-[13px] hover:bg-[#EADDFF] border border-[#EFEAF6]">${t}</button>`).join('');
+            const imgC = document.getElementById('detail-image-container');
+            if (post.img) { imgC.innerHTML = `<img src="${post.img}" class="w-full h-full object-cover">`; imgC.className = "w-full bg-[#EFEAF6] aspect-[4/3] relative flex items-center justify-center overflow-hidden"; } else { const fb = getDeptFallback(post.tag); imgC.innerHTML = `<i data-lucide="${fb.icon}" class="w-20 h-20 ${fb.color} opacity-80 mb-2"></i>`; imgC.className = `w-full ${fb.bg} aspect-[4/3] relative flex flex-col items-center justify-center p-8`; }
+            lucide.createIcons(); document.getElementById('view-post-detail').classList.replace('hidden', 'flex'); document.getElementById('view-post-detail').classList.add('fade-in'); window.scrollTo(0, 0);
+        };
+        document.getElementById('btn-back-detail').addEventListener('click', () => { document.getElementById('view-post-detail').classList.replace('flex', 'hidden'); if(viewBeforeDetail) { viewBeforeDetail.classList.replace('hidden', viewBeforeDetail.id === 'view-board' || viewBeforeDetail.id === 'view-home' ? 'block' : 'flex'); if(viewBeforeDetail.id === 'view-home') toggleFABs(true); } window.currentDetailPost = null; });
+        document.getElementById('btn-delete-post').addEventListener('click', () => { document.getElementById('view-confirm-delete').classList.remove('hidden'); document.getElementById('view-confirm-delete').classList.add('flex'); });
+        document.getElementById('btn-cancel-delete').addEventListener('click', () => { document.getElementById('view-confirm-delete').classList.add('hidden'); document.getElementById('view-confirm-delete').classList.remove('flex'); });
+        document.getElementById('btn-confirm-delete').addEventListener('click', async () => { if (!window.currentDetailPost || !db || !currentUser) return; try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'posts', window.currentDetailPost.id)); window.showToast("삭제 완료"); document.getElementById('btn-cancel-delete').click(); document.getElementById('btn-back-detail').click(); } catch (e) { window.showToast("삭제 오류"); } });
+
+        // ------------------ 6. 글 작성 (이미지 업로드 포함) ------------------
+        document.getElementById('btn-write-post').addEventListener('click', () => {
+            if (!currentUserNickname) { window.showToast("로그인 후 이용할 수 있어요."); document.getElementById('view-login').classList.replace('hidden', 'flex'); return; }
+            ['view-home', 'view-board'].forEach(id => { const el = document.getElementById(id); if(!el.classList.contains('hidden')) el.classList.replace('block', 'hidden'); }); toggleFABs(false); switchView('view-home', 'view-write');
+        });
+        document.getElementById('btn-back-write').addEventListener('click', () => { document.getElementById('view-write').classList.replace('flex', 'hidden'); document.getElementById('view-home').classList.replace('hidden', 'block'); toggleFABs(true); });
+
+        let uploadedImages = [];
+        document.getElementById('btn-camera').addEventListener('click', () => document.getElementById('image-input').click());
+        document.getElementById('image-input').addEventListener('change', (e) => {
+            if (e.target.files && e.target.files.length > 0) {
+                const reader = new FileReader(); reader.onload = async (ev) => {
+                    if (uploadedImages.length < 1) {
+                        const img = new Image(); img.onload = () => { const canvas = document.createElement('canvas'); let w = img.width, h = img.height; if(w>h && w>600){h*=600/w;w=600;}else if(h>600){w*=600/h;h=600;} canvas.width=w; canvas.height=h; canvas.getContext('2d').drawImage(img,0,0,w,h); uploadedImages.push(canvas.toDataURL('image/jpeg', 0.6)); updateImgPreview(); }; img.src = ev.target.result;
+                    } else window.showToast("사진은 1장만 가능해요.");
+                }; reader.readAsDataURL(e.target.files[0]);
+            } e.target.value = '';
+        });
+        function updateImgPreview() {
+            const container = document.getElementById('image-preview-container'); container.innerHTML = '';
+            uploadedImages.forEach((src, idx) => { container.innerHTML += `<div class="relative shrink-0 w-24 h-24"><img src="${src}" class="w-full h-full object-cover rounded-[24px] shadow-sm"><button class="absolute -top-2 -right-2 bg-[#1D1B20] text-white rounded-full p-1" onclick="window.removeImage(${idx})"><i data-lucide="x" class="w-4 h-4"></i></button></div>`; }); lucide.createIcons(); document.getElementById('image-count').textContent = `${uploadedImages.length}/1`;
+        }
+        window.removeImage = function(idx) { uploadedImages.splice(idx, 1); updateImgPreview(); };
+
+        document.getElementById('btn-upload').addEventListener('click', async () => {
+            const t = document.getElementById('post-title').value.trim(), c = document.getElementById('post-content').value.trim();
+            if (!t) return window.showToast("제목을 입력해주세요."); if (!c) return window.showToast("내용을 입력해주세요.");
+            let tags = c.match(/#[^\s#]+/g) || []; const hasU = tags.some(tag => tag.endsWith('대') || tag.endsWith('대학교')), hasD = tags.some(tag => tag.endsWith('과') || tag.endsWith('학과') || tag.endsWith('전공'));
+            if (!hasU || !hasD) { if (currentUserProfileData) { if(!hasU && currentUserProfileData.univ) tags.push('#'+currentUserProfileData.univ.replace('#','')); if(!hasD && currentUserProfileData.dept) tags.push('#'+currentUserProfileData.dept.replace('#','')); } else return window.showToast("학교/학과 해시태그를 써주세요!"); }
+            if(!currentUser || !db) return window.showToast("연결 오류");
+            document.getElementById('btn-upload').disabled = true; document.getElementById('btn-upload').textContent = "...";
+            try { await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'posts'), { title: t, author: currentUserNickname || "익명", authorUid: currentUser.uid, createdAt: Date.now(), img: uploadedImages[0] || "", tag: tags.slice(0,3).join(' '), content: c }); window.showToast("업로드 완료!"); document.getElementById('post-title').value=""; document.getElementById('post-content').value=""; uploadedImages=[]; updateImgPreview(); setTimeout(() => document.getElementById('btn-back-write').click(), 600); } catch (e) { window.showToast("오류 발생"); }
+            document.getElementById('btn-upload').disabled = false; document.getElementById('btn-upload').textContent = "업로드";
+        });
+
+        // ------------------ 7. 채팅 ------------------
+        document.getElementById('btn-start-chat').addEventListener('click', () => {
+            if (!currentUserNickname) { window.showToast("로그인 후 이용해주세요."); document.getElementById('view-login').classList.replace('hidden', 'flex'); return; }
+            if (!window.currentDetailPost || !window.currentDetailPost.authorUid) return;
+            if (window.currentDetailPost.authorUid === currentUser.uid) return window.showToast("본인의 글입니다.");
+            openChatRoom(window.currentDetailPost.authorUid, window.currentDetailPost.author, document.getElementById('view-post-detail'));
+        });
+        document.getElementById('btn-chat-list').addEventListener('click', () => {
+            if (!currentUserNickname) { window.showToast("로그인 후 이용해주세요."); document.getElementById('view-login').classList.replace('hidden', 'flex'); return; }
+            ['view-home', 'view-board'].forEach(id => { const el = document.getElementById(id); if(!el.classList.contains('hidden')) el.classList.replace('block', 'hidden'); }); toggleFABs(false); switchView('view-home', 'view-chat-list'); renderChatList();
+        });
+        document.getElementById('btn-back-chat-list').addEventListener('click', () => { document.getElementById('view-chat-list').classList.replace('flex', 'hidden'); document.getElementById('view-home').classList.replace('hidden', 'block'); toggleFABs(true); });
+
+        function renderChatList() {
+            const container = document.getElementById('chat-list-container'); if (!container || !currentUser) return; container.innerHTML = '';
+            const myRooms = allChatRooms.filter(r => r.participants && r.participants.includes(currentUser.uid)).sort((a,b) => b.updatedAt - a.updatedAt);
+            if (myRooms.length === 0) { container.innerHTML = '<div class="text-center py-24 text-[#49454F] font-bold bg-white rounded-[24px] shadow-sm mt-5">채팅 목록이 없어요.</div>'; return; }
+            myRooms.forEach(room => {
+                const oUid = room.participants.find(id => id !== currentUser.uid), oNick = room.participantNicknames[oUid] || '알 수 없음'; const tStr = room.updatedAt ? new Date(room.updatedAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : "";
+                const li = document.createElement('li'); li.className = "flex items-center gap-4 bg-white p-4 rounded-[24px] shadow-sm cursor-pointer hover:shadow-md transition-all";
+                li.innerHTML = `<div class="w-14 h-14 bg-[#EADDFF] text-[#21005D] rounded-full flex items-center justify-center shrink-0"><i data-lucide="user" class="w-6 h-6"></i></div><div class="flex flex-col flex-1 overflow-hidden"><div class="flex justify-between items-center mb-1"><span class="font-black text-[16px] text-[#1D1B20] truncate">${oNick}</span><span class="text-[12px] font-bold text-[#6750A4] shrink-0">${tStr}</span></div><span class="text-[15px] text-[#49454F] truncate">${room.lastMessage || ''}</span></div>`;
+                li.addEventListener('click', () => openChatRoom(oUid, oNick, document.getElementById('view-chat-list'))); container.appendChild(li);
+            }); lucide.createIcons();
+        }
+
+        function openChatRoom(oUid, oNick, prevView) {
+            currentChatOtherUid = oUid; currentChatOtherNickname = oNick; previousViewBeforeChatRoom = prevView; currentChatRoomId = [currentUser.uid, oUid].sort().join('_'); document.getElementById('chat-room-title').textContent = oNick;
+            if(prevView && prevView.classList.contains('flex')) prevView.classList.replace('flex', 'hidden'); toggleFABs(false); document.getElementById('view-chat-room').classList.replace('hidden', 'flex'); document.getElementById('view-chat-room').classList.add('fade-in'); renderChatMessages(); setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }), 100);
+        }
+        document.getElementById('btn-back-chat-room').addEventListener('click', () => { document.getElementById('view-chat-room').classList.replace('flex', 'hidden'); if (previousViewBeforeChatRoom) { previousViewBeforeChatRoom.classList.replace('hidden', 'flex'); } else { document.getElementById('view-home').classList.replace('hidden', 'block'); toggleFABs(true); } currentChatRoomId = null; });
+
+        function renderChatMessages() {
+            const container = document.getElementById('chat-messages-container'); if (!currentChatRoomId || !container) return; container.innerHTML = '';
+            const roomMsgs = allChatMessages.filter(m => m.roomId === currentChatRoomId).sort((a, b) => a.createdAt - b.createdAt);
+            if (roomMsgs.length === 0) { container.innerHTML = '<div class="text-center text-[#49454F] mt-20 text-[15px] font-bold">인사를 건네보세요!</div>'; return; }
+            roomMsgs.forEach(msg => {
+                const isMe = msg.senderId === currentUser.uid; const div = document.createElement('div'); div.className = `flex w-full ${isMe ? 'justify-end' : 'justify-start'}`; const tStr = new Date(msg.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                div.innerHTML = isMe ? `<div class="flex items-end gap-2 max-w-[80%]"><span class="text-[11px] font-bold text-[#49454F] mb-1">${tStr}</span><div class="bg-[#6750A4] text-white px-5 py-3 rounded-[24px] rounded-tr-sm text-[15px] break-words shadow-sm">${msg.text}</div></div>` : `<div class="flex flex-col gap-1 w-full items-start"><span class="text-[12px] font-bold text-[#49454F] ml-2">${currentChatOtherNickname}</span><div class="flex items-end gap-2 max-w-[80%]"><div class="bg-white text-[#1D1B20] px-5 py-3 rounded-[24px] rounded-tl-sm text-[15px] break-words shadow-sm">${msg.text}</div><span class="text-[11px] font-bold text-[#49454F] mb-1">${tStr}</span></div></div>`; container.appendChild(div);
+            }); setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }), 50);
+        }
+        document.getElementById('btn-send-chat').addEventListener('click', async () => {
+            const text = document.getElementById('chat-input').value.trim(); if (!text || !currentChatRoomId || !db || !currentUser) return; document.getElementById('chat-input').value = ''; document.getElementById('chat-input').focus();
+            try { await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'chatMessages'), { roomId: currentChatRoomId, senderId: currentUser.uid, text: text, createdAt: Date.now() }); await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'chatRooms', currentChatRoomId), { participants: [currentUser.uid, currentChatOtherUid], participantNicknames: { [currentUser.uid]: currentUserNickname, [currentChatOtherUid]: currentChatOtherNickname }, lastMessage: text, updatedAt: Date.now() }, { merge: true }); } catch(e) { window.showToast("전송 실패"); }
+        });
+        document.getElementById('chat-input').addEventListener('keypress', (e) => { if (e.key === 'Enter') document.getElementById('btn-send-chat').click(); });
+
+        // ------------------ 8. 로그인, 회원가입, 프로필 로직 ------------------
+        document.getElementById('btn-show-login').addEventListener('click', () => document.getElementById('view-login').classList.replace('hidden', 'flex')); document.getElementById('btn-back-login').addEventListener('click', () => document.getElementById('view-login').classList.replace('flex', 'hidden'));
+        document.getElementById('btn-submit-login').addEventListener('click', async () => {
+            const email = document.getElementById('login-email').value.trim(), pw = document.getElementById('login-pw').value; if (!email || !pw) return window.showToast("모두 입력해주세요.");
+            if (db && currentUser) {
+                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'profiles'), async (snap) => {
+                    let found = null, fId = null; snap.forEach(d => { if (d.data().email === email) { found = d.data(); fId = d.id; } });
+                    if (found) { if (found.password === pw) { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'sessions', currentUser.uid), { email }); window.showToast("로그인 성공!"); document.getElementById('view-login').classList.replace('flex', 'hidden'); document.getElementById('login-email').value=''; document.getElementById('login-pw').value=''; } else window.showToast("비밀번호 불일치"); } else { window.showToast("회원가입을 진행합니다."); document.getElementById('view-login').classList.replace('flex', 'hidden'); document.getElementById('view-auth').classList.replace('hidden', 'flex'); document.getElementById('auth-email').value = email; document.getElementById('auth-pw').value = pw; document.getElementById('auth-pw-confirm').value = pw; }
+                }, () => {});
+            }
+        });
+        document.getElementById('btn-back-auth').addEventListener('click', () => document.getElementById('view-auth').classList.replace('flex', 'hidden'));
+        const checkPw = () => { const p1 = document.getElementById('auth-pw').value, p2 = document.getElementById('auth-pw-confirm').value; document.getElementById('auth-pw-error').classList.replace(p2 !== "" && p1 !== p2 ? 'hidden' : 'block', p2 !== "" && p1 !== p2 ? 'block' : 'hidden'); }; document.getElementById('auth-pw').addEventListener('input', checkPw); document.getElementById('auth-pw-confirm').addEventListener('input', checkPw);
+        document.getElementById('btn-submit-auth').addEventListener('click', async () => {
+            const em=document.getElementById('auth-email').value.trim(), pw=document.getElementById('auth-pw').value, pwc=document.getElementById('auth-pw-confirm').value, nk=document.getElementById('auth-nickname').value.trim(), un=document.getElementById('auth-univ').value.trim(), dp=document.getElementById('auth-dept').value.trim();
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) return window.showToast("이메일 형식 오류"); if (!pw || pw !== pwc) return window.showToast("비밀번호 확인 요망"); if (!nk || !un || !dp) return window.showToast("모든 정보 입력 요망");
+            if (db && currentUser) {
+                try { await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'profiles'), { email:em, password:pw, nickname:nk, univ:un, dept:dp, uid:currentUser.uid, createdAt:Date.now() }); await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'sessions', currentUser.uid), { email:em }); window.showToast("가입 환영합니다!"); document.getElementById('view-auth').classList.replace('flex', 'hidden'); } catch(e) {}
+            }
+        });
+        document.getElementById('profile-indicator').addEventListener('click', () => { if (!currentUserProfileData) return; document.getElementById('profile-display-nickname').textContent = currentUserProfileData.nickname; document.getElementById('profile-display-email').textContent = currentUserProfileData.email; document.getElementById('profile-display-univ').textContent = currentUserProfileData.univ; document.getElementById('profile-display-dept').textContent = currentUserProfileData.dept; switchView('view-home', 'view-profile'); toggleFABs(false); });
+        document.getElementById('btn-back-profile').addEventListener('click', () => { switchView('view-profile', 'view-home'); toggleFABs(true); });
+        document.getElementById('btn-edit-profile').addEventListener('click', () => { document.getElementById('edit-nickname').value = currentUserProfileData.nickname; document.getElementById('edit-univ').value = currentUserProfileData.univ; document.getElementById('edit-dept').value = currentUserProfileData.dept; document.getElementById('view-edit-profile').classList.replace('hidden', 'flex'); });
+        document.getElementById('btn-back-edit-profile').addEventListener('click', () => document.getElementById('view-edit-profile').classList.replace('flex', 'hidden'));
+        document.getElementById('btn-submit-edit-profile').addEventListener('click', async () => { const n=document.getElementById('edit-nickname').value.trim(), u=document.getElementById('edit-univ').value.trim(), d=document.getElementById('edit-dept').value.trim(); if (!n || !u || !d) return window.showToast("모든 정보 입력 요망"); if (db && currentUserProfileDocId) { try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'profiles', currentUserProfileDocId), { ...currentUserProfileData, nickname:n, univ:u, dept:d }); currentUserProfileData.nickname=n; currentUserProfileData.univ=u; currentUserProfileData.dept=d; currentUserNickname=n; document.getElementById('profile-email').textContent=n; document.getElementById('profile-display-nickname').textContent=n; document.getElementById('profile-display-univ').textContent=u; document.getElementById('profile-display-dept').textContent=d; window.showToast("수정 완료"); document.getElementById('view-edit-profile').classList.replace('flex', 'hidden'); } catch(e){} } });
+        document.getElementById('btn-logout').addEventListener('click', async () => { if (db && currentUser) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'sessions', currentUser.uid)); currentUserNickname=null; currentUserProfileDocId=null; currentUserProfileData=null; document.getElementById('view-profile').classList.replace('flex', 'hidden'); document.getElementById('view-home').classList.replace('hidden', 'block'); document.getElementById('btn-show-login').classList.remove('hidden'); document.getElementById('profile-indicator').classList.replace('flex', 'hidden'); toggleFABs(true); window.showToast("로그아웃 되었습니다."); });
     </script>
 </body>
 </html>
