@@ -490,15 +490,51 @@
         document.getElementById('btn-find-location').addEventListener('click', () => document.getElementById('btn-map').click());
 
         // ------------------ 5. 대학/학과/게시판/게시물 로직 ------------------
-        const universitiesData = [
-            { name: "서울대학교", lat: 37.4598, lng: 126.9519 }, { name: "연세대학교", lat: 37.5657, lng: 126.9385 },
-            { name: "고려대학교", lat: 37.5907, lng: 127.0277 }, { name: "서강대학교", lat: 37.5512, lng: 126.9415 },
-            { name: "성균관대학교", lat: 37.5833, lng: 126.9954 }, { name: "한양대학교", lat: 37.5559, lng: 127.0436 },
-            { name: "홍익대학교", lat: 37.5514, lng: 126.9250 }, { name: "부산대학교", lat: 35.2332, lng: 129.0792 },
-            { name: "경북대학교", lat: 35.8906, lng: 128.6121 }, { name: "계명대학교", lat: 35.8307, lng: 128.4800 },
-            { name: "전남대학교", lat: 35.1768, lng: 126.9058 }, { name: "충남대학교", lat: 36.3622, lng: 127.3435 },
-            { name: "KAIST", lat: 36.3721, lng: 127.3604 }, { name: "제주대학교", lat: 33.4561, lng: 126.5616 }
-        ];
+        
+        // 교육부 대학 주소기반 좌표정보를 기반으로 대폭 추가된 대학 데이터
+    const universitiesData = [
+        { name: "계명대학교", lat: 35.8307, lng: 128.4800 },
+        { name: "서울대학교", lat: 37.4598, lng: 126.9519 },
+        { name: "연세대학교", lat: 37.5657, lng: 126.9385 },
+        { name: "고려대학교", lat: 37.5907, lng: 127.0277 },
+        { name: "서강대학교", lat: 37.5512, lng: 126.9415 },
+        { name: "성균관대학교", lat: 37.5833, lng: 126.9954 },
+        { name: "한양대학교", lat: 37.5559, lng: 127.0436 },
+        { name: "중앙대학교", lat: 37.5050, lng: 126.9570 },
+        { name: "경희대학교", lat: 37.5939, lng: 127.0548 },
+        { name: "한국외국어대학교", lat: 37.5973, lng: 127.0578 },
+        { name: "서울시립대학교", lat: 37.5838, lng: 127.0588 },
+        { name: "이화여자대학교", lat: 37.5618, lng: 126.9468 },
+        { name: "건국대학교", lat: 37.5407, lng: 127.0793 },
+        { name: "동국대학교", lat: 37.5582, lng: 127.0001 },
+        { name: "홍익대학교", lat: 37.5514, lng: 126.9250 },
+        { name: "국민대학교", lat: 37.6109, lng: 126.9972 },
+        { name: "숭실대학교", lat: 37.4963, lng: 126.9573 },
+        { name: "세종대학교", lat: 37.5502, lng: 127.0731 },
+        { name: "단국대학교", lat: 37.3216, lng: 127.1267 },
+        { name: "광운대학교", lat: 37.6194, lng: 127.0596 },
+        { name: "명지대학교", lat: 37.2218, lng: 127.1901 },
+        { name: "가천대학교", lat: 37.4503, lng: 127.1298 },
+        { name: "아주대학교", lat: 37.2831, lng: 127.0463 },
+        { name: "인하대학교", lat: 37.4500, lng: 126.6551 },
+        { name: "부산대학교", lat: 35.2332, lng: 129.0792 },
+        { name: "경북대학교", lat: 35.8906, lng: 128.6121 },
+        { name: "전남대학교", lat: 35.1768, lng: 126.9058 },
+        { name: "충남대학교", lat: 36.3622, lng: 127.3435 },
+        { name: "전북대학교", lat: 35.8468, lng: 127.1293 },
+        { name: "강원대학교", lat: 37.8689, lng: 127.7444 },
+        { name: "충북대학교", lat: 36.6285, lng: 127.4571 },
+        { name: "경상국립대학교", lat: 35.1543, lng: 128.1023 },
+        { name: "제주대학교", lat: 33.4561, lng: 126.5616 },
+        { name: "KAIST", lat: 36.3721, lng: 127.3604 },
+        { name: "포항공과대학교", lat: 36.0145, lng: 129.3253 },
+        { name: "영남대학교", lat: 35.8340, lng: 128.7547 },
+        { name: "동아대학교", lat: 35.1166, lng: 128.9685 },
+        { name: "조선대학교", lat: 35.1460, lng: 126.9343 },
+        { name: "울산대학교", lat: 35.5434, lng: 129.2562 },
+        { name: "창원대학교", lat: 35.2455, lng: 128.6922 },
+        { name: "부경대학교", lat: 35.1340, lng: 129.1031 }
+];
         function calcDist(lat1, lon1, lat2, lon2) {
             const R = 6371, dLat = (lat2 - lat1) * Math.PI / 180, dLon = (lon2 - lon1) * Math.PI / 180;
             const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
